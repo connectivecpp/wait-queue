@@ -1,6 +1,6 @@
 # Wait Queue, a Header-Only C++ 20 MPMC Thread-Safe Queue
 
-### Unit Test and Documentation Generation Workflow Status
+#### Unit Test and Documentation Generation Workflow Status
 
 ![GH Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/connectivecpp/wait-queue/build_run_unit_test_cmake.yml?branch=main&label=GH%20Actions%20build,%20unit%20tests%20on%20main)
 
@@ -40,8 +40,8 @@ The unit test code uses [Catch2](https://github.com/catchorg/Catch2). If the `WA
 
 The unit test uses two third-party libraries (each is a single header-only file):
 
-- Martin Moene's [`ring-span-lite`](https://github.com/martinmoene/ring-span-lite)
-- Justas Masiulis' [`circular_buffer`](https://github.com/JustasMasiulis/circular_buffer)
+- Martin Moene's [ring-span-lite](https://github.com/martinmoene/ring-span-lite)
+- Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
 Specific versions and / or branches for the dependencies are in `test/CMakeLists.txt`.
 
