@@ -32,7 +32,7 @@ The `wait-queue` header file does not have any third-party dependencies. It uses
 
 ## Supported Compilers
 
-Continuous integration workflows build and unit test on g++ (through Ubuntu), MSVC (through Windows), and clang (through macOS).
+Continuous integration workflows build and unit test on g++ (through Ubuntu) and MSVC (through Windows). Note that clang support for C++ 20 `std::jthread` and `std::stop_token` is still incomplete as of May 2024.
 
 ## Unit Test Dependencies
 
