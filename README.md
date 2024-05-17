@@ -10,13 +10,9 @@
 
 ## Overview
 
-`wait_queue` is a multi-reader, multi-writer FIFO queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
+`wait_queue` is a multi-reader, multi-writer FIFO wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
 
-A graceful shutdown can be performed using the `request_stop` method (modeled on the C++ 20 `request_stop` from `std::stop_source`). This allows waiting reader threads to be notified for shutdown. Alternatively a `std::stop_token` can be passed in to the `wait_queue` constructor, allowing shutdown from outside of the `wait_queue` object.
-
-`wait_queue` is inspired by code from Anthony Williams' Concurrency in Action book, although heavily modified.
-
-Additional documentation can be found dkfjlkjdlkjklj
+Additional documentation (which is also the main page of the generated Doxygen doc) can be found [here](doc/README.md).
 
 ## Generated Documentation
 
@@ -43,7 +39,7 @@ The unit test uses two third-party libraries (each is a single header-only file)
 - Martin Moene's [ring-span-lite](https://github.com/martinmoene/ring-span-lite)
 - Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
-Specific versions and / or branches for the dependencies are in `test/CMakeLists.txt`.
+Specific versions (or branches) for the dependencies are in `test/CMakeLists.txt`.
 
 ## Build and Run Unit Tests
 
