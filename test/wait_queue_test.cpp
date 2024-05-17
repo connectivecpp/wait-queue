@@ -113,7 +113,7 @@ template <typename T, typename Q>
 void read_func (Q& wq, test_set<T>& s, std::mutex& mut) {
   while (true) {
     std::optional<set_elem<T> > opt_elem = wq.wait_and_pop();
-    if (!opt_elem) { // empty element means close has been called
+    if (!opt_elem) { // empty element means request stop has been called
       return;
     }
     std::lock_guard<std::mutex> lk(mut);
@@ -157,12 +157,12 @@ bool threaded_test(Q& wq, int num_readers, int num_writers, int slice, const T& 
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::lock_guard<std::mutex> lk(mut);
     if (s.size() == tot) {
+      wq.request_stop(); // tell the readers it's done
       done = true;
     }
   }
-  wq.request_stop();
 
-  // join readers; since wait queue is closed they should all join immediately
+  // join readers; since wait queue is stopped they should all join immediately
   for (auto& thr : rd_thrs) {
     thr.join();
   }
@@ -338,7 +338,7 @@ std::size_t vv_pop_func(vv_wq& wq, std::size_t exp) {
   std::size_t n { 0u };
   while (n < exp) {
     auto res = wq.wait_and_pop();
-    if (!res) { // queue has been closed
+    if (!res) { // queue has been stopped
       break;
     }
     REQUIRE (*res == data1);
@@ -413,7 +413,6 @@ SCENARIO ( "Threaded wait queue, deque int",
   REQUIRE ( threaded_test(wq, 1, 1, 100, 44) );
 
   // Parameters are 5 reader, 3 writer threads, 1000 slice
-  // threads will be created and joined
   REQUIRE ( threaded_test(wq, 5, 3, 1000, 1212) );
   // Parameters are 60 reader, 40 writer threads, 5000 slice
   REQUIRE ( threaded_test(wq, 60, 40, 5000, 5656) );

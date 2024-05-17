@@ -263,9 +263,13 @@ public:
   // modifying methods
 
   /**
-   * @brief Request the @c wait_queue to stop processing.
+   * @brief Request the @c wait_queue to stop processing, unless a @c std::stop_token
+   * was passed in to a constructor.
    *
-   * When this method is called, all waiting reader threaders will be notified. 
+   * If a @c std::stop_token was passed into a constructor, a @c request_stop must
+   * be performed external to the @c wait_queue and this method has no effect.
+   *
+   * For an internal @c std::stop_token, all waiting reader threaders will be notified. 
    * Subsequent @c push operations will return @c false.
    */
   bool request_stop() noexcept {
