@@ -3,12 +3,12 @@
  *  @brief Example code demonstrating use of @c chops::wait_queue.
  *  See @c threaded_wait_shared_demo.cpp for multithreaded example. 
  * 
- *  @ingroup example_module
- *
  *  @author Thurman Gillespy
  * 
  *  Copyright (c)2019 by Thurman Gillespy
  *  3/22/19
+ *
+ *  Minor changes May 2024 by Cliff Green to match new @c wait_queue API.
  *
  *  Distributed under the Boost Software License, Version 1.0. 
  *  (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +19,7 @@
  */
 
 #include <iostream>
+#include <ios> // std::boolalpha
 #include <cstdlib> // EXIT_SUCCESS
 #include <string>
 #include <optional> // std::optional
@@ -28,9 +29,10 @@
 // print queue stats
 void queueState(const chops::wait_queue<int>& wq) {
     
+    std::cout << std::boolalpha;
     std::cout << "wait queue contains " << wq.size() << " elements" << std::endl;
-    std::cout << "wait queue is empty: " << (wq.empty() ? "true" : "false") << std::endl;
-    std::cout << "wait queue is open: " << (wq.is_closed() ? "false" : "true") << std::endl;
+    std::cout << "wait queue is empty: " << wq.empty() << std::endl;
+    std::cout << "wait queue stop requested: " << wq.stop_requested() << std::endl;
     std::cout << std::endl; 
 }
 
@@ -67,8 +69,6 @@ int main() {
     }
     printLn();
     
-    // all done, close shop
-    wq.close();
     queueState(wq);
 
     return EXIT_SUCCESS;
