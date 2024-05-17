@@ -13,14 +13,16 @@ add_executable ( wait_queue_test wait_queue_test.cpp )
 target_compile_features ( wait_queue_test PRIVATE cxx_std_20 )
 
 # add dependencies
-include ( ../../cmake/download_cpm.cmake )
+include ( ../cmake/download_cpm.cmake )
 
 CPMAddPackage ( "gh:catchorg/Catch2@3.5.4" )
 CPMAddPackage ( "gh:martinmoene/ring-span-lite@0.6.0" )
-CPMAddPackage ( "gh:JustasMasiulis/circular_buffer" )
+# CPMAddPackage ( "gh:JustasMasiulis/circular_buffer@master" )
+CPMAddPackage ( NAME circular_buffer
+	        URL https://github.com/JustasMasiulis/circular_buffer/archive/refs/heads/master.zip )
 
 # link dependencies
-target_link_libraries ( wait_queue_test PRIVATE circular_buffer Catch2::Catch2WithMain )
+target_link_libraries ( wait_queue_test PRIVATE wait_queue ring-span-lite circular_buffer Catch2::Catch2WithMain )
 
 enable_testing()
 

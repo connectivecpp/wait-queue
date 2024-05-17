@@ -14,7 +14,13 @@
  *  One of the template parameters is the container type, allowing customization 
  *  for specific use cases (see below for additional details).
  *
- *  If the @c close method is called, all reader threads calling @c wait_and_pop 
+ *  A @c std::stop_token can be passed in through the constructors, which allows
+ *  aa external @c std::stop_source to @c request_stop. Alternatively, an
+ *  internal @c stop_token will be used, allowing the @c wait_queue 
+ *  @c request_stop method to be used to shutdown @c wait_queue processing.
+ *
+ *  Once a @c request_stop is called (either externally or through the @c wait_queue
+ *  @c request_stop) all reader threads calling @c wait_and_pop 
  *  are notified, and an empty value returned to those threads. Subsequent calls 
  *  to @c push will return a @c false value.
  *
@@ -27,12 +33,12 @@
  *    wq.push(42);
  *    ...
  *    // all finished, time to shutdown
- *    wq.close();
+ *    wq.request_stop();
  *
  *    // inside reader thread, assume wq passed in by reference
  *    auto rtn_val = wq.wait_and_pop(); // return type is std::optional<int>
- *    if (!rtn_val) { // empty value, close has been called
- *      // time to end reader thread
+ *    if (!rtn_val) { // empty value, request_stop has been called
+ *      // time to exit reader thread
  *    }
  *    if (*rtn_val == 42) ...
  *  @endcode
@@ -47,7 +53,7 @@
  *  @endcode
  *
  *  The container type must support the following (depending on which 
- *  methods are instantiated): default construction, construction from a 
+ *  methods are called): default construction, construction from a 
  *  begin and end iterator, construction with an initial size, 
  *  @c push_back (preferably overloaded for both copy and move), 
  *  @c emplace_back (with a template parameter pack), @c front, @c pop_front, 
@@ -55,30 +61,32 @@
  *  defined.
  *
  *  This class is based on code from the book Concurrency in Action by Anthony 
- *  Williams. The core logic in this class is the same as provided by Anthony 
- *  in his book, but the interfaces have changed and additional features added. 
- *  The name of the utility class template in Anthony's book is @c threadsafe_queue.
+ *  Williams (2012 edition). The core logic in this class is the same as provided 
+ *  by Anthony in his book, but the class interface is changed and additional 
+ *  features added. In particular, @ std::stop_token and @c condition_variable_any
+ *  are C++ 20 features not in Anthony's original code. The name of the utility 
+ *  class template in Anthony's book is @c threadsafe_queue.
  *
  *  @note A fixed size buffer can be used for the container, which eliminates
  *  queue memory management happening during a @c push or @c pop. In particular,
- *  the proposed @c std::ring_span container (C++ 20, most likely) works well 
- *  for this use case, and this code has been tested with @c ring-span lite from 
+ *  the proposed @c std::ring_span container works well 
+ *  for this use case, and this code has been tested with @c ring-span-lite from 
  *  Martin Moene. The constructor that takes an iterator range can be used for 
  *  a container view type, which means that the @c wait_queue owns and manages 
  *  a view rather than the underlying container buffer.
  *
  *  @note The @c boost @c circular_buffer can be used for the container type. Memory is
  *  allocated only once, at container construction time. This may be useful for
- *  environments where construction can be dynamic, but a @c push or @c pop must
- *  not allocate or deallocate memory. 
+ *  environments where construction can use dynamic memory but a @c push or @c pop 
+ *  must not allocate or deallocate memory. 
  *
  *  @note If the container type is @c boost @c circular_buffer then the default
  *  constructor for @c wait_queue cannot be used (since it would result in a container
  *  with an empty capacity).
  *
- *  @note Iterators are not supported, due to obvious difficulties with maintaining 
- *  consistency and integrity. The @c apply method can be used to access the internal
- *  data in a threadsafe manner.
+ *  @note Iterators to a @c wait_queue are not supported, due to obvious difficulties 
+ *  with maintaining *consistency and integrity. The @c apply method can be used to 
+ *  access the internal data in a threadsafe manner.
  *
  *  @note Copy and move construction or assignment for the whole queue is
  *  disallowed, since the use cases and underlying implications are not clear 
@@ -108,9 +116,9 @@
 #define WAIT_QUEUE_HPP_INCLUDED
 
 #include <deque>
-#include <mutex>
+#include <mutex> // std::scoped_lock, std::mutex
 #include <condition_variable>
-#include <atomic>
+#include <stop_token> // std::stop_source, std::stop_token
 #include <optional>
 #include <utility> // std::move, std::move_if_noexcept
 #include <type_traits> // for noexcept specs
@@ -120,12 +128,13 @@ namespace chops {
 template <typename T, typename Container = std::deque<T> >
 class wait_queue {
 private:
-  mutable std::mutex m_mut;
-  std::condition_variable m_data_cond;
-  std::atomic_bool m_closed;
-  Container m_data_queue;
+  mutable std::mutex              m_mut;
+  std::optional<std::stop_source> m_stop_src;
+  std::stop_token                 m_stop_tok;
+  std::condition_variable_any     m_data_cond;
+  Container                       m_data_queue;
 
-  using lock_guard = std::lock_guard<std::mutex>;
+  using lock_guard = std::scoped_lock<std::mutex>;
 
 public:
 
@@ -137,6 +146,9 @@ public:
   /**
    * @brief Default construct a @c wait_queue.
    *
+   * An internal @c stop_source is used to provide a @c std::stop_token for
+   * coordinating shutdown.
+   *
    * @note A default constructed @c boost @c circular_buffer cannot do
    * anything, so a different @c wait_queue constructor must be used if
    * instantiated with a @c boost @c circular_buffer.
@@ -144,7 +156,20 @@ public:
    */
   wait_queue()
     // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_mut(), m_data_cond(), m_closed(false), m_data_queue() { }
+      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()), 
+	m_data_cond(), m_data_queue() { }
+
+  /**
+   * @brief Construct a @c wait_queue with an externally provided @c std::stop_token.
+   *
+   * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
+   * processing.
+   *
+   */
+  wait_queue(std::stop_token stop_tok)
+    // noexcept(std::is_nothrow_constructible<Container>::value)
+      : m_mut(), m_stop_src(), m_stop_tok(stop_tok), 
+	m_data_cond(), m_data_queue() { }
 
   /**
    * @brief Construct a @c wait_queue with an iterator range for the container.
@@ -154,6 +179,9 @@ public:
    * types copy initial elements as defined by the range and the initial size is
    * set accordingly. A @c ring_span, however, uses the range distance to define 
    * a capacity and sets the initial size to zero.
+   *
+   * An internal @c std::stop_source is used to provide a @c std::stop_token for
+   * coordinating shutdown.
    *
    * @note This is the only constructor that can be used with a @c ring_span
    * container type.
@@ -165,13 +193,33 @@ public:
   template <typename Iter>
   wait_queue(Iter beg, Iter end)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_mut(), m_data_cond(), m_closed(false), m_data_queue(beg, end) { }
+      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
+	m_data_cond(), m_data_queue(beg, end) { }
+
+  /**
+   * @brief Construct a @c wait_queue with an iterator range and a @c std::stop_token.
+   *
+   * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
+   * processing.
+   *
+   * @param beg Beginning iterator.
+   *
+   * @param end Ending iterator.
+   */
+  template <typename Iter>
+  wait_queue(std::stop_token stop_tok, Iter beg, Iter end)
+    // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
+      : m_mut(), m_stop_src(), m_stop_tok(stop_tok),
+	m_data_cond(), m_data_queue(beg, end) { }
 
   /**
    * @brief Construct a @c wait_queue with an initial size or capacity.
    *
    * Construct the container (or container view) with an initial size of default
    * inserted elements or with an initial capacity, depending on the container type.
+   *
+   * An internal @c std::stop_source is used to provide a @c std::stop_token for
+   * coordinating shutdown.
    *
    * @note This constructor cannot be used with a @c ring_span container type.
    * 
@@ -186,7 +234,23 @@ public:
    */
   wait_queue(size_type sz)
     // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
-      : m_mut(), m_data_cond(), m_closed(false), m_data_queue(sz) { }
+      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
+	m_data_cond(), m_data_queue(sz) { }
+
+  /**
+   * @brief Construct a @c wait_queue with an initial size or capacity along
+   * with a @c std::stop_token.
+   *
+   * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
+   * processing.
+   *
+   * @param sz Capacity or initial size, depending on container type.
+   *
+   */
+  wait_queue(std::stop_token stop_tok, size_type sz)
+    // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
+      : m_mut(), m_stop_src(), m_stop_tok((*m_stop_src).get_token()),
+	m_data_cond(), m_data_queue(sz) { }
 
   // disallow copy or move construction of the entire object
   wait_queue(const wait_queue&) = delete;
@@ -199,24 +263,16 @@ public:
   // modifying methods
 
   /**
-   * @brief Open a previously closed @c wait_queue for processing.
-   *
-   * @note The initial state of a @c wait_queue is open.
-   */
-  void open() noexcept {
-    m_closed = false;
-  }
-
-  /**
-   * @brief Close a @c wait_queue for processing.
+   * @brief Request the @c wait_queue to stop processing.
    *
    * When this method is called, all waiting reader threaders will be notified. 
    * Subsequent @c push operations will return @c false.
    */
-  void close() /* noexcept */ {
-    m_closed = true;
-    lock_guard lk{m_mut};
-    m_data_cond.notify_all();
+  bool request_stop() noexcept {
+    if (m_stop_src) {
+      return (*m_stop_src).request_stop();
+    }
+    return false;
   }
 
   /**
@@ -227,10 +283,11 @@ public:
    *
    * @param val Val to copy into the queue.
    *
-   * @return @c true if successful, @c false if the @c wait_queue is closed.
+   * @return @c true if successful, @c false if the @c wait_queue has been
+   * requested to stop.
    */
   bool push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */ {
-    if (m_closed) {
+    if (m_stop_tok.stop_requested()) {
       return false;
     }
     lock_guard lk{m_mut};
@@ -246,7 +303,7 @@ public:
    * be moved (if possible) instead of copied.
    */
   bool push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ {
-    if (m_closed) {
+    if (m_stop_tok.stop_requested()) {
       return false;
     }
     lock_guard lk{m_mut};
@@ -265,11 +322,12 @@ public:
    * @c emplace method calls. @c emplace_push for a @c wait_queue does not follow this 
    * convention and instead has the same return as the @c push methods.
    *
-   * @return @c true if successful, @c false if the @c wait_queue is closed.
+   * @return @c true if successful, @c false if the @c wait_queue is has been requested
+   * to stop.
    */
   template <typename ... Args>
   bool emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible<T, Args...>::value)*/ {
-    if (m_closed) {
+    if (m_stop_tok.stop_requested()) {
       return false;
     }
     lock_guard lk{m_mut};
@@ -282,21 +340,17 @@ public:
    * @brief Pop and return a value from the @c wait_queue, blocking and waiting for a writer 
    * thread to push a value if one is not immediately available.
    *
-   * If this method is called after a @c wait_queue has been closed, an empty @c std::optional 
-   * is returned. If a @c wait_queue needs to be flushed after it is closed, @c try_pop should 
-   * be called instead.
+   * If this method is called after a @c wait_queue has been requested to stop, an empty 
+   * @c std::optional is returned. If a @c wait_queue needs to be flushed after it is stopped, 
+   * @c try_pop should be called instead.
    *
    * @return A value from the @c wait_queue (if non-empty). If the @c std::optional is empty, 
-   * the @c wait_queue has been closed.
+   * the @c wait_queue has been requested to be stopped.
    */
   std::optional<T> wait_and_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */ {
-    if (m_closed) {
-      return std::optional<T> {};
-    }
     std::unique_lock<std::mutex> lk{m_mut};
-    m_data_cond.wait ( lk, [this] { return m_closed || !m_data_queue.empty(); } );
-    if (m_data_queue.empty()) {
-      return std::optional<T> {}; // queue was closed, no data available
+    if (!m_data_cond.wait ( lk, m_stop_tok, [this] { return !m_data_queue.empty(); } )) {
+      return std::optional<T> {}; // queue was request to stop, no data available
     }
     std::optional<T> val {std::move_if_noexcept(m_data_queue.front())}; // move construct if possible
     m_data_queue.pop_front();
@@ -311,6 +365,9 @@ public:
    * available in the @c wait_queue.
    */
   std::optional<T> try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */ {
+    if (m_stop_tok.stop_requested()) {
+      return std::optional<T> {};
+    }
     lock_guard lk{m_mut};
     if (m_data_queue.empty()) {
       return std::optional<T> {};
@@ -356,12 +413,13 @@ public:
   }
 
   /**
-   * Query whether the @ close method has been called on the @c wait_queue.
+   * Query whether a @ request_stop method (passed through a @c stop_token) has been called on 
+   * the @c wait_queue.
    *
-   * @return @c true if the @c wait_queue has been closed.
+   * @return @c true if the @c stop_requested has been called.
    */
-  bool is_closed() const noexcept {
-    return m_closed;
+  bool stop_requested() const noexcept {
+    return m_stop_tok.stop_requested();
   }
 
   /**
