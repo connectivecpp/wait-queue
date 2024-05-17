@@ -20,7 +20,7 @@ Additional documentation can be found dkfjlkjdlkjklj
 
 ## Generated Documentation
 
-The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/presentations/).
+The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/wait-queue/).
 
 ## Dependencies
 
@@ -49,7 +49,7 @@ Specific versions and / or branches for the dependencies are in `test/CMakeLists
 
 To build and run the unit test program:
 
-First clone the `wait-queue` repository, then create a build directory in parallel to the presentations directory (this is called "out of source" builds, which is recommended), then `cd` (change directory) into the build directory. The CMake commands:
+First clone the `wait-queue` repository, then create a build directory in parallel to the `wait-queue` directory (this is called "out of source" builds, which is recommended), then `cd` (change directory) into the build directory. The CMake commands:
 
 ```
 cmake -D WAIT_QUEUE_BUILD_TESTS:BOOL=ON -D JM_CIRCULAR_BUFFER_BUILD_TESTS:BOOL=OFF ../wait-queue
