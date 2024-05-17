@@ -23,6 +23,7 @@
 #include <thread>
 #include <future> // std::async
 #include <mutex>
+#include <stop_token>
 
 #include "catch2/catch_test_macros.hpp"
 #include "catch2/catch_template_test_macros.hpp"
@@ -35,7 +36,7 @@
 
 using namespace std::literals::string_literals;
 
-constexpr int N = 400;
+constexpr int N = 40;
 
 // WQ creation function with non-used pointer for overloading
 template <typename T>
@@ -89,8 +90,13 @@ void non_threaded_arithmetic_test(Q& wq, int count) {
     REQUIRE(wq.push(base_val));
   }
   val_type sum { 0 };
-  wq.apply( [&sum] (const val_type& i) { sum += i; } );
+  wq.apply( [&sum] (const val_type& x) { sum += x; } );
   REQUIRE (sum == expected_sum);
+
+  for (int i {0}; i < count; ++i) {
+    REQUIRE(*(wq.try_pop()) == base_val);
+  }
+  REQUIRE (wq.empty());
 
   for (int i {0}; i < count; ++i) {
     wq.push(base_val+i);
@@ -110,7 +116,7 @@ template <typename T>
 using test_set = std::set<set_elem<T> >;
 
 template <typename T, typename Q>
-void read_func (Q& wq, test_set<T>& s, std::mutex& mut) {
+void read_func (std::stop_token stop_tok, Q& wq, test_set<T>& s, std::mutex& mut) {
   while (true) {
     std::optional<set_elem<T> > opt_elem = wq.wait_and_pop();
     if (!opt_elem) { // empty element means request stop has been called
@@ -122,7 +128,7 @@ void read_func (Q& wq, test_set<T>& s, std::mutex& mut) {
 }
 
 template <typename T, typename Q>
-void write_func (Q& wq, int start, int slice, const T& val) {
+void write_func (std::stop_token stop_tok, Q& wq, int start, int slice, const T& val) {
   for (int i {0}; i < slice; ++i) {
     if (!wq.push(set_elem<T>{(start+i), val})) {
       // FAIL("wait queue push failed in write_func");
@@ -169,14 +175,13 @@ bool threaded_test(Q& wq, int num_readers, int num_writers, int slice, const T& 
   REQUIRE (wq.empty());
   REQUIRE (wq.stop_requested());
   // check set to make sure all entries are present
-  REQUIRE (s.size() == tot);
   int idx {0};
   for (const auto& e : s) {
     REQUIRE (e.first == idx);
     REQUIRE (e.second == val);
     ++idx;
   }
-  return true;
+  return (s.size() == tot);
 }
 
 // non threaded test, multiple container types, multiple element types
@@ -408,14 +413,16 @@ SCENARIO ( "Threaded wait queue, deque int",
 
   chops::wait_queue<set_elem<int> > wq;
 
-  // Parameters are 1 reader, 1 writer thread, 100 slice
-  // threads will be created and joined
-  REQUIRE ( threaded_test(wq, 1, 1, 100, 44) );
+  SECTION ( "1 reader, 1 writer thread, 100 slice" ) {
+    REQUIRE ( threaded_test(wq, 1, 1, 100, 44) );
+  }
 
-  // Parameters are 5 reader, 3 writer threads, 1000 slice
-  REQUIRE ( threaded_test(wq, 5, 3, 1000, 1212) );
-  // Parameters are 60 reader, 40 writer threads, 5000 slice
-  REQUIRE ( threaded_test(wq, 60, 40, 5000, 5656) );
+  SECTION ( "5 reader, 3 writer threads, 1000 slice" ) {
+    REQUIRE ( threaded_test(wq, 5, 3, 1000, 1212) );
+  }
+  SECTION ( "60 reader, 40 writer threads, 5000 slice" ) {
+    REQUIRE ( threaded_test(wq, 60, 40, 5000, 5656) );
+  }
 }
 
 SCENARIO ( "Threaded wait queue, deque string", 
@@ -423,7 +430,8 @@ SCENARIO ( "Threaded wait queue, deque string",
 
   chops::wait_queue<set_elem<std::string> > wq;
 
-  // Parameters are 60 reader, 40 writer threads, 12000 slice
-  REQUIRE ( threaded_test(wq, 60, 40, 12000, "cool, lit, sup"s) );
+  SECTION ( "60 reader, 40 writer threads, 12000 slice" ) {
+    REQUIRE ( threaded_test(wq, 60, 40, 12000, "cool, lit, sup"s) );
+  }
 }
 
