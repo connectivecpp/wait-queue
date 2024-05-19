@@ -10,9 +10,7 @@
 
 ## Overview
 
-`wait_queue` is a multi-reader, multi-writer FIFO wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
-
-Additional documentation (which is also the main page of the generated Doxygen doc) can be found [here](doc/README.md).
+`wait_queue` is a multi-reader, multi-writer FIFO thread-safe wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
 
 ## Generated Documentation
 
@@ -20,15 +18,15 @@ The generated Doxygen documentation for `wait_queue` is [here](https://connectiv
 
 ## Dependencies
 
-The `wait-queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
+The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
 
 ## C++ Standard
 
-`wait-queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `concepts` / `requires`.
+`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `concepts` / `requires`.
 
 ## Supported Compilers
 
-Continuous integration workflows build and unit test on g++ (through Ubuntu) and MSVC (through Windows). Note that clang support for C++ 20 `std::jthread` and `std::stop_token` is still incomplete as of May 2024.
+Continuous integration workflows build and unit test on g++ (through Ubuntu) and MSVC (through Windows). Note that clang support for C++ 20 `std::jthread` and `std::stop_token` is still experimental (and possibly incomplete) as of May 2024, so has not (yet) been tested with `wait_queue`.
 
 ## Unit Test Dependencies
 
@@ -39,7 +37,7 @@ The unit test uses two third-party libraries (each is a single header-only file)
 - Martin Moene's [ring-span-lite](https://github.com/martinmoene/ring-span-lite)
 - Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
-Specific versions (or branches) for the dependencies are in `test/CMakeLists.txt`.
+Specific version (or branch) specs for the dependencies are in `test/CMakeLists.txt`.
 
 ## Build and Run Unit Tests
 
