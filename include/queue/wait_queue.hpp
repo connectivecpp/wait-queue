@@ -1,5 +1,7 @@
 /** @mainpage Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue
  *
+ * ## Overview
+ *
  * This class allows transferring data between threads with queue semantics (push, pop), 
  * using C++ std library general facilities (mutex, condition variable). An internal 
  * container is managed within this class. 
@@ -52,7 +54,7 @@
  * the API is significantly changed and additional features added. The name of the utility 
  * class template in Anthony's book is @c threadsafe_queue.
  *
- * Additional details:
+ * ### Additional Details
  *
  * Each method is fully documented in the class documentation. In particular, function
  * arguments, pre-conditions, and return values are all documented.
@@ -301,6 +303,11 @@ public:
    *
    * For an internal @c std::stop_token, all waiting reader threaders will be notified. 
    * Subsequent @c push operations will return @c false.
+   *
+   * @return @c true if an internal @c stop_source was used (versus a @c std::stop_token
+   * passed in to the constructor) and the request returns @c true, @c false if an 
+   * external @c std::stop_token was passed in.
+   *
    */
   bool request_stop() noexcept {
     if (m_stop_src) {
@@ -396,7 +403,8 @@ public:
    * available, otherwise return an empty @c std::optional.
    *
    * @return A value from the @c wait_queue or an empty @c std::optional if no values are 
-   * available in the @c wait_queue.
+   * available in the @c wait_queue or if the @c wait_queue has been requested to be 
+   * stopped .
    */
   std::optional<T> try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */ {
     if (m_stop_tok.stop_requested()) {
@@ -447,7 +455,7 @@ public:
   }
 
   /**
-   * Query whether a @ request_stop method (passed through a @c stop_token) has been called on 
+   * Query whether a @ request_stop method has been called on 
    * the @c wait_queue.
    *
    * @return @c true if the @c stop_requested has been called.
