@@ -1,114 +1,144 @@
-/** @file
+/** @mainpage Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue
  *
- *  @brief Multi-reader multi-writer wait queue class for transferring
- *  data between threads.
+ * This class allows transferring data between threads with queue semantics (push, pop), 
+ * using C++ std library general facilities (mutex, condition variable). An internal 
+ * container is managed within this class. 
  *
- *  This class allows transferring data between threads with queue semantics
- *  (push, pop), using C++ std library general facilities (mutex, condition 
- *  variable). An internal container is managed within this class. 
+ * Multiple writer and reader threads can access a @c wait_queue object simultaneously. 
+ * When a value is pushed on the queue by a writer thread, only one reader thread will be 
+ * notified to consume the value.
  *
- *  Multiple writer and reader threads can access this object, although when 
- *  a value is pushed, only one reader thread will be notified to consume a 
- *  value.
+ * One of the template parameters is the container type, allowing customization 
+ * for specific use cases (see below for additional details). The default container
+ * type is @c std::deque.
  *
- *  One of the template parameters is the container type, allowing customization 
- *  for specific use cases (see below for additional details).
+ * A graceful shutdown can be requested using the @c request_stop method (modeled on the 
+ * C++ 20 @c request_stop from @c std::stop_source). This allows waiting reader threads 
+ * to be notified for shutdown. Alternatively a @c std::stop_token can be passed in to 
+ * the @c wait_queue constructor, allowing shutdown from outside of the @c wait_queue 
+ * object.
  *
- *  A @c std::stop_token can be passed in through the constructors, which allows
- *  aa external @c std::stop_source to @c request_stop. Alternatively, an
- *  internal @c stop_token will be used, allowing the @c wait_queue 
- *  @c request_stop method to be used to shutdown @c wait_queue processing.
+ * @c wait_queue uses C++ standard library concurrency facilities (e.g. @c std::mutex, 
+ * @c std::condition_variable_any) in its implementation. It is not a lock-free queue, 
+ * but it has been designed to be used in memory constrained environments or where 
+ * deterministic performance is needed. 
  *
- *  Once a @c request_stop is called (either externally or through the @c wait_queue
- *  @c request_stop) all reader threads calling @c wait_and_pop 
- *  are notified, and an empty value returned to those threads. Subsequent calls 
- *  to @c push will return a @c false value.
+ * In particular, @c wait_queue:
  *
- *  Example usage, default container:
+ * - Has been tested with Martin Moene's @c ring_span library for the internal container. 
+ *   A @c ring_span is traditionally known as a "ring buffer" or "circular buffer". This 
+ *   implies that the @c wait_queue can be used in environments where dynamic memory 
+ *   management (heap) is not allowed or is problematic. In particular, no heap memory is 
+ *   directly allocated within the @c wait_queue object.
  *
- *  @code
- *    chops::wait_queue<int> wq;
+ * - Does not throw or catch exceptions anywhere in its code base. If a value being pushed
+ *   on to the queue throws an exception, it can be caught by the pushing code (or higher
+ *   up in the call chain). Exceptions may be thrown by C++ std library concurrency calls 
+ *   (@c std::mutex locks, etc), as specified by the C++ standard, although this usually 
+ *   indicates an application design issue or issues at the operating system level.
  *
- *    // inside writer thread, assume wq passed in by reference
- *    wq.push(42);
- *    ...
- *    // all finished, time to shutdown
- *    wq.request_stop();
+ * - If the C++ std library concurrency calls become @c noexcept (instead of throwing an 
+ *   exception), every @c wait_queue method will become @c noexcept or conditionally 
+ *   @c noexcept (depending on the type of the data passed through the @c wait_queue).
  *
- *    // inside reader thread, assume wq passed in by reference
- *    auto rtn_val = wq.wait_and_pop(); // return type is std::optional<int>
- *    if (!rtn_val) { // empty value, request_stop has been called
- *      // time to exit reader thread
- *    }
- *    if (*rtn_val == 42) ...
- *  @endcode
+ * The only requirement on the type passed through a @c wait_queue is that it supports 
+ * either copy construction or move construction. In particular, a default constructor is 
+ * not required (this is enabled by using @c std::optional, which does not require a 
+ * default constructor).
  *
- *  Example usage with ring buffer (from Martin Moene):
+ * The implementation is adapted from the book Concurrency in Action, Practical 
+ * Multithreading, by Anthony Williams (2012 edition). The core logic in this library is 
+ * the same as provided by Anthony in his book, but C++ 20 features have been added,
+ * the API is significantly changed and additional features added. The name of the utility 
+ * class template in Anthony's book is @c threadsafe_queue.
  *
- *  @code
- *    const int sz = 20;
- *    int buf[sz];
- *    chops::wait_queue<int, nonstd::ring_span<int> > wq(buf+0, buf+sz);
- *    // push and pop same as code with default container
- *  @endcode
+ * Additional details:
  *
- *  The container type must support the following (depending on which 
- *  methods are called): default construction, construction from a 
- *  begin and end iterator, construction with an initial size, 
- *  @c push_back (preferably overloaded for both copy and move), 
- *  @c emplace_back (with a template parameter pack), @c front, @c pop_front, 
- *  @c empty, and @c size. The container must also have a @c size_type
- *  defined.
+ * Each method is fully documented in the class documentation. In particular, function
+ * arguments, pre-conditions, and return values are all documented.
  *
- *  This class is based on code from the book Concurrency in Action by Anthony 
- *  Williams (2012 edition). The core logic in this class is the same as provided 
- *  by Anthony in his book, but the class interface is changed and additional 
- *  features added. In particular, @ std::stop_token and @c condition_variable_any
- *  are C++ 20 features not in Anthony's original code. The name of the utility 
- *  class template in Anthony's book is @c threadsafe_queue.
+ * Once @c request_stop has been invoked (either through the @c wait_queue object or 
+ * from an external @c std::stop_source), subsequent pushes will not add any elements to 
+ * the queue and the @c push methods will return @c false.
  *
- *  @note A fixed size buffer can be used for the container, which eliminates
- *  queue memory management happening during a @c push or @c pop. In particular,
- *  the proposed @c std::ring_span container works well 
- *  for this use case, and this code has been tested with @c ring-span-lite from 
- *  Martin Moene. The constructor that takes an iterator range can be used for 
- *  a container view type, which means that the @c wait_queue owns and manages 
- *  a view rather than the underlying container buffer.
+ * The @c push methods return a @c bool to denote whether a value was succesfully queued or 
+ * whether a shutdown was requested. The @c pop methods return a @c std::optional value. 
+ * For the @c wait_and_pop method, if the return value is not present it means a shutdown was 
+ * requested. For the @c try_pop method, if the return value is not present it means either 
+ * the queue was empty at that moment, or that a shutdown was requested.
  *
- *  @note The @c boost @c circular_buffer can be used for the container type. Memory is
- *  allocated only once, at container construction time. This may be useful for
- *  environments where construction can use dynamic memory but a @c push or @c pop 
- *  must not allocate or deallocate memory. 
+ * A @c std::stop_token can be passed in through the constructors, which allows
+ * aa external @c std::stop_source to @c request_stop. Alternatively, an
+ * internal @c stop_token will be used, allowing the @c wait_queue 
+ * @c request_stop method to be used to shutdown @c wait_queue processing.
  *
- *  @note If the container type is @c boost @c circular_buffer then the default
- *  constructor for @c wait_queue cannot be used (since it would result in a container
- *  with an empty capacity).
+ * Once a @c request_stop is called (either externally or through the @c wait_queue
+ * @c request_stop) all reader threads calling @c wait_and_pop are notified, and an empty 
+ * value returned to those threads. Subsequent calls to @c push will return a @c false value.
  *
- *  @note Iterators to a @c wait_queue are not supported, due to obvious difficulties 
- *  with maintaining *consistency and integrity. The @c apply method can be used to 
- *  access the internal data in a threadsafe manner.
+ * Example usage, default container:
  *
- *  @note Copy and move construction or assignment for the whole queue is
- *  disallowed, since the use cases and underlying implications are not clear 
- *  for those operations. In particular, the exception implications for 
- *  assigning the internal data from one queue to another is messy, and the general 
- *  semantics of what it means is not clearly defined. If there is data in one 
- *  @c wait_queue that must be copied or moved to another, the @c apply method can 
- *  be used or individual @c push and @c pop methods called, even if not as efficient 
- *  as an internal copy or move.
+ * @code
+ *   chops::wait_queue<int> wq;
  *
- *  @note Very few methods are declared as @c noexcept since very few of the @c std::mutex,
- *  @c std::condition_variable, and @c std::lock_guard methods are @c noexcept. It is
- *  possible to declare the methods as conditionally @c noexcept (commented out code),
- *  which would assume that no exceptions will escape from mutex or condition
- *  variable objects (or if one does, @c std::terminate will be called).
+ *   // inside writer thread, assume wq passed in by reference
+ *   wq.push(42);
+ *   ...
+ *   // all finished, time to shutdown
+ *   wq.request_stop();
  *
- *  @authors Cliff Green, Anthony Williams
+ *   // inside reader thread, assume wq passed in by reference
+ *   auto rtn_val = wq.wait_and_pop(); // return type is std::optional<int>
+ *   if (!rtn_val) { // empty value, request_stop has been called
+ *     // time to exit reader thread
+ *   }
+ *   if (*rtn_val == 42) ...
+ * @endcode
  *
- *  Copyright (c) 2017-2024 by Cliff Green
+ * Example usage with ring buffer (from Martin Moene):
  *
- *  Distributed under the Boost Software License, Version 1.0. 
- *  (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ * @code
+ *   const int sz = 20;
+ *   int buf[sz];
+ *   chops::wait_queue<int, nonstd::ring_span<int> > wq(buf+0, buf+sz);
+ *   // push and pop same as code with default container
+ * @endcode
+ *
+ * The container type must support the following (depending on which 
+ * methods are called): default construction, construction from a 
+ * begin and end iterator, construction with an initial size, 
+ * @c push_back (preferably overloaded for both copy and move), 
+ * @c emplace_back (with a template parameter pack), @c front, @c pop_front, 
+ * @c empty, and @c size. The container must also have a @c size_type
+ * defined.
+ *
+ * Iterators on a @c wait_queue are not supported, due to obvious difficulties 
+ * with maintaining consistency and integrity. The @c apply method can be used to 
+ * access the internal data in a threadsafe manner.
+ *
+ * Copy and move construction or assignment for the whole queue is
+ * disallowed, since the use cases and underlying implications are not clear 
+ * for those operations. In particular, the exception implications for 
+ * assigning the internal data from one queue to another is messy, and the general 
+ * semantics of what it means is not clearly defined. If there is data in one 
+ * @c wait_queue that must be copied or moved to another, the @c apply method can 
+ * be used or individual @c push and @c pop methods called, even if not as efficient 
+ * as an internal copy or move.
+ *
+ * @note The @c boost @c circular_buffer can be used for the container type. Memory is
+ * allocated only once, at container construction time. This may be useful for
+ * environments where construction can use dynamic memory but a @c push or @c pop 
+ * must not allocate or deallocate memory. If the container type is @c boost 
+ * @c circular_buffer then the default constructor for @c wait_queue cannot be used 
+ * (since it would result in a container with an empty capacity).
+ *
+ *
+ * @authors Cliff Green, Anthony Williams
+ *
+ * Copyright (c) 2017-2024 by Cliff Green
+ *
+ * Distributed under the Boost Software License, Version 1.0. 
+ * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
  */
 
