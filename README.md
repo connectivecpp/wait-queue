@@ -18,11 +18,11 @@ The generated Doxygen documentation for `wait_queue` is [here](https://connectiv
 
 ## Dependencies
 
-The `wait-queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
+The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
 
 ## C++ Standard
 
-`wait-queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `concepts` / `requires`.
+`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `concepts` / `requires`.
 
 ## Supported Compilers
 
