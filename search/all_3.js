@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['request_5fstop_0',['request_stop',['../classchops_1_1wait__queue.html#a4edfb271a60d1b107ee13231ae90d18d',1,'chops::wait_queue']]]
+  ['push_0',['push',['../classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47',1,'chops::wait_queue::push(const T &amp;val)'],['../classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e',1,'chops::wait_queue::push(T &amp;&amp;val)']]]
 ];

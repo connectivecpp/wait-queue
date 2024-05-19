@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Wait Queue: Main Page</title>
+<title>Wait Queue: Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,10 +68,60 @@ $(function() {
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Wait Queue Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p>This class allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within this class.</p>
+<p>Multiple writer and reader threads can access a <code>wait_queue</code> object simultaneously. When a value is pushed on the queue by a writer thread, only one reader thread will be notified to consume the value.</p>
+<p>One of the template parameters is the container type, allowing customization for specific use cases (see below for additional details). The default container type is <code>std::deque</code>.</p>
+<p>A graceful shutdown can be requested using the <code>request_stop</code> method (modeled on the C++ 20 <code>request_stop</code> from <code>std::stop_source</code>). This allows waiting reader threads to be notified for shutdown. Alternatively a <code>std::stop_token</code> can be passed in to the <code>wait_queue</code> constructor, allowing shutdown from outside of the <code>wait_queue</code> object.</p>
+<p><code>wait_queue</code> uses C++ standard library concurrency facilities (e.g. <code>std::mutex</code>, <code>std::condition_variable_any</code>) in its implementation. It is not a lock-free queue, but it has been designed to be used in memory constrained environments or where deterministic performance is needed.</p>
+<p>In particular, <code>wait_queue:</code> </p>
+<ul>
+<li>Has been tested with Martin Moene's <code>ring_span</code> library for the internal container. A <code>ring_span</code> is traditionally known as a "ring buffer" or "circular buffer". This implies that the <code>wait_queue</code> can be used in environments where dynamic memory management (heap) is not allowed or is problematic. In particular, no heap memory is directly allocated within the <code>wait_queue</code> object.</li>
+<li>Does not throw or catch exceptions anywhere in its code base. If a value being pushed on to the queue throws an exception, it can be caught by the pushing code (or higher up in the call chain). Exceptions may be thrown by C++ std library concurrency calls (<code>std::mutex</code> locks, etc), as specified by the C++ standard, although this usually indicates an application design issue or issues at the operating system level.</li>
+<li>If the C++ std library concurrency calls become <code>noexcept</code> (instead of throwing an exception), every <code>wait_queue</code> method will become <code>noexcept</code> or conditionally <code>noexcept</code> (depending on the type of the data passed through the <code>wait_queue</code>).</li>
+</ul>
+<p>The only requirement on the type passed through a <code>wait_queue</code> is that it supports either copy construction or move construction. In particular, a default constructor is not required (this is enabled by using <code>std::optional</code>, which does not require a default constructor).</p>
+<p>The implementation is adapted from the book Concurrency in Action, Practical Multithreading, by Anthony Williams (2012 edition). The core logic in this library is the same as provided by Anthony in his book, but C++ 20 features have been added, the API is significantly changed and additional features added. The name of the utility class template in Anthony's book is <code>threadsafe_queue</code>.</p>
+<p>Additional details:</p>
+<p>Each method is fully documented in the class documentation. In particular, function arguments, pre-conditions, and return values are all documented.</p>
+<p>Once <code>request_stop</code> has been invoked (either through the <code>wait_queue</code> object or from an external <code>std::stop_source</code>), subsequent pushes will not add any elements to the queue and the <code>push</code> methods will return <code>false</code>.</p>
+<p>The <code>push</code> methods return a <code>bool</code> to denote whether a value was succesfully queued or whether a shutdown was requested. The <code>pop</code> methods return a <code>std::optional</code> value. For the <code>wait_and_pop</code> method, if the return value is not present it means a shutdown was requested. For the <code>try_pop</code> method, if the return value is not present it means either the queue was empty at that moment, or that a shutdown was requested.</p>
+<p>A <code>std::stop_token</code> can be passed in through the constructors, which allows aa external <code>std::stop_source</code> to <code>request_stop</code>. Alternatively, an internal <code>stop_token</code> will be used, allowing the <code>wait_queue</code> <code>request_stop</code> method to be used to shutdown <code>wait_queue</code> processing.</p>
+<p>Once a <code>request_stop</code> is called (either externally or through the <code>wait_queue</code> <code>request_stop</code>) all reader threads calling <code>wait_and_pop</code> are notified, and an empty value returned to those threads. Subsequent calls to <code>push</code> will return a <code>false</code> value.</p>
+<p>Example usage, default container:</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="classchops_1_1wait__queue.html">chops::wait_queue&lt;int&gt;</a> wq;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// inside writer thread, assume wq passed in by reference</span></div>
+<div class="line">wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">push</a>(42);</div>
+<div class="line">...</div>
+<div class="line"><span class="comment">// all finished, time to shutdown</span></div>
+<div class="line">wq.request_stop();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// inside reader thread, assume wq passed in by reference</span></div>
+<div class="line"><span class="keyword">auto</span> rtn_val = wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">wait_and_pop</a>(); <span class="comment">// return type is std::optional&lt;int&gt;</span></div>
+<div class="line"><span class="keywordflow">if</span> (!rtn_val) { <span class="comment">// empty value, request_stop has been called</span></div>
+<div class="line">  <span class="comment">// time to exit reader thread</span></div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">if</span> (*rtn_val == 42) ...</div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html"><div class="ttname"><a href="classchops_1_1wait__queue.html">chops::wait_queue</a></div><div class="ttdef"><b>Definition</b> wait_queue.hpp:159</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a219bd031684bb9ba57a5a0a44684ff47"><div class="ttname"><a href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">chops::wait_queue::push</a></div><div class="ttdeci">bool push(const T &amp;val)</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:323</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a953ec5035ff1c216926e2a365f3aeb98"><div class="ttname"><a href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; wait_and_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:384</div></div>
+</div><!-- fragment --><p>Example usage with ring buffer (from Martin Moene):</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> sz = 20;</div>
+<div class="line"><span class="keywordtype">int</span> buf[sz];</div>
+<div class="line"><a class="code hl_class" href="classchops_1_1wait__queue.html">chops::wait_queue&lt;int, nonstd::ring_span&lt;int&gt;</a> &gt; wq(buf+0, buf+sz);</div>
+<div class="line"><span class="comment">// push and pop same as code with default container</span></div>
+</div><!-- fragment --><p>The container type must support the following (depending on which methods are called): default construction, construction from a begin and end iterator, construction with an initial size, <code>push_back</code> (preferably overloaded for both copy and move), <code>emplace_back</code> (with a template parameter pack), <code>front</code>, <code>pop_front</code>, <code>empty</code>, and <code>size</code>. The container must also have a <code>size_type</code> defined.</p>
+<p>Iterators on a <code>wait_queue</code> are not supported, due to obvious difficulties with maintaining consistency and integrity. The <code>apply</code> method can be used to access the internal data in a threadsafe manner.</p>
+<p>Copy and move construction or assignment for the whole queue is disallowed, since the use cases and underlying implications are not clear for those operations. In particular, the exception implications for assigning the internal data from one queue to another is messy, and the general semantics of what it means is not clearly defined. If there is data in one <code>wait_queue</code> that must be copied or moved to another, the <code>apply</code> method can be used or individual <code>push</code> and <code>pop</code> methods called, even if not as efficient as an internal copy or move.</p>
+<dl class="section note"><dt>Note</dt><dd>The <code>boost</code> <code>circular_buffer</code> can be used for the container type. Memory is allocated only once, at container construction time. This may be useful for environments where construction can use dynamic memory but a <code>push</code> or <code>pop</code> must not allocate or deallocate memory. If the container type is <code>boost</code> <code>circular_buffer</code> then the default constructor for <code>wait_queue</code> cannot be used (since it would result in a container with an empty capacity).</dd></dl>
+<dl class="section author"><dt>Authors</dt><dd>Cliff Green, Anthony Williams</dd></dl>
+<p>Copyright (c) 2017-2024 by Cliff Green</p>
+<p>Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>) </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
