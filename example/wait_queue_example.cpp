@@ -16,6 +16,7 @@
  *  Sample make file: 
  *  g++ -std=c++17 -I ~/Projects/utility-rack/include/ wait_queue_demo.cpp
  * 
+ *  This also builds under CMake, with C++ 20 specified.
  */
 
 #include <iostream>

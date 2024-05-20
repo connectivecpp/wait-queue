@@ -12,7 +12,7 @@ cmake_minimum_required ( VERSION 3.14 FATAL_ERROR )
 project ( wait_queue 
 	  LANGUAGES CXX 
 	  DESCRIPTION "A multi producer / multi consumer thread safe wait queue"
-	  HOMEPAGE_URL "https://githug.com/connectivecpp/wait-queue/" )
+	  HOMEPAGE_URL "https://github.com/connectivecpp/wait-queue/" )
 
 option ( WAIT_QUEUE_BUILD_TESTS "Build unit tests" OFF )
 option ( WAIT_QUEUE_BUILD_EXAMPLES "Build examples" OFF )
