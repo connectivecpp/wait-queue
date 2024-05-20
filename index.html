@@ -74,7 +74,7 @@ $(function() {
 <div class="contents">
 <div class="textblock"><h2><a class="anchor" id="autotoc_md0"></a>
 Overview</h2>
-<p>This class allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within this class.</p>
+<p>This class template allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within an object of this class template.</p>
 <p>Multiple writer and reader threads can access a <code>wait_queue</code> object simultaneously. When a value is pushed on the queue by a writer thread, only one reader thread will be notified to consume the value.</p>
 <p>One of the template parameters is the container type, allowing customization for specific use cases (see below for additional details). The default container type is <code>std::deque</code>.</p>
 <p>A graceful shutdown can be requested using the <code>request_stop</code> method (modeled on the C++ 20 <code>request_stop</code> from <code>std::stop_source</code>). This allows waiting reader threads to be notified for shutdown. Alternatively a <code>std::stop_token</code> can be passed in to the <code>wait_queue</code> constructor, allowing shutdown from outside of the <code>wait_queue</code> object.</p>
