@@ -630,7 +630,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 <p>Request the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor. </p>
 <p>If a <code>std::stop_token</code> was passed into a constructor, a <code>request_stop</code> must be performed external to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> and this method has no effect.</p>
-<p>For an internal <code>std::stop_token</code>, all waiting reader threaders will be notified. Subsequent <code>push</code> operations will return <code>false</code>. </p>
+<p>For an internal <code>std::stop_token</code>, all waiting reader threaders will be notified. Subsequent <code>push</code> operations will return <code>false</code>.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if an internal <code>stop_source</code> was used (versus a <code>std::stop_token</code> passed in to the constructor) and the request returns <code>true</code>, <code>false</code> if an external <code>std::stop_token</code> was passed in. </dd></dl>
 
 </div>
 </div>
@@ -687,7 +688,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Query whether a @ request_stop method (passed through a <code>stop_token</code>) has been called on the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
+<p>Query whether a @ request_stop method has been called on the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code>stop_requested</code> has been called. </dd></dl>
 
 </div>
@@ -718,7 +719,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>. </p>
-<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped . </dd></dl>
 
 </div>
 </div>

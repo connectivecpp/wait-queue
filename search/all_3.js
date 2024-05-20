@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['push_0',['push',['../classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47',1,'chops::wait_queue::push(const T &amp;val)'],['../classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e',1,'chops::wait_queue::push(T &amp;&amp;val)']]]
+  ['mpmc_20thread_20safe_20queue_0',['Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue',['../index.html',1,'']]],
+  ['multi_20writer_20multi_20reader_20mpmc_20thread_20safe_20queue_1',['Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue',['../index.html',1,'']]]
 ];

@@ -72,7 +72,9 @@ $(function() {
   <div class="headertitle"><div class="title">Wait Queue, a Multi-Writer / Multi-Reader (MPMC) Thread-Safe Queue </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This class allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within this class.</p>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md0"></a>
+Overview</h2>
+<p>This class allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within this class.</p>
 <p>Multiple writer and reader threads can access a <code>wait_queue</code> object simultaneously. When a value is pushed on the queue by a writer thread, only one reader thread will be notified to consume the value.</p>
 <p>One of the template parameters is the container type, allowing customization for specific use cases (see below for additional details). The default container type is <code>std::deque</code>.</p>
 <p>A graceful shutdown can be requested using the <code>request_stop</code> method (modeled on the C++ 20 <code>request_stop</code> from <code>std::stop_source</code>). This allows waiting reader threads to be notified for shutdown. Alternatively a <code>std::stop_token</code> can be passed in to the <code>wait_queue</code> constructor, allowing shutdown from outside of the <code>wait_queue</code> object.</p>
@@ -85,7 +87,8 @@ $(function() {
 </ul>
 <p>The only requirement on the type passed through a <code>wait_queue</code> is that it supports either copy construction or move construction. In particular, a default constructor is not required (this is enabled by using <code>std::optional</code>, which does not require a default constructor).</p>
 <p>The implementation is adapted from the book Concurrency in Action, Practical Multithreading, by Anthony Williams (2012 edition). The core logic in this library is the same as provided by Anthony in his book, but C++ 20 features have been added, the API is significantly changed and additional features added. The name of the utility class template in Anthony's book is <code>threadsafe_queue</code>.</p>
-<p>Additional details:</p>
+<h3><a class="anchor" id="autotoc_md1"></a>
+Additional Details</h3>
 <p>Each method is fully documented in the class documentation. In particular, function arguments, pre-conditions, and return values are all documented.</p>
 <p>Once <code>request_stop</code> has been invoked (either through the <code>wait_queue</code> object or from an external <code>std::stop_source</code>), subsequent pushes will not add any elements to the queue and the <code>push</code> methods will return <code>false</code>.</p>
 <p>The <code>push</code> methods return a <code>bool</code> to denote whether a value was succesfully queued or whether a shutdown was requested. The <code>pop</code> methods return a <code>std::optional</code> value. For the <code>wait_and_pop</code> method, if the return value is not present it means a shutdown was requested. For the <code>try_pop</code> method, if the return value is not present it means either the queue was empty at that moment, or that a shutdown was requested.</p>
@@ -106,9 +109,9 @@ $(function() {
 <div class="line">  <span class="comment">// time to exit reader thread</span></div>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">if</span> (*rtn_val == 42) ...</div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html"><div class="ttname"><a href="classchops_1_1wait__queue.html">chops::wait_queue</a></div><div class="ttdef"><b>Definition</b> wait_queue.hpp:159</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a219bd031684bb9ba57a5a0a44684ff47"><div class="ttname"><a href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">chops::wait_queue::push</a></div><div class="ttdeci">bool push(const T &amp;val)</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:323</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a953ec5035ff1c216926e2a365f3aeb98"><div class="ttname"><a href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; wait_and_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:384</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html"><div class="ttname"><a href="classchops_1_1wait__queue.html">chops::wait_queue</a></div><div class="ttdef"><b>Definition</b> wait_queue.hpp:161</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a219bd031684bb9ba57a5a0a44684ff47"><div class="ttname"><a href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">chops::wait_queue::push</a></div><div class="ttdeci">bool push(const T &amp;val)</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:330</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a953ec5035ff1c216926e2a365f3aeb98"><div class="ttname"><a href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; wait_and_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:391</div></div>
 </div><!-- fragment --><p>Example usage with ring buffer (from Martin Moene):</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> sz = 20;</div>
 <div class="line"><span class="keywordtype">int</span> buf[sz];</div>
