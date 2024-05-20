@@ -2,9 +2,9 @@
  *
  * ## Overview
  *
- * This class allows transferring data between threads with queue semantics (push, pop), 
- * using C++ std library general facilities (mutex, condition variable). An internal 
- * container is managed within this class. 
+ * This class template allows transferring data between threads with queue semantics 
+ * (push, pop), using C++ std library general facilities (mutex, condition variable). 
+ * An internal container is managed within an object of this class template. 
  *
  * Multiple writer and reader threads can access a @c wait_queue object simultaneously. 
  * When a value is pushed on the queue by a writer thread, only one reader thread will be 
