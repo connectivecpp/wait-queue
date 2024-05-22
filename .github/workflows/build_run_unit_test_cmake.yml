@@ -24,7 +24,7 @@ jobs:
       - name: create-build-dir
         run: mkdir build
       - name: configure-cmake
-        run: cd build && cmake -D WAIT_QUEUE_BUILD_TESTS:BOOL=ON -D JM_CIRCULAR_BUFFER_BUILD_TESTS:BOOL=OFF ..
+        run: cd build && cmake -D WAIT_QUEUE_BUILD_TESTS:BOOL=ON -D WAIT_QUEUE_BUILD_EXAMPLES:BOOL=ON -D JM_CIRCULAR_BUFFER_BUILD_TESTS:BOOL=OFF ..
       - name: build
         run: cd build && cmake --build . --config $BUILD_TYPE
       - name: run-unit-test
