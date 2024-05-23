@@ -1,19 +1,17 @@
 /** @file
  *  
- *  @brief Multithreaded demo of @c chops::shared_buffer and @c chops::wait_queue. 
+ * @brief Multithreaded demo of @c chops::shared_buffer and @c chops::wait_queue. 
  * 
- *  @ingroup example_module
+ * @author Thurman Gillespy
+ * 
+ * Copyright (c)2019 by Thurman Gillespy
+ * 3/22/19
  *
- *  @author Thurman Gillespy
+ * Distributed under the Boost Software License, Version 1.0. 
+ * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  * 
- *  Copyright (c)2019 by Thurman Gillespy
- *  3/22/19
- *
- *  Distributed under the Boost Software License, Version 1.0. 
- *  (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
- * 
- *  Sample make file:
- *  g++ -std=c++17 -I ~/Projects/utility-rack/include/ multithreaded_demo.cpp -lpthread 
+ * Sample make file:
+ * g++ -std=c++17 -I ~/Projects/utility-rack/include/ multithreaded_demo.cpp -lpthread 
  */
 
 #include <iostream>
