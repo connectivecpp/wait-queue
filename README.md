@@ -8,7 +8,7 @@
 
 ![GH Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/connectivecpp/wait-queue/gen_docs.yml?branch=main&label=GH%20Actions%20generate%20docs)
 
-![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/wait-queue)
+![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/wait-queue?label=GH%20tag)
 
 ## Overview
 
