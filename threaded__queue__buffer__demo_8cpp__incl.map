@@ -1,0 +1,41 @@
+<map id="/github/workspace/example/threaded_queue_buffer_demo.cpp" name="/github/workspace/example/threaded_queue_buffer_demo.cpp">
+<area shape="rect" id="Node000001" title="Multithreaded demo of chops::shared_buffer and chops::wait_queue." alt="" coords="425,5,604,61"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,109,77,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="425,51,274,77,93,111,92,106,273,72,424,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,109,160,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="425,55,176,111,175,106,424,50"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="184,109,242,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="425,63,257,111,256,106,424,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="266,109,320,135"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="446,64,335,107,333,102,444,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="344,109,402,135"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="471,64,407,103,404,98,469,59"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="426,109,504,135"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="501,63,482,97,477,94,497,60"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="528,109,602,135"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="532,60,552,94,548,97,528,63"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="627,109,687,135"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="560,59,625,98,623,103,558,64"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="711,109,766,135"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="586,59,698,102,696,107,584,64"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="789,109,842,135"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="605,57,775,106,773,111,604,62"/>
+<area shape="rect" id="Node000012" href="$wait__queue_8hpp_source.html" title=" " alt="" coords="866,109,1016,135"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="605,50,866,103,865,108,604,55"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="1041,109,1217,135"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="605,44,1028,104,1027,109,604,50"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="589,183,645,208"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="877,138,661,185,660,179,876,133"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="669,183,725,208"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="900,138,741,184,739,179,899,133"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="749,183,874,208"/>
+<area shape="poly" id="edge14_Node000012_Node000015" title=" " alt="" coords="920,138,848,177,846,172,918,133"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="898,183,984,208"/>
+<area shape="poly" id="edge15_Node000012_Node000016" title=" " alt="" coords="944,135,944,167,938,167,938,135"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1008,183,1074,208"/>
+<area shape="poly" id="edge16_Node000012_Node000017" title=" " alt="" coords="960,133,1013,171,1010,175,956,137"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="1098,183,1149,208"/>
+<area shape="poly" id="edge17_Node000012_Node000018" title=" " alt="" coords="973,133,1085,176,1083,181,971,138"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="1174,183,1255,208"/>
+<area shape="poly" id="edge18_Node000012_Node000019" title=" " alt="" coords="988,133,1160,177,1158,182,987,138"/>
+</map>

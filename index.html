@@ -122,7 +122,7 @@ Additional Details</h3>
 <p>Copy and move construction or assignment for the whole queue is disallowed, since the use cases and underlying implications are not clear for those operations. In particular, the exception implications for assigning the internal data from one queue to another is messy, and the general semantics of what it means is not clearly defined. If there is data in one <code>wait_queue</code> that must be copied or moved to another, the <code>apply</code> method can be used or individual <code>push</code> and <code>pop</code> methods called, even if not as efficient as an internal copy or move.</p>
 <dl class="section note"><dt>Note</dt><dd>The <code>boost</code> <code>circular_buffer</code> can be used for the container type. Memory is allocated only once, at container construction time. This may be useful for environments where construction can use dynamic memory but a <code>push</code> or <code>pop</code> must not allocate or deallocate memory. If the container type is <code>boost</code> <code>circular_buffer</code> then the default constructor for <code>wait_queue</code> cannot be used (since it would result in a container with an empty capacity).</dd></dl>
 <dl class="section author"><dt>Authors</dt><dd>Cliff Green, Anthony Williams</dd></dl>
-<p>Copyright (c) 2017-2024 by Cliff Green</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017-2024 by Cliff Green</dd></dl>
 <p>Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>) </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wait_5fqueue_5fexample_2ecpp_0',['wait_queue_example.cpp',['../wait__queue__example_8cpp.html',1,'']]],
-  ['wait_5fqueue_5ftest_2ecpp_1',['wait_queue_test.cpp',['../wait__queue__test_8cpp.html',1,'']]]
+  ['threaded_5fqueue_5fbuffer_5fdemo_2ecpp_0',['threaded_queue_buffer_demo.cpp',['../threaded__queue__buffer__demo_8cpp.html',1,'']]]
 ];
