@@ -1,22 +1,22 @@
 /** @file
  *  
- *  @brief Example code demonstrating use of @c chops::wait_queue.
- *  See @c threaded_wait_shared_demo.cpp for multithreaded example. 
+ * @brief Example code demonstrating use of @c chops::wait_queue.
+ * See @c threaded_wait_shared_demo.cpp for multithreaded example. 
  * 
- *  @author Thurman Gillespy
+ * @author Thurman Gillespy
  * 
- *  Copyright (c)2019 by Thurman Gillespy
- *  3/22/19
+ * @copyright (c) 2019 by Thurman Gillespy
+ * 3/22/19
  *
- *  Minor changes May 2024 by Cliff Green to match new @c wait_queue API.
+ * Minor changes May 2024 by Cliff Green to match new @c wait_queue API.
  *
- *  Distributed under the Boost Software License, Version 1.0. 
- *  (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+ * Distributed under the Boost Software License, Version 1.0. 
+ * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  * 
- *  Sample make file: 
- *  g++ -std=c++17 -I ~/Projects/utility-rack/include/ wait_queue_demo.cpp
+ * Sample make file: 
+ * g++ -std=c++17 -I ~/Projects/utility-rack/include/ wait_queue_demo.cpp
  * 
- *  This also builds under CMake, with C++ 20 specified.
+ * This also builds under CMake, with C++ 20 specified.
  */
 
 #include <iostream>
