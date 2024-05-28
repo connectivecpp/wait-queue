@@ -39,7 +39,7 @@ The unit test uses two third-party libraries (each is a single header-only file)
 - Martin Moene's [ring-span-lite](https://github.com/martinmoene/ring-span-lite)
 - Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
-Specific version (or branch) specs for the dependencies are in `test/CMakeLists.txt`.
+Specific version (or branch) specs for the dependencies are in the [test/CMakeLists.txt](test/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
 ## Build and Run Unit Tests
 
