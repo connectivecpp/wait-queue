@@ -10,6 +10,8 @@
 
 ![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/wait-queue?label=GH%20tag)
 
+![Licence](https://img.shields.io/badge/license-boost-4480cc.svg)
+
 ## Overview
 
 `wait_queue` is a multi-reader, multi-writer FIFO thread-safe wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
@@ -20,7 +22,6 @@ The generated Doxygen documentation for `wait_queue` is [here](https://connectiv
 
 ## License
 
-This project is distributed under the [Boost Software License](LICENSE.txt): [![Licence](https://img.shields.io/badge/license-boost-4480cc.svg)](http://www.boost.org/LICENSE_1_0.txt)
 
 ## Dependencies
 
