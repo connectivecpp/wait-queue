@@ -10,7 +10,7 @@
 
 ![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/wait-queue?label=GH%20tag)
 
-![Licence](https://img.shields.io/badge/license-boost-4480cc.svg)
+![Licence](https://img.shields.io/badge/License-Boost%201.0-blue)
 
 ## Overview
 
