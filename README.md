@@ -18,6 +18,10 @@
 
 The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/wait-queue/).
 
+## License
+
+This project is distributed under the [Boost Software License](LICENSE.txt): [![Licence](https://img.shields.io/badge/license-boost-4480cc.svg)](http://www.boost.org/LICENSE_1_0.txt)
+
 ## Dependencies
 
 The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
