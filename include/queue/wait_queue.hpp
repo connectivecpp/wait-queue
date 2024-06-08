@@ -147,6 +147,7 @@
 #ifndef WAIT_QUEUE_HPP_INCLUDED
 #define WAIT_QUEUE_HPP_INCLUDED
 
+#include <cassert> // assert
 #include <deque>
 #include <mutex> // std::scoped_lock, std::mutex
 #include <condition_variable>
@@ -185,11 +186,18 @@ public:
    * anything, so a different @c wait_queue constructor must be used if
    * instantiated with a @c boost @c circular_buffer.
    *
+   * @post @c empty returns true.
+   * @post @c size returns 0.
+   * @post @c stop_requested return false.
    */
   wait_queue()
     // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()), 
-	m_data_cond(), m_data_queue() { }
+      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token())
+  {
+    assert(empty());
+    assert(size() == size_type(0));
+    assert(!stop_requested());
+  }
 
   /**
    * @brief Construct a @c wait_queue with an externally provided @c std::stop_token.
@@ -197,11 +205,16 @@ public:
    * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
    * processing.
    *
+   * @post @c empty returns true.
+   * @post @c size returns 0.
    */
   wait_queue(std::stop_token stop_tok)
     // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_mut(), m_stop_src(), m_stop_tok(stop_tok), 
-	m_data_cond(), m_data_queue() { }
+      : m_stop_tok(stop_tok)
+  {
+    assert(empty());
+    assert(size() == size_type(0));
+  }
 
   /**
    * @brief Construct a @c wait_queue with an iterator range for the container.
@@ -221,12 +234,19 @@ public:
    * @param beg Beginning iterator.
    *
    * @param end Ending iterator.
+   *
+   * @post @c empty returns true if @c beg equals @c end otherwise returns false.
+   * @post @c size returns the distance between @c beg and @c end parameters.
    */
   template <typename Iter>
   wait_queue(Iter beg, Iter end)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_cond(), m_data_queue(beg, end) { }
+      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
+	m_data_queue(beg, end)
+  {
+    assert(empty() == (beg == end));
+    assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+  }
 
   /**
    * @brief Construct a @c wait_queue with an iterator range and a @c std::stop_token.
@@ -237,12 +257,18 @@ public:
    * @param beg Beginning iterator.
    *
    * @param end Ending iterator.
+   *
+   * @post @c empty returns true if @c beg equals @c end otherwise returns false.
+   * @post @c size returns the distance between @c beg and @c end parameters.
    */
   template <typename Iter>
   wait_queue(std::stop_token stop_tok, Iter beg, Iter end)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_mut(), m_stop_src(), m_stop_tok(stop_tok),
-	m_data_cond(), m_data_queue(beg, end) { }
+      : m_stop_tok(stop_tok), m_data_queue(beg, end)
+  {
+    assert(empty() == (beg == end));
+    assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+  }
 
   /**
    * @brief Construct a @c wait_queue with an initial size or capacity.
@@ -263,11 +289,17 @@ public:
    *
    * @param sz Capacity or initial size, depending on container type.
    *
+   * @post If @c sz is 0 @c empty returns true, else behavior depends on container used.
+   * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(size_type sz)
     // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
-      : m_mut(), m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_cond(), m_data_queue(sz) { }
+      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
+	m_data_queue(sz)
+  {
+    assert((sz != size_type(0)) || empty());
+    assert((size() == size_type(0)) || (size() == sz));
+  }
 
   /**
    * @brief Construct a @c wait_queue with an initial size or capacity along
@@ -278,11 +310,16 @@ public:
    *
    * @param sz Capacity or initial size, depending on container type.
    *
+   * @post If @c sz is 0 @c empty returns true, else behavior depends on container used.
+   * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(std::stop_token stop_tok, size_type sz)
     // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
-      : m_mut(), m_stop_src(), m_stop_tok((*m_stop_src).get_token()),
-	m_data_cond(), m_data_queue(sz) { }
+      : m_stop_tok((*m_stop_src).get_token()), m_data_queue(sz)
+  {
+    assert((sz != size_type(0)) || empty());
+    assert((size() == size_type(0)) || (size() == sz));
+  }
 
   // disallow copy or move construction of the entire object
   wait_queue(const wait_queue&) = delete;
@@ -307,7 +344,6 @@ public:
    * @return @c true if an internal @c stop_source was used (versus a @c std::stop_token
    * passed in to the constructor) and the request returns @c true, @c false if an 
    * external @c std::stop_token was passed in.
-   *
    */
   auto request_stop() noexcept 
         -> bool {
@@ -329,6 +365,9 @@ public:
    *
    * @return @c true if successful, @c false if the @c wait_queue has been
    * requested to stop.
+   *
+   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   *   value will be unblocked.
    */
   auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */
         -> bool {
@@ -348,6 +387,9 @@ public:
    *
    * This method has the same semantics as the other @c push, except that the value will 
    * be moved (if possible) instead of copied.
+   *
+   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   *   value will be unblocked.
    */
   auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ 
         -> bool {
@@ -374,6 +416,9 @@ public:
    *
    * @return @c true if successful, @c false if the @c wait_queue is has been requested
    * to stop.
+   *
+   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   *   value will be unblocked.
    */
   template <typename ... Args>
   auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible<T, Args...>::value)*/
@@ -399,6 +444,9 @@ public:
    *
    * @return A value from the @c wait_queue (if non-empty). If the @c std::optional is empty, 
    * the @c wait_queue has been requested to be stopped.
+   *
+   * @post If a non empty value is returned, until a push function is called, @c size is one
+   *   less than before this function was called.
    */
   auto wait_and_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
         -> std::optional<T> {
@@ -407,8 +455,13 @@ public:
     if (!m_data_cond.wait ( lk, m_stop_tok, [this] { return !m_data_queue.empty(); } )) {
       return std::optional<T> {}; // queue was request to stop, no data available
     }
+    assert(!m_data_queue.empty());
+#ifndef NDEBUG
+    const auto old_size = m_data_queue.size();
+#endif
     std::optional<T> val {std::move_if_noexcept(m_data_queue.front())}; // move construct if possible
     m_data_queue.pop_front();
+    assert(m_data_queue.size() + 1u == old_size);
     return val;
 
   }
@@ -420,6 +473,9 @@ public:
    * @return A value from the @c wait_queue or an empty @c std::optional if no values are 
    * available in the @c wait_queue or if the @c wait_queue has been requested to be 
    * stopped .
+   *
+   * @post If a non empty value is returned, until a push function is called, @c size is one
+   *   less than before this function was called.
    */
   auto try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
         -> std::optional<T> {
@@ -431,8 +487,12 @@ public:
     if (m_data_queue.empty()) {
       return std::optional<T> {};
     }
+#ifndef NDEBUG
+    const auto old_size = m_data_queue.size();
+#endif
     std::optional<T> val {std::move_if_noexcept(m_data_queue.front())}; // move construct if possible
     m_data_queue.pop_front();
+    assert(m_data_queue.size() + 1u == old_size);
     return val;
 
   }
