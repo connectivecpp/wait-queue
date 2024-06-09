@@ -10,6 +10,8 @@
 
 ![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/wait-queue?label=GH%20tag)
 
+![License](https://img.shields.io/badge/License-Boost%201.0-blue)
+
 ## Overview
 
 `wait_queue` is a multi-reader, multi-writer FIFO thread-safe wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
@@ -39,7 +41,7 @@ The unit test uses two third-party libraries (each is a single header-only file)
 - Martin Moene's [ring-span-lite](https://github.com/martinmoene/ring-span-lite)
 - Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
-Specific version (or branch) specs for the dependencies are in `test/CMakeLists.txt`.
+Specific version (or branch) specs for the dependencies are in the [test/CMakeLists.txt](test/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
 ## Build and Run Unit Tests
 
