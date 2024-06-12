@@ -309,11 +309,14 @@ public:
    * external @c std::stop_token was passed in.
    *
    */
-  bool request_stop() noexcept {
+  auto request_stop() noexcept 
+        -> bool {
+
     if (m_stop_src) {
       return (*m_stop_src).request_stop();
     }
     return false;
+
   }
 
   /**
@@ -327,7 +330,9 @@ public:
    * @return @c true if successful, @c false if the @c wait_queue has been
    * requested to stop.
    */
-  bool push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */ {
+  auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */
+        -> bool {
+
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -335,6 +340,7 @@ public:
     m_data_queue.push_back(val);
     m_data_cond.notify_one();
     return true;
+
   }
 
   /**
@@ -343,7 +349,9 @@ public:
    * This method has the same semantics as the other @c push, except that the value will 
    * be moved (if possible) instead of copied.
    */
-  bool push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ {
+  auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ 
+        -> bool {
+
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -351,6 +359,7 @@ public:
     m_data_queue.push_back(std::move(val));
     m_data_cond.notify_one();
     return true;
+
   }
 
   /**
@@ -367,7 +376,9 @@ public:
    * to stop.
    */
   template <typename ... Args>
-  bool emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible<T, Args...>::value)*/ {
+  auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible<T, Args...>::value)*/
+        -> bool {
+
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -375,6 +386,7 @@ public:
     m_data_queue.emplace_back(std::forward<Args>(args)...);
     m_data_cond.notify_one();
     return true;
+
   }
 
   /**
@@ -388,7 +400,9 @@ public:
    * @return A value from the @c wait_queue (if non-empty). If the @c std::optional is empty, 
    * the @c wait_queue has been requested to be stopped.
    */
-  std::optional<T> wait_and_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */ {
+  auto wait_and_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
+        -> std::optional<T> {
+
     std::unique_lock<std::mutex> lk{m_mut};
     if (!m_data_cond.wait ( lk, m_stop_tok, [this] { return !m_data_queue.empty(); } )) {
       return std::optional<T> {}; // queue was request to stop, no data available
@@ -396,6 +410,7 @@ public:
     std::optional<T> val {std::move_if_noexcept(m_data_queue.front())}; // move construct if possible
     m_data_queue.pop_front();
     return val;
+
   }
 
   /**
@@ -406,7 +421,9 @@ public:
    * available in the @c wait_queue or if the @c wait_queue has been requested to be 
    * stopped .
    */
-  std::optional<T> try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */ {
+  auto try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
+        -> std::optional<T> {
+
     if (m_stop_tok.stop_requested()) {
       return std::optional<T> {};
     }
@@ -417,6 +434,7 @@ public:
     std::optional<T> val {std::move_if_noexcept(m_data_queue.front())}; // move construct if possible
     m_data_queue.pop_front();
     return val;
+
   }
 
   // non-modifying methods
@@ -447,11 +465,14 @@ public:
    * same @c wait_queue since it results in recursive mutex locks.
    */
   template <typename F>
-  void apply(F&& func) const /* noexcept(std::is_nothrow_invocable<F&&, const T&>::value) */ {
+  auto apply(F&& func) const /* noexcept(std::is_nothrow_invocable<F&&, const T&>::value) */
+        -> void {
+
     lock_guard lk{m_mut};
     for (const T& elem : m_data_queue) {
       func(elem);
     }
+
   }
 
   /**
@@ -460,8 +481,11 @@ public:
    *
    * @return @c true if the @c stop_requested has been called.
    */
-  bool stop_requested() const noexcept {
+  auto stop_requested() const noexcept
+        -> bool {
+
     return m_stop_tok.stop_requested();
+
   }
 
   /**
@@ -469,9 +493,12 @@ public:
    *
    * @return @c true if the @c wait_queue is empty.
    */
-  bool empty() const /* noexcept */ {
+  auto empty() const /* noexcept */
+        -> bool {
+
     lock_guard lk{m_mut};
     return m_data_queue.empty();
+
   }
 
   /**
@@ -479,9 +506,12 @@ public:
    *
    * @return Number of elements in the @c wait_queue.
    */
-  size_type size() const /* noexcept */ {
+  auto size() const /* noexcept */
+        -> size_type {
+
     lock_guard lk{m_mut};
     return m_data_queue.size();
+
   }
 
 };
