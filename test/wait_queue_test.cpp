@@ -164,10 +164,10 @@ bool threaded_test(Q& wq, int num_readers, int num_writers, int slice, const T& 
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::lock_guard<std::mutex> lk(mut);
     if (s.size() == tot) {
-      wq.request_stop(); // tell the readers it's done
       done = true;
     }
   }
+  wq.request_stop(); // tell the readers it's done
 
   // join readers; since wait queue is stopped they should all join immediately
   for (auto& thr : rd_thrs) {
