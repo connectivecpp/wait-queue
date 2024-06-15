@@ -169,134 +169,164 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>  <span class="comment">// modifying methods</span></div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
 <div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a4edfb271a60d1b107ee13231ae90d18d">  312</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a4edfb271a60d1b107ee13231ae90d18d">request_stop</a>() noexcept {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="keywordflow">if</span> (m_stop_src) {</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>      <span class="keywordflow">return</span> (*m_stop_src).request_stop();</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    }</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  }</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a132e0b982c2478d08cf7f62c4bf8356b">  312</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a132e0b982c2478d08cf7f62c4bf8356b">request_stop</a>() noexcept </div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> </div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keywordflow">if</span> (m_stop_src) {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>      <span class="keywordflow">return</span> (*m_stop_src).request_stop();</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  }</div>
 </div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> </div>
-<div class="foldopen" id="foldopen00330" data-start="{" data-end="}">
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">  330</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">push</a>(<span class="keyword">const</span> T&amp; val) <span class="comment">/* noexcept(std::is_nothrow_copy_constructible&lt;T&gt;::value) */</span> {</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    }</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    m_data_queue.push_back(val);</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    m_data_cond.notify_one();</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  }</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> </div>
+<div class="foldopen" id="foldopen00333" data-start="{" data-end="}">
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">  333</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">push</a>(<span class="keyword">const</span> T&amp; val) <span class="comment">/* noexcept(std::is_nothrow_copy_constructible&lt;T&gt;::value) */</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    }</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    m_data_queue.push_back(val);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    m_data_cond.notify_one();</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  }</div>
 </div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
-<div class="foldopen" id="foldopen00346" data-start="{" data-end="}">
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e">  346</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e">push</a>(T&amp;&amp; val) <span class="comment">/* noexcept(std::is_nothrow_move_constructible&lt;T&gt;::value) */</span> {</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    }</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    m_data_queue.push_back(std::move(val));</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    m_data_cond.notify_one();</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>  }</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span> </div>
+<div class="foldopen" id="foldopen00352" data-start="{" data-end="}">
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a297dece02fc1309110ad4e7f2ec88d11">  352</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a297dece02fc1309110ad4e7f2ec88d11">push</a>(T&amp;&amp; val) <span class="comment">/* noexcept(std::is_nothrow_move_constructible&lt;T&gt;::value) */</span> </div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    }</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    m_data_queue.push_back(std::move(val));</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    m_data_cond.notify_one();</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>  }</div>
 </div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span> </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ... Args&gt;</div>
-<div class="foldopen" id="foldopen00370" data-start="{" data-end="}">
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a7122b2ffbfa2a5e1b90ea05c3524c8db">  370</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a7122b2ffbfa2a5e1b90ea05c3524c8db">emplace_push</a>(Args &amp;&amp;... args) <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T, Args...&gt;::value)*/</span> {</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    }</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    m_data_queue.emplace_back(std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    m_data_cond.notify_one();</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  }</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ... Args&gt;</div>
+<div class="foldopen" id="foldopen00379" data-start="{" data-end="}">
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28">  379</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28">emplace_push</a>(Args &amp;&amp;... args) <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T, Args...&gt;::value)*/</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>    }</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    m_data_queue.emplace_back(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    m_data_cond.notify_one();</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> </div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>  }</div>
 </div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="foldopen" id="foldopen00391" data-start="{" data-end="}">
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">  391</a></span>  std::optional&lt;T&gt; <a class="code hl_function" href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">wait_and_pop</a>() <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T&gt;::value) */</span> {</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    std::unique_lock&lt;std::mutex&gt; lk{m_mut};</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="keywordflow">if</span> (!m_data_cond.wait ( lk, m_stop_tok, [<span class="keyword">this</span>] { return !m_data_queue.empty(); } )) {</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {}; <span class="comment">// queue was request to stop, no data available</span></div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    }</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    std::optional&lt;T&gt; val {std::move_if_noexcept(m_data_queue.front())}; <span class="comment">// move construct if possible</span></div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    m_data_queue.pop_front();</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>  }</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> </div>
+<div class="foldopen" id="foldopen00403" data-start="{" data-end="}">
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">  403</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">wait_and_pop</a>() <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T&gt;::value) */</span></div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        -&gt; std::optional&lt;T&gt; {</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span> </div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    std::unique_lock&lt;std::mutex&gt; lk{m_mut};</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keywordflow">if</span> (!m_data_cond.wait ( lk, m_stop_tok, [<span class="keyword">this</span>] { return !m_data_queue.empty(); } )) {</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {}; <span class="comment">// queue was request to stop, no data available</span></div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    }</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    std::optional&lt;T&gt; val {std::move_if_noexcept(m_data_queue.front())}; <span class="comment">// move construct if possible</span></div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    m_data_queue.pop_front();</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>  }</div>
 </div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> </div>
-<div class="foldopen" id="foldopen00409" data-start="{" data-end="}">
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a1752520ca761cc4c4b271138af35e4d9">  409</a></span>  std::optional&lt;T&gt; <a class="code hl_function" href="classchops_1_1wait__queue.html#a1752520ca761cc4c4b271138af35e4d9">try_pop</a>() <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T&gt;::value) */</span> {</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {};</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    }</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keywordflow">if</span> (m_data_queue.empty()) {</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {};</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    }</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>    std::optional&lt;T&gt; val {std::move_if_noexcept(m_data_queue.front())}; <span class="comment">// move construct if possible</span></div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    m_data_queue.pop_front();</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    <span class="keywordflow">return</span> val;</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>  }</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> </div>
+<div class="foldopen" id="foldopen00424" data-start="{" data-end="}">
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a8c31302ab11c526926711cce37e114f8">  424</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a8c31302ab11c526926711cce37e114f8">try_pop</a>() <span class="comment">/* noexcept(std::is_nothrow_constructible&lt;T&gt;::value) */</span></div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        -&gt; std::optional&lt;T&gt; {</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    <span class="keywordflow">if</span> (m_stop_tok.stop_requested()) {</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {};</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    }</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>    <span class="keywordflow">if</span> (m_data_queue.empty()) {</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>      <span class="keywordflow">return</span> std::optional&lt;T&gt; {};</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>    }</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    std::optional&lt;T&gt; val {std::move_if_noexcept(m_data_queue.front())}; <span class="comment">// move construct if possible</span></div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    m_data_queue.pop_front();</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>    <span class="keywordflow">return</span> val;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span> </div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>  }</div>
 </div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span> </div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>  <span class="comment">// non-modifying methods</span></div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
-<div class="foldopen" id="foldopen00450" data-start="{" data-end="}">
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a1df31efd3da2dd14149a4b9856a86b20">  450</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a1df31efd3da2dd14149a4b9856a86b20">apply</a>(F&amp;&amp; func) <span class="keyword">const</span> <span class="comment">/* noexcept(std::is_nothrow_invocable&lt;F&amp;&amp;, const T&amp;&gt;::value) */</span> {</div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> T&amp; elem : m_data_queue) {</div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>      func(elem);</div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>    }</div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>  }</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span> </div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>  <span class="comment">// non-modifying methods</span></div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="foldopen" id="foldopen00468" data-start="{" data-end="}">
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#ad2d0ef0ed03c1adef207ce58c96d164b">  468</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#ad2d0ef0ed03c1adef207ce58c96d164b">apply</a>(F&amp;&amp; func) <span class="keyword">const</span> <span class="comment">/* noexcept(std::is_nothrow_invocable&lt;F&amp;&amp;, const T&amp;&gt;::value) */</span></div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>        -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span> </div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> T&amp; elem : m_data_queue) {</div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>      func(elem);</div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span>    }</div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span> </div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>  }</div>
 </div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span> </div>
-<div class="foldopen" id="foldopen00463" data-start="{" data-end="}">
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a58d60cd5a0eab2aa4936c0cfc41b3e58">  463</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a58d60cd5a0eab2aa4936c0cfc41b3e58">stop_requested</a>() const noexcept {</div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    <span class="keywordflow">return</span> m_stop_tok.stop_requested();</div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>  }</div>
-</div>
-<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span> </div>
-<div class="foldopen" id="foldopen00472" data-start="{" data-end="}">
-<div class="line"><a id="l00472" name="l00472"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a8e8580fff919a1beee237c2f0d6c8bf3">  472</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a8e8580fff919a1beee237c2f0d6c8bf3">empty</a>() const <span class="comment">/* noexcept */</span> {</div>
-<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span>    <span class="keywordflow">return</span> m_data_queue.empty();</div>
-<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>  }</div>
-</div>
-<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span> </div>
-<div class="foldopen" id="foldopen00482" data-start="{" data-end="}">
-<div class="line"><a id="l00482" name="l00482"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#aa6b54f710b34a83e746b9b6feca0f89f">  482</a></span>  size_type <a class="code hl_function" href="classchops_1_1wait__queue.html#aa6b54f710b34a83e746b9b6feca0f89f">size</a>() const <span class="comment">/* noexcept */</span> {</div>
-<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span>    lock_guard lk{m_mut};</div>
-<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>    <span class="keywordflow">return</span> m_data_queue.size();</div>
-<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>  }</div>
-</div>
+<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span> </div>
+<div class="foldopen" id="foldopen00484" data-start="{" data-end="}">
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a3bc8b749b091e3cf2972bc7d1ed120b5">  484</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a3bc8b749b091e3cf2972bc7d1ed120b5">stop_requested</a>() const noexcept</div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>        -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span> </div>
-<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>};</div>
-</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    <span class="keywordflow">return</span> m_stop_tok.stop_requested();</div>
 <div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span> </div>
-<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>} <span class="comment">// end namespace</span></div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>  }</div>
+</div>
 <div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span> </div>
-<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span> </div>
+<div class="foldopen" id="foldopen00496" data-start="{" data-end="}">
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6">  496</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6">empty</a>() const <span class="comment">/* noexcept */</span></div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>        -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span> </div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>    <span class="keywordflow">return</span> m_data_queue.empty();</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span> </div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>  }</div>
+</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span> </div>
+<div class="foldopen" id="foldopen00509" data-start="{" data-end="}">
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno"><a class="line" href="classchops_1_1wait__queue.html#a8c3a4e368155ce68537c53ea5d9dcc0a">  509</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classchops_1_1wait__queue.html#a8c3a4e368155ce68537c53ea5d9dcc0a">size</a>() const <span class="comment">/* noexcept */</span></div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>        -&gt; size_type {</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span> </div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>    lock_guard lk{m_mut};</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>    <span class="keywordflow">return</span> m_data_queue.size();</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span> </div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>  }</div>
+</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span> </div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>};</div>
+</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span> </div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>} <span class="comment">// end namespace</span></div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span> </div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span> </div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html"><div class="ttname"><a href="classchops_1_1wait__queue.html">chops::wait_queue</a></div><div class="ttdef"><b>Definition</b> wait_queue.hpp:161</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a1752520ca761cc4c4b271138af35e4d9"><div class="ttname"><a href="classchops_1_1wait__queue.html#a1752520ca761cc4c4b271138af35e4d9">chops::wait_queue::try_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; try_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue if an element is immediately available,...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:409</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a1df31efd3da2dd14149a4b9856a86b20"><div class="ttname"><a href="classchops_1_1wait__queue.html#a1df31efd3da2dd14149a4b9856a86b20">chops::wait_queue::apply</a></div><div class="ttdeci">void apply(F &amp;&amp;func) const</div><div class="ttdoc">Apply a non-modifying function object to all elements of the queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:450</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a219bd031684bb9ba57a5a0a44684ff47"><div class="ttname"><a href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">chops::wait_queue::push</a></div><div class="ttdeci">bool push(const T &amp;val)</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:330</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a132e0b982c2478d08cf7f62c4bf8356b"><div class="ttname"><a href="classchops_1_1wait__queue.html#a132e0b982c2478d08cf7f62c4bf8356b">chops::wait_queue::request_stop</a></div><div class="ttdeci">auto request_stop() noexcept -&gt; bool</div><div class="ttdoc">Request the wait_queue to stop processing, unless a std::stop_token was passed in to a constructor.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:312</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_a28d8bf85d4654dbb1cb9a262cd7a2a53"><div class="ttname"><a href="classchops_1_1wait__queue.html#a28d8bf85d4654dbb1cb9a262cd7a2a53">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue(std::stop_token stop_tok, size_type sz)</div><div class="ttdoc">Construct a wait_queue with an initial size or capacity along with a std::stop_token.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:282</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a35e84bd97d3cb1524beed9112206141e"><div class="ttname"><a href="classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e">chops::wait_queue::push</a></div><div class="ttdeci">bool push(T &amp;&amp;val)</div><div class="ttdoc">Push a value, either by moving or copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:346</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a297dece02fc1309110ad4e7f2ec88d11"><div class="ttname"><a href="classchops_1_1wait__queue.html#a297dece02fc1309110ad4e7f2ec88d11">chops::wait_queue::push</a></div><div class="ttdeci">auto push(T &amp;&amp;val) -&gt; bool</div><div class="ttdoc">Push a value, either by moving or copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:352</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a39a40991b51fa4a234928240858105d6"><div class="ttname"><a href="classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6">chops::wait_queue::empty</a></div><div class="ttdeci">auto empty() const -&gt; bool</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:496</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_a3a7c6ff751cfbb9036af8628a825f83b"><div class="ttname"><a href="classchops_1_1wait__queue.html#a3a7c6ff751cfbb9036af8628a825f83b">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue()</div><div class="ttdoc">Default construct a wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:189</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a4edfb271a60d1b107ee13231ae90d18d"><div class="ttname"><a href="classchops_1_1wait__queue.html#a4edfb271a60d1b107ee13231ae90d18d">chops::wait_queue::request_stop</a></div><div class="ttdeci">bool request_stop() noexcept</div><div class="ttdoc">Request the wait_queue to stop processing, unless a std::stop_token was passed in to a constructor.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:312</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a58d60cd5a0eab2aa4936c0cfc41b3e58"><div class="ttname"><a href="classchops_1_1wait__queue.html#a58d60cd5a0eab2aa4936c0cfc41b3e58">chops::wait_queue::stop_requested</a></div><div class="ttdeci">bool stop_requested() const noexcept</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:463</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a7122b2ffbfa2a5e1b90ea05c3524c8db"><div class="ttname"><a href="classchops_1_1wait__queue.html#a7122b2ffbfa2a5e1b90ea05c3524c8db">chops::wait_queue::emplace_push</a></div><div class="ttdeci">bool emplace_push(Args &amp;&amp;... args)</div><div class="ttdoc">Directly construct an object in the underlying container (using the container's emplace_back method) ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:370</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a8e8580fff919a1beee237c2f0d6c8bf3"><div class="ttname"><a href="classchops_1_1wait__queue.html#a8e8580fff919a1beee237c2f0d6c8bf3">chops::wait_queue::empty</a></div><div class="ttdeci">bool empty() const</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:472</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a953ec5035ff1c216926e2a365f3aeb98"><div class="ttname"><a href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; wait_and_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:391</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a3bc8b749b091e3cf2972bc7d1ed120b5"><div class="ttname"><a href="classchops_1_1wait__queue.html#a3bc8b749b091e3cf2972bc7d1ed120b5">chops::wait_queue::stop_requested</a></div><div class="ttdeci">auto stop_requested() const noexcept -&gt; bool</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:484</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a8c31302ab11c526926711cce37e114f8"><div class="ttname"><a href="classchops_1_1wait__queue.html#a8c31302ab11c526926711cce37e114f8">chops::wait_queue::try_pop</a></div><div class="ttdeci">auto try_pop() -&gt; std::optional&lt; T &gt;</div><div class="ttdoc">Pop and return a value from the wait_queue if an element is immediately available,...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:424</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_a8c3a4e368155ce68537c53ea5d9dcc0a"><div class="ttname"><a href="classchops_1_1wait__queue.html#a8c3a4e368155ce68537c53ea5d9dcc0a">chops::wait_queue::size</a></div><div class="ttdeci">auto size() const -&gt; size_type</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:509</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_a9a1fe1774e81f1e172c67cf1bc3eb293"><div class="ttname"><a href="classchops_1_1wait__queue.html#a9a1fe1774e81f1e172c67cf1bc3eb293">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue(Iter beg, Iter end)</div><div class="ttdoc">Construct a wait_queue with an iterator range for the container.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:226</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_aa0e83506cd58f667c0acf0fbb7e69b06"><div class="ttname"><a href="classchops_1_1wait__queue.html#aa0e83506cd58f667c0acf0fbb7e69b06">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue(size_type sz)</div><div class="ttdoc">Construct a wait_queue with an initial size or capacity.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:267</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_aa6b54f710b34a83e746b9b6feca0f89f"><div class="ttname"><a href="classchops_1_1wait__queue.html#aa6b54f710b34a83e746b9b6feca0f89f">chops::wait_queue::size</a></div><div class="ttdeci">size_type size() const</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:482</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_aabda755fe791b6c02a78799b5edbccf5"><div class="ttname"><a href="classchops_1_1wait__queue.html#aabda755fe791b6c02a78799b5edbccf5">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue(std::stop_token stop_tok)</div><div class="ttdoc">Construct a wait_queue with an externally provided std::stop_token.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:201</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_ab218f84a50f0dbbea19f87afc87d7dbc"><div class="ttname"><a href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">chops::wait_queue::push</a></div><div class="ttdeci">auto push(const T &amp;val) -&gt; bool</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:333</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_ad2d0ef0ed03c1adef207ce58c96d164b"><div class="ttname"><a href="classchops_1_1wait__queue.html#ad2d0ef0ed03c1adef207ce58c96d164b">chops::wait_queue::apply</a></div><div class="ttdeci">auto apply(F &amp;&amp;func) const -&gt; void</div><div class="ttdoc">Apply a non-modifying function object to all elements of the queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:468</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_aedfffa249cc06db23f6b5c4d05399c28"><div class="ttname"><a href="classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28">chops::wait_queue::emplace_push</a></div><div class="ttdeci">auto emplace_push(Args &amp;&amp;... args) -&gt; bool</div><div class="ttdoc">Directly construct an object in the underlying container (using the container's emplace_back method) ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:379</div></div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html_aee1faf19b6871541a58a465a03b7108f"><div class="ttname"><a href="classchops_1_1wait__queue.html#aee1faf19b6871541a58a465a03b7108f">chops::wait_queue::wait_queue</a></div><div class="ttdeci">wait_queue(std::stop_token stop_tok, Iter beg, Iter end)</div><div class="ttdoc">Construct a wait_queue with an iterator range and a std::stop_token.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:242</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_af7f0cb5957162578f587ba14e16792cb"><div class="ttname"><a href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">auto wait_and_pop() -&gt; std::optional&lt; T &gt;</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:403</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

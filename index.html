@@ -98,20 +98,20 @@ Additional Details</h3>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classchops_1_1wait__queue.html">chops::wait_queue&lt;int&gt;</a> wq;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// inside writer thread, assume wq passed in by reference</span></div>
-<div class="line">wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">push</a>(42);</div>
+<div class="line">wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">push</a>(42);</div>
 <div class="line">...</div>
 <div class="line"><span class="comment">// all finished, time to shutdown</span></div>
 <div class="line">wq.request_stop();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// inside reader thread, assume wq passed in by reference</span></div>
-<div class="line"><span class="keyword">auto</span> rtn_val = wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">wait_and_pop</a>(); <span class="comment">// return type is std::optional&lt;int&gt;</span></div>
+<div class="line"><span class="keyword">auto</span> rtn_val = wq.<a class="code hl_function" href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">wait_and_pop</a>(); <span class="comment">// return type is std::optional&lt;int&gt;</span></div>
 <div class="line"><span class="keywordflow">if</span> (!rtn_val) { <span class="comment">// empty value, request_stop has been called</span></div>
 <div class="line">  <span class="comment">// time to exit reader thread</span></div>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">if</span> (*rtn_val == 42) ...</div>
 <div class="ttc" id="aclasschops_1_1wait__queue_html"><div class="ttname"><a href="classchops_1_1wait__queue.html">chops::wait_queue</a></div><div class="ttdef"><b>Definition</b> wait_queue.hpp:161</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a219bd031684bb9ba57a5a0a44684ff47"><div class="ttname"><a href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">chops::wait_queue::push</a></div><div class="ttdeci">bool push(const T &amp;val)</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:330</div></div>
-<div class="ttc" id="aclasschops_1_1wait__queue_html_a953ec5035ff1c216926e2a365f3aeb98"><div class="ttname"><a href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">std::optional&lt; T &gt; wait_and_pop()</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:391</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_ab218f84a50f0dbbea19f87afc87d7dbc"><div class="ttname"><a href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">chops::wait_queue::push</a></div><div class="ttdeci">auto push(const T &amp;val) -&gt; bool</div><div class="ttdoc">Push a value, by copying, to the wait_queue.</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:333</div></div>
+<div class="ttc" id="aclasschops_1_1wait__queue_html_af7f0cb5957162578f587ba14e16792cb"><div class="ttname"><a href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">chops::wait_queue::wait_and_pop</a></div><div class="ttdeci">auto wait_and_pop() -&gt; std::optional&lt; T &gt;</div><div class="ttdoc">Pop and return a value from the wait_queue, blocking and waiting for a writer thread to push a value ...</div><div class="ttdef"><b>Definition</b> wait_queue.hpp:403</div></div>
 </div><!-- fragment --><p>Example usage with ring buffer (from Martin Moene):</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> sz = 20;</div>
 <div class="line"><span class="keywordtype">int</span> buf[sz];</div>

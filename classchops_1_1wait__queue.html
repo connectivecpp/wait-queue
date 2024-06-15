@@ -124,35 +124,35 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c5f5d676d5b63816c5c351055378a1a" id="r_a7c5f5d676d5b63816c5c351055378a1a"><td class="memItemLeft" align="right" valign="top"><a id="a7c5f5d676d5b63816c5c351055378a1a" name="a7c5f5d676d5b63816c5c351055378a1a"></a>
 <a class="el" href="classchops_1_1wait__queue.html">wait_queue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classchops_1_1wait__queue.html">wait_queue</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:a7c5f5d676d5b63816c5c351055378a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4edfb271a60d1b107ee13231ae90d18d" id="r_a4edfb271a60d1b107ee13231ae90d18d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a4edfb271a60d1b107ee13231ae90d18d">request_stop</a> () noexcept</td></tr>
-<tr class="memdesc:a4edfb271a60d1b107ee13231ae90d18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor.  <br /></td></tr>
-<tr class="separator:a4edfb271a60d1b107ee13231ae90d18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a219bd031684bb9ba57a5a0a44684ff47" id="r_a219bd031684bb9ba57a5a0a44684ff47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a219bd031684bb9ba57a5a0a44684ff47">push</a> (const T &amp;val)</td></tr>
-<tr class="memdesc:a219bd031684bb9ba57a5a0a44684ff47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a219bd031684bb9ba57a5a0a44684ff47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35e84bd97d3cb1524beed9112206141e" id="r_a35e84bd97d3cb1524beed9112206141e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a35e84bd97d3cb1524beed9112206141e">push</a> (T &amp;&amp;val)</td></tr>
-<tr class="memdesc:a35e84bd97d3cb1524beed9112206141e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
-<tr class="separator:a35e84bd97d3cb1524beed9112206141e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7122b2ffbfa2a5e1b90ea05c3524c8db" id="r_a7122b2ffbfa2a5e1b90ea05c3524c8db"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; </td></tr>
-<tr class="memitem:a7122b2ffbfa2a5e1b90ea05c3524c8db"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a7122b2ffbfa2a5e1b90ea05c3524c8db">emplace_push</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a7122b2ffbfa2a5e1b90ea05c3524c8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly construct an object in the underlying container (using the container's <code>emplace_back</code> method) by forwarding the supplied arguments (can be more than one).  <br /></td></tr>
-<tr class="separator:a7122b2ffbfa2a5e1b90ea05c3524c8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a953ec5035ff1c216926e2a365f3aeb98" id="r_a953ec5035ff1c216926e2a365f3aeb98"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a953ec5035ff1c216926e2a365f3aeb98">wait_and_pop</a> ()</td></tr>
-<tr class="memdesc:a953ec5035ff1c216926e2a365f3aeb98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available.  <br /></td></tr>
-<tr class="separator:a953ec5035ff1c216926e2a365f3aeb98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1752520ca761cc4c4b271138af35e4d9" id="r_a1752520ca761cc4c4b271138af35e4d9"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a1752520ca761cc4c4b271138af35e4d9">try_pop</a> ()</td></tr>
-<tr class="memdesc:a1752520ca761cc4c4b271138af35e4d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>.  <br /></td></tr>
-<tr class="separator:a1752520ca761cc4c4b271138af35e4d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1df31efd3da2dd14149a4b9856a86b20" id="r_a1df31efd3da2dd14149a4b9856a86b20"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:a1df31efd3da2dd14149a4b9856a86b20"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a1df31efd3da2dd14149a4b9856a86b20">apply</a> (F &amp;&amp;func) const</td></tr>
-<tr class="memdesc:a1df31efd3da2dd14149a4b9856a86b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply a non-modifying function object to all elements of the queue.  <br /></td></tr>
-<tr class="separator:a1df31efd3da2dd14149a4b9856a86b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58d60cd5a0eab2aa4936c0cfc41b3e58" id="r_a58d60cd5a0eab2aa4936c0cfc41b3e58"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a58d60cd5a0eab2aa4936c0cfc41b3e58">stop_requested</a> () const noexcept</td></tr>
-<tr class="separator:a58d60cd5a0eab2aa4936c0cfc41b3e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e8580fff919a1beee237c2f0d6c8bf3" id="r_a8e8580fff919a1beee237c2f0d6c8bf3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a8e8580fff919a1beee237c2f0d6c8bf3">empty</a> () const</td></tr>
-<tr class="separator:a8e8580fff919a1beee237c2f0d6c8bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6b54f710b34a83e746b9b6feca0f89f" id="r_aa6b54f710b34a83e746b9b6feca0f89f"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aa6b54f710b34a83e746b9b6feca0f89f">size</a> () const</td></tr>
-<tr class="separator:aa6b54f710b34a83e746b9b6feca0f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a132e0b982c2478d08cf7f62c4bf8356b" id="r_a132e0b982c2478d08cf7f62c4bf8356b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a132e0b982c2478d08cf7f62c4bf8356b">request_stop</a> () noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a132e0b982c2478d08cf7f62c4bf8356b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor.  <br /></td></tr>
+<tr class="separator:a132e0b982c2478d08cf7f62c4bf8356b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab218f84a50f0dbbea19f87afc87d7dbc" id="r_ab218f84a50f0dbbea19f87afc87d7dbc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#ab218f84a50f0dbbea19f87afc87d7dbc">push</a> (const T &amp;val) -&gt; bool</td></tr>
+<tr class="memdesc:ab218f84a50f0dbbea19f87afc87d7dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
+<tr class="separator:ab218f84a50f0dbbea19f87afc87d7dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a297dece02fc1309110ad4e7f2ec88d11" id="r_a297dece02fc1309110ad4e7f2ec88d11"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a297dece02fc1309110ad4e7f2ec88d11">push</a> (T &amp;&amp;val) -&gt; bool</td></tr>
+<tr class="memdesc:a297dece02fc1309110ad4e7f2ec88d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
+<tr class="separator:a297dece02fc1309110ad4e7f2ec88d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedfffa249cc06db23f6b5c4d05399c28" id="r_aedfffa249cc06db23f6b5c4d05399c28"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; </td></tr>
+<tr class="memitem:aedfffa249cc06db23f6b5c4d05399c28"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28">emplace_push</a> (Args &amp;&amp;... args) -&gt; bool</td></tr>
+<tr class="memdesc:aedfffa249cc06db23f6b5c4d05399c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly construct an object in the underlying container (using the container's <code>emplace_back</code> method) by forwarding the supplied arguments (can be more than one).  <br /></td></tr>
+<tr class="separator:aedfffa249cc06db23f6b5c4d05399c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f0cb5957162578f587ba14e16792cb" id="r_af7f0cb5957162578f587ba14e16792cb"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#af7f0cb5957162578f587ba14e16792cb">wait_and_pop</a> () -&gt; std::optional&lt; T &gt;</td></tr>
+<tr class="memdesc:af7f0cb5957162578f587ba14e16792cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available.  <br /></td></tr>
+<tr class="separator:af7f0cb5957162578f587ba14e16792cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c31302ab11c526926711cce37e114f8" id="r_a8c31302ab11c526926711cce37e114f8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a8c31302ab11c526926711cce37e114f8">try_pop</a> () -&gt; std::optional&lt; T &gt;</td></tr>
+<tr class="memdesc:a8c31302ab11c526926711cce37e114f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>.  <br /></td></tr>
+<tr class="separator:a8c31302ab11c526926711cce37e114f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d0ef0ed03c1adef207ce58c96d164b" id="r_ad2d0ef0ed03c1adef207ce58c96d164b"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
+<tr class="memitem:ad2d0ef0ed03c1adef207ce58c96d164b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#ad2d0ef0ed03c1adef207ce58c96d164b">apply</a> (F &amp;&amp;func) const -&gt; void</td></tr>
+<tr class="memdesc:ad2d0ef0ed03c1adef207ce58c96d164b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply a non-modifying function object to all elements of the queue.  <br /></td></tr>
+<tr class="separator:ad2d0ef0ed03c1adef207ce58c96d164b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc8b749b091e3cf2972bc7d1ed120b5" id="r_a3bc8b749b091e3cf2972bc7d1ed120b5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a3bc8b749b091e3cf2972bc7d1ed120b5">stop_requested</a> () const noexcept -&gt; bool</td></tr>
+<tr class="separator:a3bc8b749b091e3cf2972bc7d1ed120b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39a40991b51fa4a234928240858105d6" id="r_a39a40991b51fa4a234928240858105d6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6">empty</a> () const -&gt; bool</td></tr>
+<tr class="separator:a39a40991b51fa4a234928240858105d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c3a4e368155ce68537c53ea5d9dcc0a" id="r_a8c3a4e368155ce68537c53ea5d9dcc0a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a8c3a4e368155ce68537c53ea5d9dcc0a">size</a> () const -&gt; size_type</td></tr>
+<tr class="separator:a8c3a4e368155ce68537c53ea5d9dcc0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3a7c6ff751cfbb9036af8628a825f83b" name="a3a7c6ff751cfbb9036af8628a825f83b"></a>
@@ -421,8 +421,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1df31efd3da2dd14149a4b9856a86b20" name="a1df31efd3da2dd14149a4b9856a86b20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1df31efd3da2dd14149a4b9856a86b20">&#9670;&#160;</a></span>apply()</h2>
+<a id="ad2d0ef0ed03c1adef207ce58c96d164b" name="ad2d0ef0ed03c1adef207ce58c96d164b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2d0ef0ed03c1adef207ce58c96d164b">&#9670;&#160;</a></span>apply()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -435,11 +435,11 @@ template&lt;typename F &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::apply </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::apply </td>
           <td>(</td>
           <td class="paramtype">F &amp;&amp;&#160;</td>
           <td class="paramname"><em>func</em></td><td>)</td>
-          <td> const</td>
+          <td> const -&gt; void </td>
         </tr>
       </table>
   </td>
@@ -465,8 +465,8 @@ It is undefined behavior if the function object calls into the same <code><a cla
 
 </div>
 </div>
-<a id="a7122b2ffbfa2a5e1b90ea05c3524c8db" name="a7122b2ffbfa2a5e1b90ea05c3524c8db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7122b2ffbfa2a5e1b90ea05c3524c8db">&#9670;&#160;</a></span>emplace_push()</h2>
+<a id="aedfffa249cc06db23f6b5c4d05399c28" name="aedfffa249cc06db23f6b5c4d05399c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedfffa249cc06db23f6b5c4d05399c28">&#9670;&#160;</a></span>emplace_push()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -479,11 +479,11 @@ template&lt;typename ... Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::emplace_push </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::emplace_push </td>
           <td>(</td>
           <td class="paramtype">Args &amp;&amp;...&#160;</td>
           <td class="paramname"><em>args</em></td><td>)</td>
-          <td></td>
+          <td> -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -505,8 +505,8 @@ template&lt;typename ... Args&gt; </div>
 
 </div>
 </div>
-<a id="a8e8580fff919a1beee237c2f0d6c8bf3" name="a8e8580fff919a1beee237c2f0d6c8bf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e8580fff919a1beee237c2f0d6c8bf3">&#9670;&#160;</a></span>empty()</h2>
+<a id="a39a40991b51fa4a234928240858105d6" name="a39a40991b51fa4a234928240858105d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39a40991b51fa4a234928240858105d6">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -517,10 +517,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::empty </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::empty </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> const -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -534,8 +534,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a219bd031684bb9ba57a5a0a44684ff47" name="a219bd031684bb9ba57a5a0a44684ff47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a219bd031684bb9ba57a5a0a44684ff47">&#9670;&#160;</a></span>push() <span class="overload">[1/2]</span></h2>
+<a id="ab218f84a50f0dbbea19f87afc87d7dbc" name="ab218f84a50f0dbbea19f87afc87d7dbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab218f84a50f0dbbea19f87afc87d7dbc">&#9670;&#160;</a></span>push() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -546,11 +546,11 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::push </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::push </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
-          <td></td>
+          <td> -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -572,8 +572,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a35e84bd97d3cb1524beed9112206141e" name="a35e84bd97d3cb1524beed9112206141e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35e84bd97d3cb1524beed9112206141e">&#9670;&#160;</a></span>push() <span class="overload">[2/2]</span></h2>
+<a id="a297dece02fc1309110ad4e7f2ec88d11" name="a297dece02fc1309110ad4e7f2ec88d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a297dece02fc1309110ad4e7f2ec88d11">&#9670;&#160;</a></span>push() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -584,11 +584,11 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::push </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::push </td>
           <td>(</td>
           <td class="paramtype">T &amp;&amp;&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
-          <td></td>
+          <td> -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -603,8 +603,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a4edfb271a60d1b107ee13231ae90d18d" name="a4edfb271a60d1b107ee13231ae90d18d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4edfb271a60d1b107ee13231ae90d18d">&#9670;&#160;</a></span>request_stop()</h2>
+<a id="a132e0b982c2478d08cf7f62c4bf8356b" name="a132e0b982c2478d08cf7f62c4bf8356b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a132e0b982c2478d08cf7f62c4bf8356b">&#9670;&#160;</a></span>request_stop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -615,10 +615,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::request_stop </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::request_stop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -635,8 +635,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="aa6b54f710b34a83e746b9b6feca0f89f" name="aa6b54f710b34a83e746b9b6feca0f89f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6b54f710b34a83e746b9b6feca0f89f">&#9670;&#160;</a></span>size()</h2>
+<a id="a8c3a4e368155ce68537c53ea5d9dcc0a" name="a8c3a4e368155ce68537c53ea5d9dcc0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c3a4e368155ce68537c53ea5d9dcc0a">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -647,10 +647,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_type <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::size </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> const -&gt; size_type </td>
         </tr>
       </table>
   </td>
@@ -664,8 +664,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a58d60cd5a0eab2aa4936c0cfc41b3e58" name="a58d60cd5a0eab2aa4936c0cfc41b3e58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58d60cd5a0eab2aa4936c0cfc41b3e58">&#9670;&#160;</a></span>stop_requested()</h2>
+<a id="a3bc8b749b091e3cf2972bc7d1ed120b5" name="a3bc8b749b091e3cf2972bc7d1ed120b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bc8b749b091e3cf2972bc7d1ed120b5">&#9670;&#160;</a></span>stop_requested()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -676,10 +676,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::stop_requested </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::stop_requested </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> const -&gt; bool </td>
         </tr>
       </table>
   </td>
@@ -693,8 +693,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a1752520ca761cc4c4b271138af35e4d9" name="a1752520ca761cc4c4b271138af35e4d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1752520ca761cc4c4b271138af35e4d9">&#9670;&#160;</a></span>try_pop()</h2>
+<a id="a8c31302ab11c526926711cce37e114f8" name="a8c31302ab11c526926711cce37e114f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c31302ab11c526926711cce37e114f8">&#9670;&#160;</a></span>try_pop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -705,10 +705,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; T &gt; <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::try_pop </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::try_pop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> -&gt; std::optional&lt;T&gt; </td>
         </tr>
       </table>
   </td>
@@ -723,8 +723,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a953ec5035ff1c216926e2a365f3aeb98" name="a953ec5035ff1c216926e2a365f3aeb98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a953ec5035ff1c216926e2a365f3aeb98">&#9670;&#160;</a></span>wait_and_pop()</h2>
+<a id="af7f0cb5957162578f587ba14e16792cb" name="af7f0cb5957162578f587ba14e16792cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7f0cb5957162578f587ba14e16792cb">&#9670;&#160;</a></span>wait_and_pop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -735,10 +735,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; T &gt; <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::wait_and_pop </td>
+          <td class="memname">auto <a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::wait_and_pop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> -&gt; std::optional&lt;T&gt; </td>
         </tr>
       </table>
   </td>
