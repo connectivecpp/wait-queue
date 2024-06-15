@@ -2,6 +2,10 @@
 name: CMake build and run unit test matrix
 
 on:
+  pull_request:
+    types:
+      - opened
+      - reopened
   push:
     branches:
       - main
