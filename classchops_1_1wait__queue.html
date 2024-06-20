@@ -182,7 +182,12 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 <p>Default construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
 <p>An internal <code>stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
-<dl class="section note"><dt>Note</dt><dd>A default constructed <code>boost</code> <code>circular_buffer</code> cannot do anything, so a different <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> constructor must be used if instantiated with a <code>boost</code> <code>circular_buffer</code>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A default constructed <code>boost</code> <code>circular_buffer</code> cannot do anything, so a different <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> constructor must be used if instantiated with a <code>boost</code> <code>circular_buffer</code>.</dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true. </dd>
+<dd>
+<code>size</code> returns 0. </dd>
+<dd>
+<code>stop_requested</code> return false. </dd></dl>
 
 </div>
 </div>
@@ -215,10 +220,13 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 <p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an externally provided <code>std::stop_token</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing. </td></tr>
+    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true. </dd>
+<dd>
+<code>size</code> returns 0. </dd></dl>
 
 </div>
 </div>
@@ -267,10 +275,13 @@ template&lt;typename Iter &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">beg</td><td>Beginning iterator.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending iterator. </td></tr>
+    <tr><td class="paramname">end</td><td>Ending iterator.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true if <code>beg</code> equals <code>end</code> otherwise returns false. </dd>
+<dd>
+<code>size</code> returns the distance between <code>beg</code> and <code>end</code> parameters. </dd></dl>
 
 </div>
 </div>
@@ -323,10 +334,13 @@ template&lt;typename Iter &gt; </div>
   <table class="params">
     <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
     <tr><td class="paramname">beg</td><td>Beginning iterator.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending iterator. </td></tr>
+    <tr><td class="paramname">end</td><td>Ending iterator.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true if <code>beg</code> equals <code>end</code> otherwise returns false. </dd>
+<dd>
+<code>size</code> returns the distance between <code>beg</code> and <code>end</code> parameters. </dd></dl>
 
 </div>
 </div>
@@ -366,10 +380,13 @@ Using this constructor with a <code>boost</code> <code>circular_buffer</code> cr
 Using this constructor with most standard library container types creates a container initialized with default inserted elements.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sz</td><td>Capacity or initial size, depending on container type. </td></tr>
+    <tr><td class="paramname">sz</td><td>Capacity or initial size, depending on container type.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns true, else behavior depends on container used. </dd>
+<dd>
+<code>size</code> returns 0 or <code>sz</code> depending on container used. </dd></dl>
 
 </div>
 </div>
@@ -413,10 +430,13 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
-    <tr><td class="paramname">sz</td><td>Capacity or initial size, depending on container type. </td></tr>
+    <tr><td class="paramname">sz</td><td>Capacity or initial size, depending on container type.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns true, else behavior depends on container used. </dd>
+<dd>
+<code>size</code> returns 0 or <code>sz</code> depending on container used. </dd></dl>
 
 </div>
 </div>
@@ -501,7 +521,8 @@ template&lt;typename ... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>std</code> containers return a reference to the newly constructed element from <code>emplace</code> method calls. <code>emplace_push</code> for a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> does not follow this convention and instead has the same return as the <code>push</code> methods.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is has been requested to stop. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is has been requested to stop.</dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>
@@ -568,7 +589,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop.</dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>
@@ -599,7 +621,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
-<p>This method has the same semantics as the other <code>push</code>, except that the value will be moved (if possible) instead of copied. </p>
+<p>This method has the same semantics as the other <code>push</code>, except that the value will be moved (if possible) instead of copied.</p>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>
@@ -719,7 +742,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>. </p>
-<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped . </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped .</dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If a non empty value is returned, until a push function is called, <code>size</code> is one less than before this function was called. </dd></dl>
 
 </div>
 </div>
@@ -750,7 +774,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 <p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available. </p>
 <p>If this method is called after a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop, an empty <code>std::optional</code> is returned. If a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> needs to be flushed after it is stopped, <code>try_pop</code> should be called instead.</p>
-<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> (if non-empty). If the <code>std::optional</code> is empty, the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> (if non-empty). If the <code>std::optional</code> is empty, the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped.</dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If a non empty value is returned, until a push function is called, <code>size</code> is one less than before this function was called. </dd></dl>
 
 </div>
 </div>
