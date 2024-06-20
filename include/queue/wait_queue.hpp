@@ -192,8 +192,7 @@ public:
    */
   wait_queue()
     // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token())
-  {
+      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()) {
     assert(empty());
     assert(size() == size_type(0));
     assert(!stop_requested());
@@ -210,8 +209,7 @@ public:
    */
   wait_queue(std::stop_token stop_tok)
     // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_stop_tok(stop_tok)
-  {
+      : m_stop_tok(stop_tok) {
     assert(empty());
     assert(size() == size_type(0));
   }
@@ -242,8 +240,7 @@ public:
   wait_queue(Iter beg, Iter end)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
       : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_queue(beg, end)
-  {
+	m_data_queue(beg, end) {
     assert(empty() == (beg == end));
     assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
   }
@@ -264,8 +261,7 @@ public:
   template <typename Iter>
   wait_queue(std::stop_token stop_tok, Iter beg, Iter end)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_stop_tok(stop_tok), m_data_queue(beg, end)
-  {
+      : m_stop_tok(stop_tok), m_data_queue(beg, end) {
     assert(empty() == (beg == end));
     assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
   }
@@ -295,8 +291,7 @@ public:
   wait_queue(size_type sz)
     // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
       : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_queue(sz)
-  {
+	m_data_queue(sz) {
     assert((sz != size_type(0)) || empty());
     assert((size() == size_type(0)) || (size() == sz));
   }
@@ -315,8 +310,7 @@ public:
    */
   wait_queue(std::stop_token stop_tok, size_type sz)
     // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
-      : m_stop_tok((*m_stop_src).get_token()), m_data_queue(sz)
-  {
+      : m_stop_tok((*m_stop_src).get_token()), m_data_queue(sz) {
     assert((sz != size_type(0)) || empty());
     assert((size() == size_type(0)) || (size() == sz));
   }
