@@ -98,14 +98,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aabda755fe791b6c02a78799b5edbccf5" id="r_aabda755fe791b6c02a78799b5edbccf5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aabda755fe791b6c02a78799b5edbccf5">wait_queue</a> (std::stop_token stop_tok)</td></tr>
 <tr class="memdesc:aabda755fe791b6c02a78799b5edbccf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an externally provided <code>std::stop_token</code>.  <br /></td></tr>
 <tr class="separator:aabda755fe791b6c02a78799b5edbccf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a1fe1774e81f1e172c67cf1bc3eb293" id="r_a9a1fe1774e81f1e172c67cf1bc3eb293"><td class="memTemplParams" colspan="2">template&lt;typename Iter &gt; </td></tr>
-<tr class="memitem:a9a1fe1774e81f1e172c67cf1bc3eb293"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a9a1fe1774e81f1e172c67cf1bc3eb293">wait_queue</a> (Iter beg, Iter end)</td></tr>
-<tr class="memdesc:a9a1fe1774e81f1e172c67cf1bc3eb293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an iterator range for the container.  <br /></td></tr>
-<tr class="separator:a9a1fe1774e81f1e172c67cf1bc3eb293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee1faf19b6871541a58a465a03b7108f" id="r_aee1faf19b6871541a58a465a03b7108f"><td class="memTemplParams" colspan="2">template&lt;typename Iter &gt; </td></tr>
-<tr class="memitem:aee1faf19b6871541a58a465a03b7108f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aee1faf19b6871541a58a465a03b7108f">wait_queue</a> (std::stop_token stop_tok, Iter beg, Iter end)</td></tr>
-<tr class="memdesc:aee1faf19b6871541a58a465a03b7108f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an iterator range and a <code>std::stop_token</code>.  <br /></td></tr>
-<tr class="separator:aee1faf19b6871541a58a465a03b7108f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f356bb6a295287a18d76246f697433f" id="r_a4f356bb6a295287a18d76246f697433f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a4f356bb6a295287a18d76246f697433f">wait_queue</a> (Container &amp;&amp;container)</td></tr>
+<tr class="memdesc:a4f356bb6a295287a18d76246f697433f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> by moving in an already constructed container.  <br /></td></tr>
+<tr class="separator:a4f356bb6a295287a18d76246f697433f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bcad2c3580fbdd975c7f5ce36d8c09c" id="r_a4bcad2c3580fbdd975c7f5ce36d8c09c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a4bcad2c3580fbdd975c7f5ce36d8c09c">wait_queue</a> (std::stop_token stop_tok, Container &amp;&amp;container)</td></tr>
+<tr class="separator:a4bcad2c3580fbdd975c7f5ce36d8c09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0e83506cd58f667c0acf0fbb7e69b06" id="r_aa0e83506cd58f667c0acf0fbb7e69b06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aa0e83506cd58f667c0acf0fbb7e69b06">wait_queue</a> (size_type sz)</td></tr>
 <tr class="memdesc:aa0e83506cd58f667c0acf0fbb7e69b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an initial size or capacity.  <br /></td></tr>
 <tr class="separator:aa0e83506cd58f667c0acf0fbb7e69b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,11 +180,11 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 <p>Default construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
 <p>An internal <code>stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
 <dl class="section note"><dt>Note</dt><dd>A default constructed <code>boost</code> <code>circular_buffer</code> cannot do anything, so a different <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> constructor must be used if instantiated with a <code>boost</code> <code>circular_buffer</code>.</dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns <code>true</code>. </dd>
 <dd>
 <code>size</code> returns 0. </dd>
 <dd>
-<code>stop_requested</code> return false. </dd></dl>
+<code>stop_requested</code> returns <code>false</code>. </dd></dl>
 
 </div>
 </div>
@@ -224,21 +221,19 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns <code>true</code>. </dd>
 <dd>
 <code>size</code> returns 0. </dd></dl>
 
 </div>
 </div>
-<a id="a9a1fe1774e81f1e172c67cf1bc3eb293" name="a9a1fe1774e81f1e172c67cf1bc3eb293"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a1fe1774e81f1e172c67cf1bc3eb293">&#9670;&#160;</a></span>wait_queue() <span class="overload">[3/6]</span></h2>
+<a id="a4f356bb6a295287a18d76246f697433f" name="a4f356bb6a295287a18d76246f697433f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f356bb6a295287a18d76246f697433f">&#9670;&#160;</a></span>wait_queue() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
-<div class="memtemplate">
-template&lt;typename Iter &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -246,19 +241,9 @@ template&lt;typename Iter &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a>&lt; T, Container &gt;::wait_queue </td>
           <td>(</td>
-          <td class="paramtype">Iter&#160;</td>
-          <td class="paramname"><em>beg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">Container &amp;&amp;&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">Iter&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -268,32 +253,29 @@ template&lt;typename Iter &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an iterator range for the container. </p>
-<p>Construct the container (or container view) with an iterator range. Whether element copies are performed depends on the container type. Most container types copy initial elements as defined by the range and the initial size is set accordingly. A <code>ring_span</code>, however, uses the range distance to define a capacity and sets the initial size to zero.</p>
+<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> by moving in an already constructed container. </p>
+<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> container. Typically a container view is initialized with an underlying object, for example a statically allocated array. This allows <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to be used where dynamic memory is not allowed.</p>
+<p>This constructor also allows arbitrary initialization of the data inside the container before it is managed by the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
 <p>An internal <code>std::stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
-<dl class="section note"><dt>Note</dt><dd>This is the only constructor that can be used with a <code>ring_span</code> container type.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">beg</td><td>Beginning iterator.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending iterator.</td></tr>
+    <tr><td class="paramname">container</td><td>Container object to be moved from (or copied from if not movable).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true if <code>beg</code> equals <code>end</code> otherwise returns false. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns <code>true</code> if <code>beg</code> equals <code>end</code> otherwise returns <code>false</code>. </dd>
 <dd>
 <code>size</code> returns the distance between <code>beg</code> and <code>end</code> parameters. </dd></dl>
 
 </div>
 </div>
-<a id="aee1faf19b6871541a58a465a03b7108f" name="aee1faf19b6871541a58a465a03b7108f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee1faf19b6871541a58a465a03b7108f">&#9670;&#160;</a></span>wait_queue() <span class="overload">[4/6]</span></h2>
+<a id="a4bcad2c3580fbdd975c7f5ce36d8c09c" name="a4bcad2c3580fbdd975c7f5ce36d8c09c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bcad2c3580fbdd975c7f5ce36d8c09c">&#9670;&#160;</a></span>wait_queue() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
-<div class="memtemplate">
-template&lt;typename Iter &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -307,14 +289,8 @@ template&lt;typename Iter &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Iter&#160;</td>
-          <td class="paramname"><em>beg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Iter&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
+          <td class="paramtype">Container &amp;&amp;&#160;</td>
+          <td class="paramname"><em>container</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -328,17 +304,15 @@ template&lt;typename Iter &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an iterator range and a <code>std::stop_token</code>. </p>
+<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> container. It also takes a <code>std::stop_token</code> for external shutdown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
-    <tr><td class="paramname">beg</td><td>Beginning iterator.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending iterator.</td></tr>
+    <tr><td class="paramname">container</td><td>Container object to be moved from (or copied from if not movable).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns true if <code>beg</code> equals <code>end</code> otherwise returns false. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns <code>true</code> if <code>beg</code> equals <code>end</code> otherwise returns <code>false</code>. </dd>
 <dd>
 <code>size</code> returns the distance between <code>beg</code> and <code>end</code> parameters. </dd></dl>
 
@@ -384,7 +358,7 @@ Using this constructor with most standard library container types creates a cont
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns true, else behavior depends on container used. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns <code>true</code>, else behavior depends on container used. </dd>
 <dd>
 <code>size</code> returns 0 or <code>sz</code> depending on container used. </dd></dl>
 
@@ -434,7 +408,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns true, else behavior depends on container used. </dd>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>sz</code> is 0 <code>empty</code> returns <code>true</code>, else behavior depends on container used. </dd>
 <dd>
 <code>size</code> returns 0 or <code>sz</code> depending on container used. </dd></dl>
 
@@ -522,7 +496,7 @@ template&lt;typename ... Args&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>std</code> containers return a reference to the newly constructed element from <code>emplace</code> method calls. <code>emplace_push</code> for a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> does not follow this convention and instead has the same return as the <code>push</code> methods.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is has been requested to stop.</dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>
@@ -590,7 +564,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop.</dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>
@@ -622,7 +596,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 
 <p>Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
 <p>This method has the same semantics as the other <code>push</code>, except that the value will be moved (if possible) instead of copied.</p>
-<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is false, one of any threads waiting for a value will be unblocked. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
 </div>

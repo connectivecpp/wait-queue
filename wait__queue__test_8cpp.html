@@ -173,18 +173,6 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>vv_wq</b> = <a class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a151bd3dbb7d9291be8994dfeb044554b" id="r_a151bd3dbb7d9291be8994dfeb044554b"><td class="memTemplParams" colspan="2"><a id="a151bd3dbb7d9291be8994dfeb044554b" name="a151bd3dbb7d9291be8994dfeb044554b"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a151bd3dbb7d9291be8994dfeb044554b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create_wait_queue</b> (const std::deque&lt; T &gt; *)</td></tr>
-<tr class="separator:a151bd3dbb7d9291be8994dfeb044554b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa032a6ddb655aa63dd41ecdceef92d1a" id="r_aa032a6ddb655aa63dd41ecdceef92d1a"><td class="memTemplParams" colspan="2"><a id="aa032a6ddb655aa63dd41ecdceef92d1a" name="aa032a6ddb655aa63dd41ecdceef92d1a"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa032a6ddb655aa63dd41ecdceef92d1a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create_wait_queue</b> (const nonstd::ring_span&lt; T &gt; *)</td></tr>
-<tr class="separator:aa032a6ddb655aa63dd41ecdceef92d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6173cacd1823d102aa8837f7c9be08e4" id="r_a6173cacd1823d102aa8837f7c9be08e4"><td class="memTemplParams" colspan="2"><a id="a6173cacd1823d102aa8837f7c9be08e4" name="a6173cacd1823d102aa8837f7c9be08e4"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a6173cacd1823d102aa8837f7c9be08e4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create_wait_queue</b> (const jm::circular_buffer&lt; T, N &gt; *)</td></tr>
-<tr class="separator:a6173cacd1823d102aa8837f7c9be08e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ca7458033cb964b295a25d1e9cc7ba5" id="r_a5ca7458033cb964b295a25d1e9cc7ba5"><td class="memTemplParams" colspan="2"><a id="a5ca7458033cb964b295a25d1e9cc7ba5" name="a5ca7458033cb964b295a25d1e9cc7ba5"></a>
 template&lt;typename Q &gt; </td></tr>
 <tr class="memitem:a5ca7458033cb964b295a25d1e9cc7ba5"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>non_threaded_push_test</b> (Q &amp;wq, const typename Q::value_type &amp;val, int count)</td></tr>
@@ -194,6 +182,10 @@ template&lt;typename Q &gt; <br />
 requires std::is_arithmetic_v&lt;typename Q::value_type&gt;</td></tr>
 <tr class="memitem:ae7f2f32dcab1044e3aa47691d79a1af9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>non_threaded_arithmetic_test</b> (Q &amp;wq, int count)</td></tr>
 <tr class="separator:ae7f2f32dcab1044e3aa47691d79a1af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb899690c6ee0597fb68b9a4ce585920" id="r_acb899690c6ee0597fb68b9a4ce585920"><td class="memTemplParams" colspan="2"><a id="acb899690c6ee0597fb68b9a4ce585920" name="acb899690c6ee0597fb68b9a4ce585920"></a>
+template&lt;typename Q &gt; </td></tr>
+<tr class="memitem:acb899690c6ee0597fb68b9a4ce585920"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>non_threaded_test</b> (Q &amp;wq)</td></tr>
+<tr class="separator:acb899690c6ee0597fb68b9a4ce585920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19a08fc1f6bbcf7d17c6d018e6d935a1" id="r_a19a08fc1f6bbcf7d17c6d018e6d935a1"><td class="memTemplParams" colspan="2"><a id="a19a08fc1f6bbcf7d17c6d018e6d935a1" name="a19a08fc1f6bbcf7d17c6d018e6d935a1"></a>
 template&lt;typename T , typename Q &gt; </td></tr>
 <tr class="memitem:a19a08fc1f6bbcf7d17c6d018e6d935a1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>read_func</b> (std::stop_token stop_tok, Q &amp;wq, test_set&lt; T &gt; &amp;s, std::mutex &amp;mut)</td></tr>
@@ -206,18 +198,24 @@ template&lt;typename T , typename Q &gt; </td></tr>
 template&lt;typename T , typename Q &gt; </td></tr>
 <tr class="memitem:a530e3e5a3aa9980f7ec6518b4ad15192"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>threaded_test</b> (Q &amp;wq, int num_readers, int num_writers, int slice, const T &amp;val)</td></tr>
 <tr class="separator:a530e3e5a3aa9980f7ec6518b4ad15192"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a541e833ab65d6695009a6a97701518e1" id="r_a541e833ab65d6695009a6a97701518e1"><td class="memItemLeft" align="right" valign="top"><a id="a541e833ab65d6695009a6a97701518e1" name="a541e833ab65d6695009a6a97701518e1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Non-threaded wait_queue test&quot;, &quot;[wait_queue] [non_threaded]&quot;,(std::deque&lt; int &gt;),(std::deque&lt; double &gt;),(std::deque&lt; short &gt;),(std::deque&lt; std::string &gt;),(nonstd::ring_span&lt; int &gt;),(nonstd::ring_span&lt; double &gt;),(nonstd::ring_span&lt; short &gt;),(nonstd::ring_span&lt; std::string &gt;),(jm::circular_buffer&lt; int, N &gt;),(jm::circular_buffer&lt; double, N &gt;),(jm::circular_buffer&lt; short, N &gt;),(jm::circular_buffer&lt; std::string, N &gt;))</td></tr>
-<tr class="separator:a541e833ab65d6695009a6a97701518e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8861e70eea0cc62c68fd18f892f9d91" id="r_ad8861e70eea0cc62c68fd18f892f9d91"><td class="memItemLeft" align="right" valign="top"><a id="ad8861e70eea0cc62c68fd18f892f9d91" name="ad8861e70eea0cc62c68fd18f892f9d91"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Non-threaded wait_queue test, testing copy construction without move construction&quot;, &quot;[wait_queue] [no_move]&quot;)</td></tr>
-<tr class="separator:ad8861e70eea0cc62c68fd18f892f9d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ace947df58d06bbbe007cb0fe619af2" id="r_a3ace947df58d06bbbe007cb0fe619af2"><td class="memItemLeft" align="right" valign="top"><a id="a3ace947df58d06bbbe007cb0fe619af2" name="a3ace947df58d06bbbe007cb0fe619af2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Non-threaded wait_queue test, testing move construction without copy construction&quot;, &quot;[wait_queue] [no_copy]&quot;)</td></tr>
-<tr class="separator:a3ace947df58d06bbbe007cb0fe619af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c74dc568fd3c8d1dd7dd62600ef5ba0" id="r_a6c74dc568fd3c8d1dd7dd62600ef5ba0"><td class="memItemLeft" align="right" valign="top"><a id="a6c74dc568fd3c8d1dd7dd62600ef5ba0" name="a6c74dc568fd3c8d1dd7dd62600ef5ba0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Non-threaded wait_queue test, testing complex constructor and emplacement&quot;, &quot;[wait_queue] [complex_type] [deque]&quot;)</td></tr>
-<tr class="separator:a6c74dc568fd3c8d1dd7dd62600ef5ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59dacbd6c1f93fb71fa50c47bee4cf8c" id="r_a59dacbd6c1f93fb71fa50c47bee4cf8c"><td class="memItemLeft" align="right" valign="top"><a id="a59dacbd6c1f93fb71fa50c47bee4cf8c" name="a59dacbd6c1f93fb71fa50c47bee4cf8c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Non-threaded wait_queue test, deque&quot;, &quot;[wait_queue] [non_threaded] [deque]&quot;, int, double, short, std::string)</td></tr>
+<tr class="separator:a59dacbd6c1f93fb71fa50c47bee4cf8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad593b18cfc54bab06a07545c8d1007d2" id="r_ad593b18cfc54bab06a07545c8d1007d2"><td class="memItemLeft" align="right" valign="top"><a id="ad593b18cfc54bab06a07545c8d1007d2" name="ad593b18cfc54bab06a07545c8d1007d2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Non-threaded wait_queue test, ring_span&quot;, &quot;[wait_queue] [non_threaded] [ring_span]&quot;, int, double, short, std::string)</td></tr>
+<tr class="separator:ad593b18cfc54bab06a07545c8d1007d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedbf5d779d88362dd3aee11ae9904acb" id="r_aedbf5d779d88362dd3aee11ae9904acb"><td class="memItemLeft" align="right" valign="top"><a id="aedbf5d779d88362dd3aee11ae9904acb" name="aedbf5d779d88362dd3aee11ae9904acb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Non-threaded wait_queue test, circular_buffer&quot;, &quot;[wait_queue] [non_threaded] [circular_buffer]&quot;, int, double, short, std::string)</td></tr>
+<tr class="separator:aedbf5d779d88362dd3aee11ae9904acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad92641e287d4c8d53b2a8ec1416ff332" id="r_ad92641e287d4c8d53b2a8ec1416ff332"><td class="memItemLeft" align="right" valign="top"><a id="ad92641e287d4c8d53b2a8ec1416ff332" name="ad92641e287d4c8d53b2a8ec1416ff332"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Non-threaded wait_queue test, testing copy construction without move construction&quot;, &quot;[wait_queue] [no_move]&quot;)</td></tr>
+<tr class="separator:ad92641e287d4c8d53b2a8ec1416ff332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada27db34d4899d5024052d5ca2b0b226" id="r_ada27db34d4899d5024052d5ca2b0b226"><td class="memItemLeft" align="right" valign="top"><a id="ada27db34d4899d5024052d5ca2b0b226" name="ada27db34d4899d5024052d5ca2b0b226"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Non-threaded wait_queue test, testing move construction without copy construction&quot;, &quot;[wait_queue] [no_copy]&quot;)</td></tr>
+<tr class="separator:ada27db34d4899d5024052d5ca2b0b226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc812b2d058d6519157899175e544742" id="r_abc812b2d058d6519157899175e544742"><td class="memItemLeft" align="right" valign="top"><a id="abc812b2d058d6519157899175e544742" name="abc812b2d058d6519157899175e544742"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Non-threaded wait_queue test, testing complex constructor and emplacement&quot;, &quot;[wait_queue] [complex_type] [deque]&quot;)</td></tr>
+<tr class="separator:abc812b2d058d6519157899175e544742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a070e4ea01f32bf8dc19979ab1fabcc" id="r_a2a070e4ea01f32bf8dc19979ab1fabcc"><td class="memItemLeft" align="right" valign="top"><a id="a2a070e4ea01f32bf8dc19979ab1fabcc" name="a2a070e4ea01f32bf8dc19979ab1fabcc"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>vv_push_func</b> (<a class="el" href="classchops_1_1wait__queue.html">vv_wq</a> &amp;wq, std::size_t cnt)</td></tr>
 <tr class="separator:a2a070e4ea01f32bf8dc19979ab1fabcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,15 +225,15 @@ std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>vv_pop_func</b
 <tr class="memitem:a2d269eb12334ddb9af0f2b5f91e16c06" id="r_a2d269eb12334ddb9af0f2b5f91e16c06"><td class="memItemLeft" align="right" valign="top"><a id="a2d269eb12334ddb9af0f2b5f91e16c06" name="a2d269eb12334ddb9af0f2b5f91e16c06"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Vector of vector of float, move and copy&quot;, &quot;[wait_queue] [float] [vector_vector_float]&quot;)</td></tr>
 <tr class="separator:a2d269eb12334ddb9af0f2b5f91e16c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977313b8a6585b27e339f277c2c030a5" id="r_a977313b8a6585b27e339f277c2c030a5"><td class="memItemLeft" align="right" valign="top"><a id="a977313b8a6585b27e339f277c2c030a5" name="a977313b8a6585b27e339f277c2c030a5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Fixed size ring_span, testing wrap around with int type&quot;, &quot;[wait_queue] [int] [ring_span_wrap_around]&quot;)</td></tr>
-<tr class="separator:a977313b8a6585b27e339f277c2c030a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa075ccb1b1012893199bbdebfdc6aa53" id="r_aa075ccb1b1012893199bbdebfdc6aa53"><td class="memItemLeft" align="right" valign="top"><a id="aa075ccb1b1012893199bbdebfdc6aa53" name="aa075ccb1b1012893199bbdebfdc6aa53"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Threaded wait queue, deque int&quot;, &quot;[wait_queue] [threaded] [int] [deque]&quot;)</td></tr>
-<tr class="separator:aa075ccb1b1012893199bbdebfdc6aa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83aa994744f112298f25e572f90683f7" id="r_a83aa994744f112298f25e572f90683f7"><td class="memItemLeft" align="right" valign="top"><a id="a83aa994744f112298f25e572f90683f7" name="a83aa994744f112298f25e572f90683f7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Threaded wait queue, deque string&quot;, &quot;[wait_queue] [threaded] [string] [deque]&quot;)</td></tr>
-<tr class="separator:a83aa994744f112298f25e572f90683f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ec958df43867bdea5db3b17875d1aa8" id="r_a4ec958df43867bdea5db3b17875d1aa8"><td class="memItemLeft" align="right" valign="top"><a id="a4ec958df43867bdea5db3b17875d1aa8" name="a4ec958df43867bdea5db3b17875d1aa8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Fixed size ring_span, testing wrap around with int type&quot;, &quot;[wait_queue] [int] [ring_span_wrap_around]&quot;)</td></tr>
+<tr class="separator:a4ec958df43867bdea5db3b17875d1aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ec009fcdb5587ec59e5da5921f442b" id="r_a72ec009fcdb5587ec59e5da5921f442b"><td class="memItemLeft" align="right" valign="top"><a id="a72ec009fcdb5587ec59e5da5921f442b" name="a72ec009fcdb5587ec59e5da5921f442b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Threaded wait queue, deque int&quot;, &quot;[wait_queue] [threaded] [int] [deque]&quot;)</td></tr>
+<tr class="separator:a72ec009fcdb5587ec59e5da5921f442b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2550ebe92b4ac440b584c83e21fb031" id="r_ac2550ebe92b4ac440b584c83e21fb031"><td class="memItemLeft" align="right" valign="top"><a id="ac2550ebe92b4ac440b584c83e21fb031" name="ac2550ebe92b4ac440b584c83e21fb031"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Threaded wait queue, deque string&quot;, &quot;[wait_queue] [threaded] [string] [deque]&quot;)</td></tr>
+<tr class="separator:ac2550ebe92b4ac440b584c83e21fb031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
