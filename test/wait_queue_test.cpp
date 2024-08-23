@@ -39,24 +39,6 @@ using namespace std::literals::string_literals;
 
 constexpr int N = 40;
 
-// WQ creation function with non-used pointer for overloading
-template <typename T>
-auto create_wait_queue(const std::deque<T>*) {
-  return chops::wait_queue<T, std::deque<T> > { };
-}
-
-template <typename T>
-auto create_wait_queue(const nonstd::ring_span<T>*) {
-  static T buf[N];
-  return chops::wait_queue<T, nonstd::ring_span<T> > { buf+0, buf+N };
-}
-
-template <typename T>
-auto create_wait_queue(const jm::circular_buffer<T, N>*) {
-  return chops::wait_queue<T, jm::circular_buffer<T, N> > { };
-}
-
-
 template <typename Q>
 void non_threaded_push_test(Q& wq, const typename Q::value_type& val, int count) {
 
@@ -109,6 +91,28 @@ void non_threaded_arithmetic_test(Q& wq, int count) {
   REQUIRE (wq.empty());
 
 }
+
+template <typename Q>
+void non_threaded_test (Q& wq) {
+  using val_type = typename Q::value_type;
+  val_type val1;
+  val_type val2;
+  if constexpr (std::is_arithmetic_v<val_type>) {
+    val1 = 42;
+    val2 = 43;
+  }
+  else { // assume std::string value type in container - generalize as needed
+    val1 = "Howzit going, bro!";
+    val2 = "It's hanging, bro!";
+  }
+
+  non_threaded_push_test(wq, val1, N);
+  if constexpr (std::is_arithmetic_v<val_type>) {
+    non_threaded_arithmetic_test(wq, N);
+  }
+}
+
+// threaded testing code
 
 template <typename T>
 using set_elem = std::pair<int, T>;
@@ -187,36 +191,35 @@ bool threaded_test(Q& wq, int num_readers, int num_writers, int slice, const T& 
 
 // non threaded test, multiple container types, multiple element types
 
-TEMPLATE_TEST_CASE ( "Non-threaded wait_queue test", "[wait_queue] [non_threaded]",
-         (std::deque<int>), (std::deque<double>), (std::deque<short>), (std::deque<std::string>),
-         (nonstd::ring_span<int>), (nonstd::ring_span<double>), (nonstd::ring_span<short>), (nonstd::ring_span<std::string>),
-         (jm::circular_buffer<int, N>), (jm::circular_buffer<double, N>),
-         (jm::circular_buffer<short, N>), (jm::circular_buffer<std::string, N>) ) {
+TEMPLATE_TEST_CASE ( "Non-threaded wait_queue test, deque", 
+                     "[wait_queue] [non_threaded] [deque]",
+                     int, double, short, std::string ) {
+  chops::wait_queue<TestType> wq;
+  non_threaded_test(wq);
+}
 
-  using val_type = typename TestType::value_type;
-  val_type val1;
-  val_type val2;
-  if constexpr (std::is_arithmetic_v<val_type>) {
-    val1 = 42;
-    val2 = 43;
-  }
-  else { // assume std::string value type in container - generalize as needed
-    val1 = "Howzit going, bro!";
-    val2 = "It's hanging, bro!";
-  }
+TEMPLATE_TEST_CASE ( "Non-threaded wait_queue test, ring_span", 
+                     "[wait_queue] [non_threaded] [ring_span]",
+                     int, double, short, std::string ) {
 
-  auto wq = create_wait_queue( static_cast<const TestType*>(nullptr) );
-  non_threaded_push_test(wq, val1, N);
-  if constexpr (std::is_arithmetic_v<val_type>) {
-    non_threaded_arithmetic_test(wq, N);
-  }
+  static TestType buf[N];
+  chops::wait_queue<TestType, nonstd::ring_span<TestType>> wq 
+    { nonstd::ring_span<TestType> { buf+0, buf+N } };
+  non_threaded_test(wq);
+}
+
+TEMPLATE_TEST_CASE ( "Non-threaded wait_queue test, circular_buffer", 
+                     "[wait_queue] [non_threaded] [circular_buffer]",
+                     int, double, short, std::string ) {
+  chops::wait_queue<TestType, jm::circular_buffer<TestType, N>> wq;
+  non_threaded_test(wq);
 }
 
 /*
 */
 
-SCENARIO ( "Non-threaded wait_queue test, testing copy construction without move construction",
-           "[wait_queue] [no_move]" ) {
+TEST_CASE ( "Non-threaded wait_queue test, testing copy construction without move construction",
+            "[wait_queue] [no_move]" ) {
 
   struct Foo {
     Foo() = delete;
@@ -235,8 +238,8 @@ SCENARIO ( "Non-threaded wait_queue test, testing copy construction without move
   non_threaded_push_test(wq, Foo(42.0), N);
 }
 
-SCENARIO ( "Non-threaded wait_queue test, testing move construction without copy construction",
-           "[wait_queue] [no_copy]" ) {
+TEST_CASE ( "Non-threaded wait_queue test, testing move construction without copy construction",
+            "[wait_queue] [no_copy]" ) {
 
   struct Bar {
     Bar() = delete;
@@ -262,8 +265,8 @@ SCENARIO ( "Non-threaded wait_queue test, testing move construction without copy
   REQUIRE (wq.empty());
 }
 
-SCENARIO ( "Non-threaded wait_queue test, testing complex constructor and emplacement",
-           "[wait_queue] [complex_type] [deque]" ) {
+TEST_CASE ( "Non-threaded wait_queue test, testing complex constructor and emplacement",
+            "[wait_queue] [complex_type] [deque]" ) {
 
   struct Band {
     using engagement_type = std::vector<std::vector<std::string> >;
@@ -375,12 +378,13 @@ TEST_CASE ( "Vector of vector of float, move and copy",
 
 }
 
-SCENARIO ( "Fixed size ring_span, testing wrap around with int type",
-           "[wait_queue] [int] [ring_span_wrap_around]" ) {
+TEST_CASE ( "Fixed size ring_span, testing wrap around with int type",
+            "[wait_queue] [int] [ring_span_wrap_around]" ) {
 
 
   int buf[N];
-  chops::wait_queue<int, nonstd::ring_span<int> > wq(buf+0, buf+N);
+  chops::wait_queue<int, nonstd::ring_span<int> > wq 
+    { nonstd::ring_span<int> { buf+0, buf+N } };
 
   constexpr int Answer = 42;
   constexpr int AnswerPlus = 42+5;
@@ -409,8 +413,8 @@ SCENARIO ( "Fixed size ring_span, testing wrap around with int type",
   REQUIRE (wq.empty());
 }
 
-SCENARIO ( "Threaded wait queue, deque int",
-           "[wait_queue] [threaded] [int] [deque]" ) {
+TEST_CASE ( "Threaded wait queue, deque int",
+            "[wait_queue] [threaded] [int] [deque]" ) {
 
   chops::wait_queue<set_elem<int> > wq;
 
@@ -426,8 +430,8 @@ SCENARIO ( "Threaded wait queue, deque int",
   }
 }
 
-SCENARIO ( "Threaded wait queue, deque string", 
-           "[wait_queue] [threaded] [string] [deque]" ) {
+TEST_CASE ( "Threaded wait queue, deque string", 
+            "[wait_queue] [threaded] [string] [deque]" ) {
 
   chops::wait_queue<set_elem<std::string> > wq;
 
