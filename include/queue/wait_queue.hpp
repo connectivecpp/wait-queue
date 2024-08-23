@@ -27,11 +27,14 @@
  *
  * In particular, @c wait_queue:
  *
- * - Has been tested with Martin Moene's @c ring_span library for the internal container. 
- *   A @c ring_span is traditionally known as a "ring buffer" or "circular buffer". This 
- *   implies that the @c wait_queue can be used in environments where dynamic memory 
- *   management (heap) is not allowed or is problematic. In particular, no heap memory is 
- *   directly allocated within the @c wait_queue object.
+ * - Has been tested with Martin Moene's @c ring_span library for the internal container,
+ *   as well as Justin Masiulis' @c circular_buffer library. A "ring buffer" or 
+ *   "circular buffer" uses a fixed size container and implies that the @c wait_queue can 
+ *   be used in environments where dynamic memory management (heap) is not allowed or is 
+ *   problematic. In particular, no heap memory will be directly allocated within the 
+ *   @c wait_queue object. A @c ring_span is a view on a container object instead of 
+ *   directly owning the container, so there are differences in construction and
+ *   container management.
  *
  * - Does not throw or catch exceptions anywhere in its code base. If a value being pushed
  *   on to the queue throws an exception, it can be caught by the pushing code (or higher
@@ -102,13 +105,13 @@
  * @code
  *   const int sz = 20;
  *   int buf[sz];
- *   chops::wait_queue<int, nonstd::ring_span<int> > wq(buf+0, buf+sz);
+ *   chops::wait_queue<int, nonstd::ring_span<int> > 
+ *         wq { nonstd::ring_span<int> { buf+0, buf+sz } };
  *   // push and pop same as code with default container
  * @endcode
  *
  * The container type must support the following (depending on which 
- * methods are called): default construction, construction from a 
- * begin and end iterator, construction with an initial size, 
+ * methods are called): default construction, construction with an initial size, 
  * @c push_back (preferably overloaded for both copy and move), 
  * @c emplace_back (with a template parameter pack), @c front, @c pop_front, 
  * @c empty, and @c size. The container must also have a @c size_type
@@ -134,8 +137,9 @@
  * @c circular_buffer then the default constructor for @c wait_queue cannot be used 
  * (since it would result in a container with an empty capacity).
  *
+ * Thanks go to Lou Langholtz for adding DBC (Design by Contract) assertions.
  *
- * @authors Cliff Green, Anthony Williams
+ * @authors Cliff Green, Lou Langholtz, Anthony Williams
  *
  * @copyright (c) 2017-2024 by Cliff Green
  *
@@ -186,9 +190,9 @@ public:
    * anything, so a different @c wait_queue constructor must be used if
    * instantiated with a @c boost @c circular_buffer.
    *
-   * @post @c empty returns true.
+   * @post @c empty returns @c true.
    * @post @c size returns 0.
-   * @post @c stop_requested return false.
+   * @post @c stop_requested returns @c false.
    */
   wait_queue()
     // noexcept(std::is_nothrow_constructible<Container>::value)
@@ -204,7 +208,7 @@ public:
    * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
    * processing.
    *
-   * @post @c empty returns true.
+   * @post @c empty returns @c true.
    * @post @c size returns 0.
    */
   wait_queue(std::stop_token stop_tok)
@@ -215,55 +219,52 @@ public:
   }
 
   /**
-   * @brief Construct a @c wait_queue with an iterator range for the container.
+   * @brief Construct a @c wait_queue by moving in an already constructed 
+   * container.
    *
-   * Construct the container (or container view) with an iterator range. Whether
-   * element copies are performed depends on the container type. Most container
-   * types copy initial elements as defined by the range and the initial size is
-   * set accordingly. A @c ring_span, however, uses the range distance to define 
-   * a capacity and sets the initial size to zero.
+   * This constructor allows a container view to be used for the @c wait_queue
+   * container. Typically a container view is initialized with an underlying
+   * object, for example a statically allocated array. This allows @c wait_queue
+   * to be used where dynamic memory is not allowed.
+   *
+   * This constructor also allows arbitrary initialization of the data inside
+   * the container before it is managed by the @c wait_queue.
    *
    * An internal @c std::stop_source is used to provide a @c std::stop_token for
    * coordinating shutdown.
    *
-   * @note This is the only constructor that can be used with a @c ring_span
-   * container type.
+   * @param container Container object to be moved from (or copied from if not
+   * movable).
    *
-   * @param beg Beginning iterator.
-   *
-   * @param end Ending iterator.
-   *
-   * @post @c empty returns true if @c beg equals @c end otherwise returns false.
+   * @post @c empty returns @c true if @c beg equals @c end otherwise returns @c false.
    * @post @c size returns the distance between @c beg and @c end parameters.
    */
-  template <typename Iter>
-  wait_queue(Iter beg, Iter end)
-    // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
+  wait_queue(Container&& container)
+    // noexcept(std::is_  something movable or maybe copyable )
       : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_queue(beg, end) {
-    assert(empty() == (beg == end));
-    assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+	m_data_queue(std::move(container)) {
+    // assert(empty() == (beg == end));
+    // assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
   }
 
   /**
-   * @brief Construct a @c wait_queue with an iterator range and a @c std::stop_token.
+   * This constructor allows a container view to be used for the @c wait_queue
+   * container. It also takes a @c std::stop_token for external shutdown.
    *
    * @param stop_tok A @c std::stop_token which can be used to shutdown @c wait_queue
    * processing.
    *
-   * @param beg Beginning iterator.
+   * @param container Container object to be moved from (or copied from if not
+   * movable).
    *
-   * @param end Ending iterator.
-   *
-   * @post @c empty returns true if @c beg equals @c end otherwise returns false.
+   * @post @c empty returns @c true if @c beg equals @c end otherwise returns @c false.
    * @post @c size returns the distance between @c beg and @c end parameters.
    */
-  template <typename Iter>
-  wait_queue(std::stop_token stop_tok, Iter beg, Iter end)
+  wait_queue(std::stop_token stop_tok, Container&& container)
     // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_stop_tok(stop_tok), m_data_queue(beg, end) {
-    assert(empty() == (beg == end));
-    assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+      : m_stop_tok(stop_tok), m_data_queue(std::move(container)) {
+    // assert(empty() == (beg == end));
+    // assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
   }
 
   /**
@@ -285,7 +286,7 @@ public:
    *
    * @param sz Capacity or initial size, depending on container type.
    *
-   * @post If @c sz is 0 @c empty returns true, else behavior depends on container used.
+   * @post If @c sz is 0 @c empty returns @c true, else behavior depends on container used.
    * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(size_type sz)
@@ -305,7 +306,7 @@ public:
    *
    * @param sz Capacity or initial size, depending on container type.
    *
-   * @post If @c sz is 0 @c empty returns true, else behavior depends on container used.
+   * @post If @c sz is 0 @c empty returns @c true, else behavior depends on container used.
    * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(std::stop_token stop_tok, size_type sz)
@@ -360,7 +361,7 @@ public:
    * @return @c true if successful, @c false if the @c wait_queue has been
    * requested to stop.
    *
-   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   * @post If @c true is returned and @c empty is @c false, one of any threads waiting for a
    *   value will be unblocked.
    */
   auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */
@@ -382,7 +383,7 @@ public:
    * This method has the same semantics as the other @c push, except that the value will 
    * be moved (if possible) instead of copied.
    *
-   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   * @post If @c true is returned and @c empty is @c false, one of any threads waiting for a
    *   value will be unblocked.
    */
   auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ 
@@ -411,7 +412,7 @@ public:
    * @return @c true if successful, @c false if the @c wait_queue is has been requested
    * to stop.
    *
-   * @post If @c true is returned and @c empty is false, one of any threads waiting for a
+   * @post If @c true is returned and @c empty is @c false, one of any threads waiting for a
    *   value will be unblocked.
    */
   template <typename ... Args>
