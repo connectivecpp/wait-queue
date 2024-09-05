@@ -158,11 +158,12 @@
 #include <stop_token> // std::stop_source, std::stop_token
 #include <optional>
 #include <utility> // std::move, std::move_if_noexcept
-#include <type_traits> // for noexcept specs
+#include <type_traits> // for requires clauses and noexcept specs
 
 namespace chops {
 
 template <typename T, typename Container = std::deque<T> >
+  requires std::is_copy_constructible_v<T> || std::is_move_constructible_v<T>
 class wait_queue {
 private:
   mutable std::mutex              m_mut;
@@ -195,8 +196,10 @@ public:
    * @post @c stop_requested returns @c false.
    */
   wait_queue()
-    // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()) {
+    requires std::is_default_constructible_v<Container>
+    // noexcept(std::is_nothrow_constructible_v<Container>)
+      : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()) 
+  {
     assert(empty());
     assert(size() == size_type(0));
     assert(!stop_requested());
@@ -212,8 +215,10 @@ public:
    * @post @c size returns 0.
    */
   wait_queue(std::stop_token stop_tok)
-    // noexcept(std::is_nothrow_constructible<Container>::value)
-      : m_stop_tok(stop_tok) {
+    requires std::is_default_constructible_v<Container>
+    // noexcept(std::is_nothrow_constructible_v<Container, std::stop_token>)
+      : m_stop_tok(stop_tok) 
+  {
     assert(empty());
     assert(size() == size_type(0));
   }
@@ -236,15 +241,16 @@ public:
    * @param container Container object to be moved from (or copied from if not
    * movable).
    *
-   * @post @c empty returns @c true if @c beg equals @c end otherwise returns @c false.
-   * @post @c size returns the distance between @c beg and @c end parameters.
+   * @post @c empty and @c size match moved (or copied) in container.
    */
   wait_queue(Container&& container)
-    // noexcept(std::is_  something movable or maybe copyable )
+    requires std::is_move_constructible_v<Container> ||
+             std::is_copy_constructible_v<Container>
+    // noexcept(std::is_nnthrow_constructible_v<Container, Container&&>)
       : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_queue(std::move(container)) {
-    // assert(empty() == (beg == end));
-    // assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+	m_data_queue(std::move(container)) 
+  {
+    // not easily assertible until contracts added to C++
   }
 
   /**
@@ -257,14 +263,14 @@ public:
    * @param container Container object to be moved from (or copied from if not
    * movable).
    *
-   * @post @c empty returns @c true if @c beg equals @c end otherwise returns @c false.
-   * @post @c size returns the distance between @c beg and @c end parameters.
+   * @post @c empty and @c size match moved (or copied) in container.
    */
   wait_queue(std::stop_token stop_tok, Container&& container)
-    // noexcept(std::is_nothrow_constructible<Container, Iter, Iter>::value)
-      : m_stop_tok(stop_tok), m_data_queue(std::move(container)) {
-    // assert(empty() == (beg == end));
-    // assert((size() == size_type(0)) == (beg == end)); // std::distance constrains beg, end.
+    requires std::is_move_constructible_v<Container> ||
+             std::is_copy_constructible_v<Container>
+    // noexcept(std::is_nothrow_constructible_v<Container, std::stop_token, Container&&>)
+      : m_stop_tok(stop_tok), m_data_queue(std::move(container)) 
+  {
   }
 
   /**
@@ -290,9 +296,11 @@ public:
    * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(size_type sz)
-    // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
+    requires std::is_constructible_v<Container, size_type>
+    // noexcept(std::is_nothrow_constructible_v<Container, size_type>)
       : m_stop_src(std::stop_source{}), m_stop_tok((*m_stop_src).get_token()),
-	m_data_queue(sz) {
+	m_data_queue(sz) 
+  {
     assert((sz != size_type(0)) || empty());
     assert((size() == size_type(0)) || (size() == sz));
   }
@@ -310,8 +318,10 @@ public:
    * @post @c size returns 0 or @c sz depending on container used.
    */
   wait_queue(std::stop_token stop_tok, size_type sz)
-    // noexcept(std::is_nothrow_constructible<Container, size_type>::value)
-      : m_stop_tok((*m_stop_src).get_token()), m_data_queue(sz) {
+    requires std::is_constructible_v<Container, std::stop_token, size_type>
+    // noexcept(std::is_nothrow_constructible_v<Container, std::stop_token, size_type>)
+      : m_stop_tok((*m_stop_src).get_token()), m_data_queue(sz) 
+  {
     assert((sz != size_type(0)) || empty());
     assert((size() == size_type(0)) || (size() == sz));
   }
@@ -341,13 +351,12 @@ public:
    * external @c std::stop_token was passed in.
    */
   auto request_stop() noexcept 
-        -> bool {
-
+        -> bool 
+  {
     if (m_stop_src) {
       return (*m_stop_src).request_stop();
     }
     return false;
-
   }
 
   /**
@@ -364,9 +373,11 @@ public:
    * @post If @c true is returned and @c empty is @c false, one of any threads waiting for a
    *   value will be unblocked.
    */
-  auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible<T>::value) */
-        -> bool {
+  auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible_v<T>) */
+        -> bool 
+      requires requires (T val, Container c) { c.push_back(val); }
 
+  {
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -386,9 +397,11 @@ public:
    * @post If @c true is returned and @c empty is @c false, one of any threads waiting for a
    *   value will be unblocked.
    */
-  auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible<T>::value) */ 
-        -> bool {
+  auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible_v<T>) */ 
+        -> bool
+      requires requires (T val, Container c) { c.push_back(val); }
 
+  {
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -416,9 +429,11 @@ public:
    *   value will be unblocked.
    */
   template <typename ... Args>
-  auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible<T, Args...>::value)*/
-        -> bool {
-
+  auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible_v<T, Args...>)*/
+        -> bool 
+      requires requires (Args && args, Container c) { c.emplace_back(args); }
+ 
+  {
     if (m_stop_tok.stop_requested()) {
       return false;
     }
@@ -426,7 +441,6 @@ public:
     m_data_queue.emplace_back(std::forward<Args>(args)...);
     m_data_cond.notify_one();
     return true;
-
   }
 
   /**
@@ -443,9 +457,11 @@ public:
    * @post If a non empty value is returned, until a push function is called, @c size is one
    *   less than before this function was called.
    */
-  auto wait_and_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
-        -> std::optional<T> {
+  [[nodiscard]] auto wait_and_pop() /* noexcept(std::is_nothrow_constructible_v<T>) */
+        -> std::optional<T> 
+      requires requires (Container c) { c.empty(); c.pop_front(); }
 
+  {
     std::unique_lock<std::mutex> lk{m_mut};
     if (!m_data_cond.wait ( lk, m_stop_tok, [this] { return !m_data_queue.empty(); } )) {
       return std::optional<T> {}; // queue was request to stop, no data available
@@ -472,9 +488,10 @@ public:
    * @post If a non empty value is returned, until a push function is called, @c size is one
    *   less than before this function was called.
    */
-  auto try_pop() /* noexcept(std::is_nothrow_constructible<T>::value) */
-        -> std::optional<T> {
-
+  [[nodiscard]] auto try_pop() /* noexcept(std::is_nothrow_constructible_v<T>) */
+        -> std::optional<T> 
+      requires requires (Container c) { c.empty(); c.pop_front(); }
+  {
     if (m_stop_tok.stop_requested()) {
       return std::optional<T> {};
     }
@@ -520,9 +537,11 @@ public:
    * same @c wait_queue since it results in recursive mutex locks.
    */
   template <typename F>
-  auto apply(F&& func) const /* noexcept(std::is_nothrow_invocable<F&&, const T&>::value) */
-        -> void {
+  auto apply(F&& func) const /* noexcept(std::is_nothrow_invocable_v<F&&, const T&>) */
+        -> void 
+      requires requires (T elem, F func) { func(elem); }
 
+  {
     lock_guard lk{m_mut};
     for (const T& elem : m_data_queue) {
       func(elem);
@@ -536,11 +555,11 @@ public:
    *
    * @return @c true if the @c stop_requested has been called.
    */
-  auto stop_requested() const noexcept
-        -> bool {
+  [[nodiscard]] auto stop_requested() const noexcept
+        -> bool 
 
+  {
     return m_stop_tok.stop_requested();
-
   }
 
   /**
@@ -548,9 +567,11 @@ public:
    *
    * @return @c true if the @c wait_queue is empty.
    */
-  auto empty() const /* noexcept */
-        -> bool {
+  [[nodiscard]] auto empty() const /* noexcept */
+        -> bool 
+      requires requires (Container c) { c.empty(); }
 
+  {
     lock_guard lk{m_mut};
     return m_data_queue.empty();
 
@@ -561,9 +582,11 @@ public:
    *
    * @return Number of elements in the @c wait_queue.
    */
-  auto size() const /* noexcept */
-        -> size_type {
+  [[nodiscard]] auto size() const /* noexcept */
+        -> size_type 
+      requires requires (Container c) { c.size(); }
 
+  {
     lock_guard lk{m_mut};
     return m_data_queue.size();
 
