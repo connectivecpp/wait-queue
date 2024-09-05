@@ -431,7 +431,7 @@ public:
   template <typename ... Args>
   auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible_v<T, Args...>)*/
         -> bool 
-      requires requires (Args && args, Container c) { c.emplace_back(args); }
+      requires requires (Container c) { c.emplace_back(); }
  
   {
     if (m_stop_tok.stop_requested()) {
