@@ -158,9 +158,9 @@
 #include <condition_variable>
 #include <stop_token> // std::stop_source, std::stop_token
 #include <optional>
-#include <utility> // std::move, std::move_if_noexcept
+#include <utility> // std::move, std::move_if_noexcept, std::forward
 #include <type_traits> // for requires clauses and noexcept specs
-#include <concepts> 
+// #include <concepts> 
 
 namespace chops {
 
@@ -172,8 +172,8 @@ concept supports_push_back = requires (Ctr ctr, T val) {
 };
 
 template <typename Ctr, typename ... Args>
-concept supports_emplace_back = requires (Ctr ctr, Args args) {
-  ctr.emplace_back(args);
+concept supports_emplace_back = requires (Ctr ctr, Args&& ... args) {
+  ctr.emplace_back(args ...);
 };
 
 template <typename Ctr>
