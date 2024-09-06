@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['emplace_5fpush_0',['emplace_push',['../classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28',1,'chops::wait_queue']]],
-  ['empty_1',['empty',['../classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6',1,'chops::wait_queue']]]
+  ['database_0',['Database',['../classDatabase.html',1,'']]],
+  ['dataprocessor_1',['DataProcessor',['../classDataProcessor.html',1,'']]],
+  ['details_2',['Additional Details',['../index.html#autotoc_md1',1,'']]],
+  ['device_5fq_5ft_3',['device_q_t',['../threaded__queue__buffer__demo_8cpp.html#abaa7567eb6d9c02cadd244fc5af6e2b5',1,'threaded_queue_buffer_demo.cpp']]],
+  ['devicedatagenerator_4',['DeviceDataGenerator',['../classDeviceDataGenerator.html',1,'']]]
 ];

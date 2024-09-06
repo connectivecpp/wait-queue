@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['emplace_5fpush_0',['emplace_push',['../classchops_1_1wait__queue.html#aedfffa249cc06db23f6b5c4d05399c28',1,'chops::wait_queue']]],
-  ['empty_1',['empty',['../classchops_1_1wait__queue.html#a39a40991b51fa4a234928240858105d6',1,'chops::wait_queue']]]
+  ['emplace_5fpush_0',['emplace_push',['../classchops_1_1wait__queue.html#a3a4fab3eb9d71f79a73b5c631f9852f5',1,'chops::wait_queue']]],
+  ['empty_1',['empty',['../classchops_1_1wait__queue.html#a9d2bc952c4b4674b4dc12329604c8069',1,'chops::wait_queue']]]
 ];
