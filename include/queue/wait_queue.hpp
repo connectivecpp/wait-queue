@@ -112,10 +112,11 @@
  *
  * The container type must support the following (depending on which 
  * methods are called): default construction, construction with an initial size, 
- * @c push_back (preferably overloaded for both copy and move), 
+ * @c push_back (preferably overloaded for both copy and move semantics), 
  * @c emplace_back (with a template parameter pack), @c front, @c pop_front, 
  * @c empty, and @c size. The container must also have a @c size_type
- * defined.
+ * defined. Type constraints and concepts are defined for the various
+ * type requirements.
  *
  * Iterators on a @c wait_queue are not supported, due to obvious difficulties 
  * with maintaining consistency and integrity. The @c apply method can be used to 
@@ -159,8 +160,38 @@
 #include <optional>
 #include <utility> // std::move, std::move_if_noexcept
 #include <type_traits> // for requires clauses and noexcept specs
+#include <concepts> 
 
 namespace chops {
+
+// requirements for wait_queue container
+
+template <typename Ctr, typename T>
+concept supports_push_back = requires (Ctr ctr, T val) {
+  ctr.push_back(val);
+};
+
+template <typename Ctr, typename ... Args>
+concept supports_emplace_back = requires (Ctr ctr, Args args) {
+  ctr.emplace_back(args);
+};
+
+template <typename Ctr>
+concept supports_empty = requires (Ctr ctr) {
+  ctr.empty();
+};
+
+template <typename Ctr>
+concept supports_pop_front = requires (Ctr ctr) {
+  ctr.pop_front();
+};
+
+template <typename Ctr>
+concept supports_size = requires (Ctr ctr) {
+  ctr.size();
+};
+
+// declaration for wait_queue
 
 template <typename T, typename Container = std::deque<T> >
   requires std::is_copy_constructible_v<T> || std::is_move_constructible_v<T>
@@ -375,7 +406,7 @@ public:
    */
   auto push(const T& val) /* noexcept(std::is_nothrow_copy_constructible_v<T>) */
         -> bool 
-      requires requires (T val, Container c) { c.push_back(val); }
+    requires supports_push_back<Container, T>
 
   {
     if (m_stop_tok.stop_requested()) {
@@ -399,7 +430,7 @@ public:
    */
   auto push(T&& val) /* noexcept(std::is_nothrow_move_constructible_v<T>) */ 
         -> bool
-      requires requires (T val, Container c) { c.push_back(val); }
+    requires supports_push_back<Container, T>
 
   {
     if (m_stop_tok.stop_requested()) {
@@ -431,7 +462,7 @@ public:
   template <typename ... Args>
   auto emplace_push(Args &&... args) /* noexcept(std::is_nothrow_constructible_v<T, Args...>)*/
         -> bool 
-  //    requires requires (Container c) { c.emplace_back(); }
+    requires supports_emplace_back<Container, Args...>
  
   {
     if (m_stop_tok.stop_requested()) {
@@ -459,7 +490,7 @@ public:
    */
   [[nodiscard]] auto wait_and_pop() /* noexcept(std::is_nothrow_constructible_v<T>) */
         -> std::optional<T> 
-      requires requires (Container c) { c.empty(); c.pop_front(); }
+      requires supports_empty<Container> && supports_pop_front<Container>
 
   {
     std::unique_lock<std::mutex> lk{m_mut};
@@ -490,7 +521,7 @@ public:
    */
   [[nodiscard]] auto try_pop() /* noexcept(std::is_nothrow_constructible_v<T>) */
         -> std::optional<T> 
-      requires requires (Container c) { c.empty(); c.pop_front(); }
+      requires supports_empty<Container> && supports_pop_front<Container>
   {
     if (m_stop_tok.stop_requested()) {
       return std::optional<T> {};
@@ -539,7 +570,7 @@ public:
   template <typename F>
   auto apply(F&& func) const /* noexcept(std::is_nothrow_invocable_v<F&&, const T&>) */
         -> void 
-      requires requires (T elem, F func) { func(elem); }
+      requires std::is_invocable_v<F, T>
 
   {
     lock_guard lk{m_mut};
@@ -569,7 +600,7 @@ public:
    */
   [[nodiscard]] auto empty() const /* noexcept */
         -> bool 
-      requires requires (Container c) { c.empty(); }
+      requires supports_empty<Container>
 
   {
     lock_guard lk{m_mut};
@@ -584,7 +615,7 @@ public:
    */
   [[nodiscard]] auto size() const /* noexcept */
         -> size_type 
-      requires requires (Container c) { c.size(); }
+      requires supports_size<Container>
 
   {
     lock_guard lk{m_mut};
