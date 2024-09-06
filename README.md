@@ -1,4 +1,4 @@
-# Wait Queue, a Header-Only C++ 20 MPMC Thread-Safe Queue
+# Wait Queue, a Header-Only C++ 20 MPMC Thread-Safe Queue With Shutdown Semantics
 
 #### Unit Test and Documentation Generation Workflow Status
 
@@ -16,7 +16,11 @@
 
 `wait_queue` is a multi-reader, multi-writer FIFO thread-safe wait queue (often called MPMC for multiple producer / multiple consumer) for transferring data between threads. It is templatized on the type of data passed through the queue as well as the queue container type. Data is passed with value semantics, either by copying or by moving (as opposed to a queue that transfers data by pointer or reference). The wait queue has both wait and no-wait pop semantics. A fixed size container (e.g. a `ring_span`) can be used, eliminating any and all dynamic memory management (useful in embedded or deterministic environments). Similarly, a circular buffer that only allocates on construction can be used, which eliminates dynamic memory management when pushing or popping values on or off the queue.
 
+Shutdown semantics are available through `std::stop_token` facilities. A `std::stop_token` can be passed in through the constructors, allowing shutdown to be requested externally to the `wait_queue`, or shutdown can be requested through the `wait_queue request_stop` method.
+
 Thanks go to [Louis Langholtz](https://github.com/louis-langholtz) for adding DBC (Design by Contract) asserts and comments.
+
+Concepts and various type constraints have been added. Enhancements are always appreciated.
 
 ## Generated Documentation
 
@@ -28,11 +32,11 @@ The `wait_queue` header file does not have any third-party dependencies. It uses
 
 ## C++ Standard
 
-`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `concepts` / `requires`.
+`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, `concepts`, and `requires` clauses.
 
 ## Supported Compilers
 
-Continuous integration workflows build and unit test on g++ (through Ubuntu) and MSVC (through Windows). Note that clang support for C++ 20 `std::jthread` and `std::stop_token` is still experimental (and possibly incomplete) as of May 2024, so has not (yet) been tested with `wait_queue`.
+Continuous integration workflows build and unit test on g++ (through Ubuntu) and MSVC (through Windows). Note that clang support for C++ 20 `std::jthread` and `std::stop_token` is still experimental (and possibly incomplete) as of Sep 2024, so has not (yet) been tested with `wait_queue`.
 
 ## Unit Test Dependencies
 
