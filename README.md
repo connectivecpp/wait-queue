@@ -20,6 +20,8 @@ Shutdown semantics are available through `std::stop_token` facilities. A `std::s
 
 Thanks go to [Louis Langholtz](https://github.com/louis-langholtz) for adding DBC (Design by Contract) asserts and comments.
 
+Concepts and various type constraints have been added. Enhancements are always appreciated.
+
 ## Generated Documentation
 
 The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/wait-queue/).
@@ -30,7 +32,7 @@ The `wait_queue` header file does not have any third-party dependencies. It uses
 
 ## C++ Standard
 
-`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, and `requires` clauses.
+`wait_queue`  uses C++ 20 features, including `std::stop_token`, `std::stop_source`, `std::condition_variable_any`, `std::scoped_lock`, `concepts`, and `requires` clauses.
 
 ## Supported Compilers
 
