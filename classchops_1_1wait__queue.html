@@ -80,6 +80,11 @@ $(function() {
   <div class="headertitle"><div class="title">chops::wait_queue&lt; T, Container &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>MPMC thread-safe wait queue with shutdown semantics.  
+ <a href="classchops_1_1wait__queue.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="wait__queue_8hpp_source.html">wait_queue.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -93,21 +98,21 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = T</
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a068e23b8bad70d5cea0274f67490d0b0" id="r_a068e23b8bad70d5cea0274f67490d0b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a068e23b8bad70d5cea0274f67490d0b0">wait_queue</a> ()</td></tr>
-<tr class="memdesc:a068e23b8bad70d5cea0274f67490d0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
+<tr class="memdesc:a068e23b8bad70d5cea0274f67490d0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.  <br /></td></tr>
 <tr class="separator:a068e23b8bad70d5cea0274f67490d0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9df806a2884aa13e7b50dca9463a0346" id="r_a9df806a2884aa13e7b50dca9463a0346"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a9df806a2884aa13e7b50dca9463a0346">wait_queue</a> (std::stop_token stop_tok)</td></tr>
-<tr class="memdesc:a9df806a2884aa13e7b50dca9463a0346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an externally provided <code>std::stop_token</code>.  <br /></td></tr>
+<tr class="memdesc:a9df806a2884aa13e7b50dca9463a0346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an externally provided <code>std::stop_token</code>.  <br /></td></tr>
 <tr class="separator:a9df806a2884aa13e7b50dca9463a0346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a889b49e610bf098a9da6dbf633237aa7" id="r_a889b49e610bf098a9da6dbf633237aa7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a889b49e610bf098a9da6dbf633237aa7">wait_queue</a> (Container &amp;&amp;container)</td></tr>
-<tr class="memdesc:a889b49e610bf098a9da6dbf633237aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> by moving in an already constructed container.  <br /></td></tr>
+<tr class="memdesc:a889b49e610bf098a9da6dbf633237aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> by moving in an already constructed container.  <br /></td></tr>
 <tr class="separator:a889b49e610bf098a9da6dbf633237aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b3a18a97eb50f41989f4bde80b24fb5" id="r_a8b3a18a97eb50f41989f4bde80b24fb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a8b3a18a97eb50f41989f4bde80b24fb5">wait_queue</a> (std::stop_token stop_tok, Container &amp;&amp;container)</td></tr>
 <tr class="separator:a8b3a18a97eb50f41989f4bde80b24fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae12fadce3c56897aa45c6eb80087b3ec" id="r_ae12fadce3c56897aa45c6eb80087b3ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#ae12fadce3c56897aa45c6eb80087b3ec">wait_queue</a> (size_type sz)</td></tr>
-<tr class="memdesc:ae12fadce3c56897aa45c6eb80087b3ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an initial size or capacity.  <br /></td></tr>
+<tr class="memdesc:ae12fadce3c56897aa45c6eb80087b3ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an initial size or capacity.  <br /></td></tr>
 <tr class="separator:ae12fadce3c56897aa45c6eb80087b3ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd118aee4df9e55b15ef2685e40a4bf0" id="r_acd118aee4df9e55b15ef2685e40a4bf0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#acd118aee4df9e55b15ef2685e40a4bf0">wait_queue</a> (std::stop_token stop_tok, size_type sz)</td></tr>
-<tr class="memdesc:acd118aee4df9e55b15ef2685e40a4bf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an initial size or capacity along with a <code>std::stop_token</code>.  <br /></td></tr>
+<tr class="memdesc:acd118aee4df9e55b15ef2685e40a4bf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an initial size or capacity along with a <code>std::stop_token</code>.  <br /></td></tr>
 <tr class="separator:acd118aee4df9e55b15ef2685e40a4bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af96257d34c4045403dd80bf4d1fad90c" id="r_af96257d34c4045403dd80bf4d1fad90c"><td class="memItemLeft" align="right" valign="top"><a id="af96257d34c4045403dd80bf4d1fad90c" name="af96257d34c4045403dd80bf4d1fad90c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>wait_queue</b> (const <a class="el" href="classchops_1_1wait__queue.html">wait_queue</a> &amp;)=delete</td></tr>
@@ -122,13 +127,13 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="classchops_1_1wait__queue.html">wait_queue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classchops_1_1wait__queue.html">wait_queue</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:a7c5f5d676d5b63816c5c351055378a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a132e0b982c2478d08cf7f62c4bf8356b" id="r_a132e0b982c2478d08cf7f62c4bf8356b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a132e0b982c2478d08cf7f62c4bf8356b">request_stop</a> () noexcept -&gt; bool</td></tr>
-<tr class="memdesc:a132e0b982c2478d08cf7f62c4bf8356b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor.  <br /></td></tr>
+<tr class="memdesc:a132e0b982c2478d08cf7f62c4bf8356b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor.  <br /></td></tr>
 <tr class="separator:a132e0b982c2478d08cf7f62c4bf8356b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06e41f755f66d5f26057f708c6c9802a" id="r_a06e41f755f66d5f26057f708c6c9802a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a06e41f755f66d5f26057f708c6c9802a">push</a> (const T &amp;val) -&gt; bool</td></tr>
-<tr class="memdesc:a06e41f755f66d5f26057f708c6c9802a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
+<tr class="memdesc:a06e41f755f66d5f26057f708c6c9802a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.  <br /></td></tr>
 <tr class="separator:a06e41f755f66d5f26057f708c6c9802a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16849f9604f15dfea6c17a36728fc035" id="r_a16849f9604f15dfea6c17a36728fc035"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a16849f9604f15dfea6c17a36728fc035">push</a> (T &amp;&amp;val) -&gt; bool</td></tr>
-<tr class="memdesc:a16849f9604f15dfea6c17a36728fc035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.  <br /></td></tr>
+<tr class="memdesc:a16849f9604f15dfea6c17a36728fc035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.  <br /></td></tr>
 <tr class="separator:a16849f9604f15dfea6c17a36728fc035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a4fab3eb9d71f79a73b5c631f9852f5" id="r_a3a4fab3eb9d71f79a73b5c631f9852f5"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; <br />
 requires supports_emplace_back&lt;Container, Args...&gt;</td></tr>
@@ -136,10 +141,10 @@ requires supports_emplace_back&lt;Container, Args...&gt;</td></tr>
 <tr class="memdesc:a3a4fab3eb9d71f79a73b5c631f9852f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly construct an object in the underlying container (using the container's <code>emplace_back</code> method) by forwarding the supplied arguments (can be more than one).  <br /></td></tr>
 <tr class="separator:a3a4fab3eb9d71f79a73b5c631f9852f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0892ea11318cc796dc7afd31ef714c8" id="r_af0892ea11318cc796dc7afd31ef714c8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#af0892ea11318cc796dc7afd31ef714c8">wait_and_pop</a> () -&gt; std::optional&lt; T &gt;</td></tr>
-<tr class="memdesc:af0892ea11318cc796dc7afd31ef714c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available.  <br /></td></tr>
+<tr class="memdesc:af0892ea11318cc796dc7afd31ef714c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available.  <br /></td></tr>
 <tr class="separator:af0892ea11318cc796dc7afd31ef714c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aceef13a95983294f3bf6a11d88190aee" id="r_aceef13a95983294f3bf6a11d88190aee"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#aceef13a95983294f3bf6a11d88190aee">try_pop</a> () -&gt; std::optional&lt; T &gt;</td></tr>
-<tr class="memdesc:aceef13a95983294f3bf6a11d88190aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>.  <br /></td></tr>
+<tr class="memdesc:aceef13a95983294f3bf6a11d88190aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>.  <br /></td></tr>
 <tr class="separator:aceef13a95983294f3bf6a11d88190aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a647e49d63c7049f385bb9e9f4c02ee44" id="r_a647e49d63c7049f385bb9e9f4c02ee44"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; <br />
 requires std::is_invocable_v&lt;F, T&gt;</td></tr>
@@ -153,7 +158,21 @@ requires std::is_invocable_v&lt;F, T&gt;</td></tr>
 <tr class="memitem:a4222cc3226016038926bf757302047a2" id="r_a4222cc3226016038926bf757302047a2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1wait__queue.html#a4222cc3226016038926bf757302047a2">size</a> () const -&gt; size_type</td></tr>
 <tr class="separator:a4222cc3226016038926bf757302047a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Container = std::deque&lt;T&gt;&gt;<br />
+requires std::is_copy_constructible_v&lt;T&gt; || std::is_move_constructible_v&lt;T&gt;<br />
+class chops::wait_queue&lt; T, Container &gt;</div><p>MPMC thread-safe wait queue with shutdown semantics. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of value that will be passed through the queue.</td></tr>
+    <tr><td class="paramname">Container</td><td>that is used as the underlying data queue.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The value type must be either copy constructible or move constructible. It does not have to be both, and in particular a default constructor is not required.</dd>
+<dd>
+The container type must support certain operations depending on which ones are called. The constraints are specified on each particular operation. </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a068e23b8bad70d5cea0274f67490d0b0" name="a068e23b8bad70d5cea0274f67490d0b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a068e23b8bad70d5cea0274f67490d0b0">&#9670;&#160;</a></span>wait_queue() <span class="overload">[1/6]</span></h2>
 
@@ -179,9 +198,9 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Default construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
+<p>Default construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>. </p>
 <p>An internal <code>stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
-<dl class="section note"><dt>Note</dt><dd>A default constructed <code>boost</code> <code>circular_buffer</code> cannot do anything, so a different <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> constructor must be used if instantiated with a <code>boost</code> <code>circular_buffer</code>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A default constructed <code>boost</code> <code>circular_buffer</code> cannot do anything, so a different <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> constructor must be used if instantiated with a <code>boost</code> <code>circular_buffer</code>.</dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd><code>empty</code> returns <code>true</code>. </dd>
 <dd>
 <code>size</code> returns 0. </dd>
@@ -216,10 +235,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an externally provided <code>std::stop_token</code>. </p>
+<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an externally provided <code>std::stop_token</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
+    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> processing.</td></tr>
   </table>
   </dd>
 </dl>
@@ -255,9 +274,9 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> by moving in an already constructed container. </p>
-<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> container. Typically a container view is initialized with an underlying object, for example a statically allocated array. This allows <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to be used where dynamic memory is not allowed.</p>
-<p>This constructor also allows arbitrary initialization of the data inside the container before it is managed by the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
+<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> by moving in an already constructed container. </p>
+<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> container. Typically a container view is initialized with an underlying object, for example a statically allocated array. This allows <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> to be used where dynamic memory is not allowed.</p>
+<p>This constructor also allows arbitrary initialization of the data inside the container before it is managed by the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.</p>
 <p>An internal <code>std::stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -304,10 +323,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> container. It also takes a <code>std::stop_token</code> for external shutdown.</p>
+<p>This constructor allows a container view to be used for the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> container. It also takes a <code>std::stop_token</code> for external shutdown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
+    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> processing.</td></tr>
     <tr><td class="paramname">container</td><td>Container object to be moved from (or copied from if not movable).</td></tr>
   </table>
   </dd>
@@ -342,7 +361,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an initial size or capacity. </p>
+<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an initial size or capacity. </p>
 <p>Construct the container (or container view) with an initial size of default inserted elements or with an initial capacity, depending on the container type.</p>
 <p>An internal <code>std::stop_source</code> is used to provide a <code>std::stop_token</code> for coordinating shutdown.</p>
 <dl class="section note"><dt>Note</dt><dd>This constructor cannot be used with a <code>ring_span</code> container type.</dd>
@@ -398,10 +417,10 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> with an initial size or capacity along with a <code>std::stop_token</code>. </p>
+<p>Construct a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> with an initial size or capacity along with a <code>std::stop_token</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> processing.</td></tr>
+    <tr><td class="paramname">stop_tok</td><td>A <code>std::stop_token</code> which can be used to shutdown <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> processing.</td></tr>
     <tr><td class="paramname">sz</td><td>Capacity or initial size, depending on container type.</td></tr>
   </table>
   </dd>
@@ -453,9 +472,9 @@ requires std::is_invocable_v&lt;F, T&gt;</div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The entire <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is locked while <code>apply</code> is in process, so passing in a function object that blocks or takes a lot of processing time may result in slow performance.</dd>
+<dl class="section note"><dt>Note</dt><dd>The entire <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> is locked while <code>apply</code> is in process, so passing in a function object that blocks or takes a lot of processing time may result in slow performance.</dd>
 <dd>
-It is undefined behavior if the function object calls into the same <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> since it results in recursive mutex locks. </dd></dl>
+It is undefined behavior if the function object calls into the same <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> since it results in recursive mutex locks. </dd></dl>
 
 </div>
 </div>
@@ -496,8 +515,8 @@ requires supports_emplace_back&lt;Container, Args...&gt;</div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The <code>std</code> containers return a reference to the newly constructed element from <code>emplace</code> method calls. <code>emplace_push</code> for a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> does not follow this convention and instead has the same return as the <code>push</code> methods.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is has been requested to stop.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The <code>std</code> containers return a reference to the newly constructed element from <code>emplace</code> method calls. <code>emplace_push</code> for a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> does not follow this convention and instead has the same return as the <code>push</code> methods.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> is has been requested to stop.</dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
@@ -527,8 +546,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Query whether the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is empty or not.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> is empty. </dd></dl>
+<p>Query whether the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> is empty or not.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> is empty. </dd></dl>
 
 </div>
 </div>
@@ -559,7 +578,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
+<p>Push a value, by copying, to the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>. </p>
 <p>When a value is pushed, one waiting reader thread (if any) will be notified that a value has been added.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -567,7 +586,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> if the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> has been requested to stop.</dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
 </div>
@@ -599,7 +618,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </p>
+<p>Push a value, either by moving or copying, to the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>. </p>
 <p>This method has the same semantics as the other <code>push</code>, except that the value will be moved (if possible) instead of copied.</p>
 <dl class="section post"><dt>Postcondition</dt><dd>If <code>true</code> is returned and <code>empty</code> is <code>false</code>, one of any threads waiting for a value will be unblocked. </dd></dl>
 
@@ -631,8 +650,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Request the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor. </p>
-<p>If a <code>std::stop_token</code> was passed into a constructor, a <code>request_stop</code> must be performed external to the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> and this method has no effect.</p>
+<p>Request the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> to stop processing, unless a <code>std::stop_token</code> was passed in to a constructor. </p>
+<p>If a <code>std::stop_token</code> was passed into a constructor, a <code>request_stop</code> must be performed external to the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> and this method has no effect.</p>
 <p>For an internal <code>std::stop_token</code>, all waiting reader threaders will be notified. Subsequent <code>push</code> operations will return <code>false</code>.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if an internal <code>stop_source</code> was used (versus a <code>std::stop_token</code> passed in to the constructor) and the request returns <code>true</code>, <code>false</code> if an external <code>std::stop_token</code> was passed in. </dd></dl>
 
@@ -663,8 +682,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get the number of elements in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Number of elements in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>. </dd></dl>
+<p>Get the number of elements in the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Number of elements in the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -694,7 +713,7 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Query whether a @ request_stop method has been called on the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>.</p>
+<p>Query whether a @ request_stop method has been called on the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code>stop_requested</code> has been called. </dd></dl>
 
 </div>
@@ -725,8 +744,8 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>. </p>
-<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> or if the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped .</dd></dl>
+<p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> if an element is immediately available, otherwise return an empty <code>std::optional</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> or an empty <code>std::optional</code> if no values are available in the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> or if the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> has been requested to be stopped .</dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd>If a non empty value is returned, until a push function is called, <code>size</code> is one less than before this function was called. </dd></dl>
 
 </div>
@@ -757,9 +776,9 @@ template&lt;typename T , typename Container  = std::deque&lt;T&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available. </p>
-<p>If this method is called after a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to stop, an empty <code>std::optional</code> is returned. If a <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> needs to be flushed after it is stopped, <code>try_pop</code> should be called instead.</p>
-<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> (if non-empty). If the <code>std::optional</code> is empty, the <code><a class="el" href="classchops_1_1wait__queue.html">wait_queue</a></code> has been requested to be stopped.</dd></dl>
+<p>Pop and return a value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code>, blocking and waiting for a writer thread to push a value if one is not immediately available. </p>
+<p>If this method is called after a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> has been requested to stop, an empty <code>std::optional</code> is returned. If a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> needs to be flushed after it is stopped, <code>try_pop</code> should be called instead.</p>
+<dl class="section return"><dt>Returns</dt><dd>A value from the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> (if non-empty). If the <code>std::optional</code> is empty, the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">wait_queue</a></code> has been requested to be stopped.</dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd>If a non empty value is returned, until a push function is called, <code>size</code> is one less than before this function was called. </dd></dl>
 
 </div>

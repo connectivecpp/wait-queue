@@ -81,7 +81,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Multithreaded demo of <code>chops::shared_buffer</code> and <code><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a></code>.  
+<p>Multithreaded demo of <code>chops::shared_buffer</code> and <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">chops::wait_queue</a></code>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
@@ -174,7 +174,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Multithreaded demo of <code>chops::shared_buffer</code> and <code><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a></code>. </p>
+<div class="textblock"><p>Multithreaded demo of <code>chops::shared_buffer</code> and <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">chops::wait_queue</a></code>. </p>
 <dl class="section author"><dt>Author</dt><dd>Thurman Gillespy</dd></dl>
 <p>Copyright (c)2019 by Thurman Gillespy 3/22/19</p>
 <p>Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
@@ -192,14 +192,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
       </table>
 </div><div class="memdoc">
 <p>Project Overview</p>
-<p>This demo program shows how to use <code><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a></code> and <code>chops::shared_buffer</code> in a multithreaded environment. The program simulates multiple peripheral data generators, perhaps sensors or network connections. THe data is handled by one or more data processors, which sorts and formats the data, and periodically sends it to a simulated database.</p>
-<p>The program can have 1 or more <a class="el" href="classDeviceDataGenerator.html">DeviceDataGenerator</a> threads that each put 20 random numbers into device_q, a <code><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a></code>. Over 1000 threads can be run sucessfully (default is 20). Each <a class="el" href="classDeviceDataGenerator.html">DeviceDataGenerator</a> thread generates random numbers in its' own 'centile': thread 0: &lt;0..99&gt;; thread 1: &lt;100..199&gt;; thread 2: &lt;200-299&gt;, etc.</p>
+<p>This demo program shows how to use <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">chops::wait_queue</a></code> and <code>chops::shared_buffer</code> in a multithreaded environment. The program simulates multiple peripheral data generators, perhaps sensors or network connections. THe data is handled by one or more data processors, which sorts and formats the data, and periodically sends it to a simulated database.</p>
+<p>The program can have 1 or more <a class="el" href="classDeviceDataGenerator.html">DeviceDataGenerator</a> threads that each put 20 random numbers into device_q, a <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">chops::wait_queue</a></code>. Over 1000 threads can be run sucessfully (default is 20). Each <a class="el" href="classDeviceDataGenerator.html">DeviceDataGenerator</a> thread generates random numbers in its' own 'centile': thread 0: &lt;0..99&gt;; thread 1: &lt;100..199&gt;; thread 2: &lt;200-299&gt;, etc.</p>
 <p>The device_q numbers are read by 1 or more (default is 5) <a class="el" href="classDataProcessor.html">DataProcessor</a> threads. The numbers are sorted by centile. When 5 numbers in the same centile are collected, a string with the numbers is created that is placed into data_q, another wait_queue of type <code>chops::wait_queue&lt;chops::const_shared_buffer&gt;&gt;</code>, ie, the string is copied into a new <code>chops::const_shared_buffer</code> in the data_q. The first number in the string is the 'index' that correspons to that centile, and the remaining numbers are kept in chronologic order.</p>
 <p>0 87 17 65 5 32s 8 870 813 808 827 874</p>
 <p>The data_q is read by the single <a class="el" href="classDatabase.html">Database</a> thread. The string is extracted from the data_q and appened to the proper centile string in the database.</p>
 <p>When the <a class="el" href="classDatabase.html">Database</a> thread is finished, a 'Data Report' is printed. Each row contains the random nubmers created by a particular thread, in chronlogic order.</p>
 <p>Data Report [0] 30 71 2 99 60 74 11 70 4 41 83 90 14 72 68 68 88 51 28 78 [1] 103 110 186 136 152 187 165 169 108 157 116 138 136 132 153 144 159 144 120 110 [2] 273 215 249 265 218 252 286 239 273 269 242 263 245 249 215 266 214 245 258 214 [3] 387 303 312 350 323 331 343 374 363 371 390 335 367 317 397 341 394 399 341 366 [4] 447 415 448 464 455 489 462 446 440 452 417 426 417 446 427 433 484 431 445 468</p>
-<p>Mutex locks and conditional variable signaling is handled within the <code><a class="el" href="classchops_1_1wait__queue.html">chops::wait_queue</a></code> class. </p>
+<p>Mutex locks and conditional variable signaling is handled within the <code><a class="el" href="classchops_1_1wait__queue.html" title="MPMC thread-safe wait queue with shutdown semantics.">chops::wait_queue</a></code> class. </p>
 
 </div>
 </div>
