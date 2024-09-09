@@ -196,7 +196,7 @@ concept supports_size = requires (Ctr ctr) {
  *
  * @tparam T Type of value that will be passed through the queue.
  *
- * @tparam Container that is used as the underlying data queue.
+ * @tparam Container Type of container that is used as the underlying data queue.
  *
  * @pre The value type must be either copy constructible or move constructible. It does not
  * have to be both, and in particular a default constructor is not required.
