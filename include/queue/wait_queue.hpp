@@ -191,8 +191,20 @@ concept supports_size = requires (Ctr ctr) {
   ctr.size();
 };
 
-// declaration for wait_queue
-
+/**
+ * @brief MPMC thread-safe wait queue with shutdown semantics.
+ *
+ * @tparam T Type of value that will be passed through the queue.
+ *
+ * @tparam Container that is used as the underlying data queue.
+ *
+ * @pre The value type must be either copy constructible or move constructible. It does not
+ * have to be both, and in particular a default constructor is not required.
+ *
+ * @pre The container type must support certain operations depending on which ones are called.
+ * The constraints are specified on each particular operation.
+ *
+ */
 template <typename T, typename Container = std::deque<T> >
   requires std::is_copy_constructible_v<T> || std::is_move_constructible_v<T>
 class wait_queue {
