@@ -33,19 +33,3 @@ jobs:
         run: cd build && cmake --build . --config $BUILD_TYPE
       - name: run-unit-test
         run: cd build && ctest -C $BUILD_TYPE
-  macos_build:
-    runs-on: macos-15
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: create-build-dir
-        run: mkdir build
-      - name: configure-cmake
-        run: cd build && cmake -D CMAKE_CXX_COMPILER=$(brew --prefix llvm@18)/bin/clang++ -D WAIT_QUEUE_BUILD_TESTS:BOOL=ON -D WAIT_QUEUE_BUILD_EXAMPLES:BOOL=ON -D JM_CIRCULAR_BUFFER_BUILD_TESTS:BOOL=OFF ..
-      - name: build
-        run: cd build && cmake --build . --config $BUILD_TYPE
-      - name: run-unit-test
-        run: cd build && ctest -C $BUILD_TYPE
