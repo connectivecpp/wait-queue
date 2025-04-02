@@ -7,6 +7,8 @@
  * Copyright (c)2019 by Thurman Gillespy
  * 3/22/19
  *
+ * Minor changes Apr 2025 by Cliff Green to match changed APIs.
+ *
  * Distributed under the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  * 
@@ -26,7 +28,7 @@
 #include <ctime> // std::time
 
 #include "queue/wait_queue.hpp"
-#include "marshall/shared_buffer.hpp"
+#include "buffer/shared_buffer.hpp"
 
 
 /** Project Overview
