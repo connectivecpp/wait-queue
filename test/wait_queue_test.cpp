@@ -19,6 +19,7 @@
 #include <set>
 #include <optional>
 #include <chrono>
+#include <ranges> // std::views::iota
 #include <type_traits> // std::is_arithmetic
 
 #include <thread>
@@ -45,12 +46,12 @@ void non_threaded_push_test(Q& wq, const typename Q::value_type& val, int count)
   REQUIRE (wq.empty());
   REQUIRE (wq.size() == 0);
 
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     REQUIRE(wq.push(val));
   }
   REQUIRE_FALSE (wq.empty());
   REQUIRE (wq.size() == count);
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     auto ret = wq.try_pop();
     REQUIRE(*ret == val);
   }
@@ -69,22 +70,22 @@ void non_threaded_arithmetic_test(Q& wq, int count) {
 
   REQUIRE (wq.empty());
 
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     REQUIRE(wq.push(base_val));
   }
   val_type sum { 0 };
   wq.apply( [&sum] (const val_type& x) { sum += x; } );
   REQUIRE (sum == expected_sum);
 
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     REQUIRE(*(wq.try_pop()) == base_val);
   }
   REQUIRE (wq.empty());
 
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     wq.push(base_val+i);
   }
-  for (int i {0}; i < count; ++i) {
+  for (int i : std::ranges::iota_view{0, count}) {
     REQUIRE(*(wq.try_pop()) == (base_val+i));
   }
   REQUIRE (wq.size() == 0);
@@ -389,25 +390,25 @@ TEST_CASE ( "Fixed size ring_span, testing wrap around with int type",
   constexpr int Answer = 42;
   constexpr int AnswerPlus = 42+5;
 
-  for (int i {0}; i < N; ++i) {
+  for (int i : std::ranges::iota_view{0, N}) {
       wq.push(Answer);
   }
   REQUIRE (wq.size() == N);
   wq.apply([Answer] (const int& i) { REQUIRE(i == Answer); } );
 
-  for (int i {0}; i < N; ++i) {
+  for (int i : std::ranges::iota_view{0, N}) {
     wq.push(Answer);
   }
-  for (int i {0}; i < (N/2); ++i) {
+  for (int i : std::ranges::iota_view{0, N/2}) {
     wq.push(AnswerPlus);
   }
   // the size is full but half match answer and half answer plus, since there's been wrap
   REQUIRE (wq.size() == N);
   // wait_pop should immediately return if the queue is non empty
-  for (int i {0}; i < (N/2); ++i) {
+  for (int i : std::ranges::iota_view{0, N/2}) {
     REQUIRE (wq.wait_and_pop() == Answer);
   }
-  for (int i {0}; i < (N/2); ++i) {
+  for (int i : std::ranges::iota_view{0, N/2}) {
     REQUIRE (wq.wait_and_pop() == AnswerPlus);
   }
   REQUIRE (wq.empty());
