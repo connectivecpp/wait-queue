@@ -73,3 +73,7 @@ test/wait_queue_test -s
 
 The example can be built by adding `-D WAIT_QUEUE_BUILD_EXAMPLES:BOOL=ON` to the CMake configure / generate step.
 
+### CMake Version Compatibility
+
+CMake 3.27 and later has removed (or will remove) compatibility with CMake versions older than 3.5. The GitHub actions for the `wait_queue` unit test have been updated to use the `CMAKE_POLICY_VERSION_MINIMUM=3.5` flag as a workaround (until the dependent library CMake files have been updated appropriately).
+

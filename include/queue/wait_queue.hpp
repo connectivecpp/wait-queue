@@ -14,7 +14,7 @@
  * for specific use cases (see below for additional details). The default container
  * type is @c std::deque.
  *
- * A graceful shutdown can be requested using the @c request_stop method (modeled on the 
+ * A graceful shutdown can be requested using the @c std::request_stop method (modeled on the 
  * C++ 20 @c request_stop from @c std::stop_source). This allows waiting reader threads 
  * to be notified for shutdown. Alternatively a @c std::stop_token can be passed in to 
  * the @c wait_queue constructor, allowing shutdown from outside of the @c wait_queue 
@@ -142,7 +142,7 @@
  *
  * @authors Cliff Green, Lou Langholtz, Anthony Williams
  *
- * @copyright (c) 2017-2024 by Cliff Green
+ * @copyright (c) 2017-2025 by Cliff Green
  *
  * Distributed under the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
