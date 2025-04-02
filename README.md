@@ -18,6 +18,8 @@
 
 Shutdown semantics are available through `std::stop_token` facilities. A `std::stop_token` can be passed in through the constructors, allowing shutdown to be requested externally to the `wait_queue`, or shutdown can be requested through the `wait_queue request_stop` method.
 
+[P0260R15 - C++ Concurrent Queues](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p0260r15.html) has recently (February 2025) been accepted by the standards committee for C++ 26. This proposal has more features than `wait_queue`, but much of the API is similar.
+
 Thanks go to [Louis Langholtz](https://github.com/louis-langholtz) for adding DBC (Design by Contract) asserts and comments.
 
 Concepts and various type constraints have been added. Enhancements are always appreciated.
