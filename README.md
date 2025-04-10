@@ -51,6 +51,10 @@ The unit test uses two third-party libraries (each is a single header-only file)
 
 Specific version (or branch) specs for the dependencies are in the [test/CMakeLists.txt](test/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
+## Example Dependencies
+
+The example applications use the Connective C++ `shared_buffer` reference counted buffer class. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
+
 ## Build and Run Unit Tests
 
 To build and run the unit test program:
