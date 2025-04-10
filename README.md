@@ -28,9 +28,9 @@ Concepts and various type constraints have been added. Enhancements are always a
 
 The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/wait-queue/).
 
-## Dependencies
+## Library Dependencies
 
-The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
+The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test and example code do have dependencies as noted below.
 
 ## C++ Standard
 
@@ -53,7 +53,7 @@ Specific version (or branch) specs for the dependencies are in the [test/CMakeLi
 
 ## Example Dependencies
 
-The example applications use the Connective C++ `shared_buffer` reference counted buffer class. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
+The example applications use the Connective C++ `shared_buffer` reference counted buffer classes. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
 ## Build and Run Unit Tests
 
