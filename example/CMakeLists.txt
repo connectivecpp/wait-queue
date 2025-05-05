@@ -9,7 +9,7 @@ cmake_minimum_required ( VERSION 3.14 FATAL_ERROR )
 project ( wait_queue_example LANGUAGES CXX )
 
 # add dependencies
-CPMAddPackage ( "gh:connectivecpp/shared-buffer@1.0.2" )
+CPMAddPackage ( "gh:connectivecpp/shared-buffer@1.0.4" )
 
 # add executables
 add_executable ( wait_queue_example wait_queue_example.cpp )
