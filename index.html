@@ -92,7 +92,7 @@ Overview</h2>
 <p>This class template allows transferring data between threads with queue semantics (push, pop), using C++ std library general facilities (mutex, condition variable). An internal container is managed within an object of this class template.</p>
 <p>Multiple writer and reader threads can access a <code>wait_queue</code> object simultaneously. When a value is pushed on the queue by a writer thread, only one reader thread will be notified to consume the value.</p>
 <p>One of the template parameters is the container type, allowing customization for specific use cases (see below for additional details). The default container type is <code>std::deque</code>.</p>
-<p>A graceful shutdown can be requested using the <code>request_stop</code> method (modeled on the C++ 20 <code>request_stop</code> from <code>std::stop_source</code>). This allows waiting reader threads to be notified for shutdown. Alternatively a <code>std::stop_token</code> can be passed in to the <code>wait_queue</code> constructor, allowing shutdown from outside of the <code>wait_queue</code> object.</p>
+<p>A graceful shutdown can be requested using the <code>std::request_stop</code> method (modeled on the C++ 20 <code>request_stop</code> from <code>std::stop_source</code>). This allows waiting reader threads to be notified for shutdown. Alternatively a <code>std::stop_token</code> can be passed in to the <code>wait_queue</code> constructor, allowing shutdown from outside of the <code>wait_queue</code> object.</p>
 <p><code>wait_queue</code> uses C++ standard library concurrency facilities (e.g. <code>std::mutex</code>, <code>std::condition_variable_any</code>) in its implementation. It is not a lock-free queue, but it has been designed to be used in memory constrained environments or where deterministic performance is needed.</p>
 <p>In particular, <code>wait_queue:</code> </p>
 <ul>
@@ -139,7 +139,7 @@ Additional Details</h3>
 <dl class="section note"><dt>Note</dt><dd>The <code>boost</code> <code>circular_buffer</code> can be used for the container type. Memory is allocated only once, at container construction time. This may be useful for environments where construction can use dynamic memory but a <code>push</code> or <code>pop</code> must not allocate or deallocate memory. If the container type is <code>boost</code> <code>circular_buffer</code> then the default constructor for <code>wait_queue</code> cannot be used (since it would result in a container with an empty capacity).</dd></dl>
 <p>Thanks go to Lou Langholtz for adding DBC (Design by Contract) assertions.</p>
 <dl class="section author"><dt>Authors</dt><dd>Cliff Green, Lou Langholtz, Anthony Williams</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017-2024 by Cliff Green</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017-2025 by Cliff Green</dd></dl>
 <p>Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>) </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
