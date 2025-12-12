@@ -28,9 +28,9 @@ Concepts and various type constraints have been added. Enhancements are always a
 
 The generated Doxygen documentation for `wait_queue` is [here](https://connectivecpp.github.io/wait-queue/).
 
-## Dependencies
+## Library Dependencies
 
-The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
+The `wait_queue` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test and example code do have dependencies as noted below.
 
 ## C++ Standard
 
@@ -50,6 +50,10 @@ The unit test uses two third-party libraries (each is a single header-only file)
 - Justas Masiulis' [circular_buffer](https://github.com/JustasMasiulis/circular_buffer)
 
 Specific version (or branch) specs for the dependencies are in the [test/CMakeLists.txt](test/CMakeLists.txt) file, look for the `CPMAddPackage` command.
+
+## Example Dependencies
+
+The example applications use the Connective C++ `shared_buffer` reference counted buffer classes. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
 ## Build and Run Unit Tests
 
@@ -72,4 +76,8 @@ test/wait_queue_test -s
 ```
 
 The example can be built by adding `-D WAIT_QUEUE_BUILD_EXAMPLES:BOOL=ON` to the CMake configure / generate step.
+
+### CMake Version Compatibility
+
+CMake 3.27 and later has removed (or will remove) compatibility with CMake versions older than 3.5. The GitHub actions for the `wait_queue` unit test have been updated to use the `CMAKE_POLICY_VERSION_MINIMUM=3.5` flag as a workaround (until the dependent library CMake files have been updated appropriately).
 
